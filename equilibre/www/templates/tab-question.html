@@ -1,17 +1,96 @@
 <ion-view view-title="Question">
-  <ion-content class="padding">
-    <h2>Welcome to Ionic</h2>
-    <p>
-    This is the Ionic starter for tabs-based apps. For other starters and ready-made templates, check out the <a href="http://market.ionic.io/starters" target="_blank">Ionic Market</a>.
-    </p>
-    <p>
-      To edit the content of each tab, edit the corresponding template file in <code>www/templates/</code>. This template is <code>www/templates/tab-dash.html</code>
-    </p>
-    <p>
-    If you need help with your app, join the Ionic Community on the <a href="http://forum.ionicframework.com" target="_blank">Ionic Forum</a>. Make sure to <a href="http://twitter.com/ionicframework" target="_blank">follow us</a> on Twitter to get important updates and announcements for Ionic developers.
-    </p>
-    <p>
-      For help sending push notifications, join the <a href="https://apps.ionic.io/signup" target="_blank">Ionic Platform</a> and check out <a href="http://docs.ionic.io/docs/push-overview" target="_blank">Ionic Push</a>. We also have other services available.
-    </p>
-  </ion-content>
+    <ion-content class="padding">
+        <h2>Create a question</h2>
+
+        <div class="alert alert-danger" ng-if="!success"><h4><i class="icon fa fa-ban"></i> Alert!</h4>Please fill out
+            all the
+            fields
+        </div>
+
+        <!-- form start -->
+        <form role="form" name="addForm" novalidate ng-submit="addQuestion()">
+            <!-- Question -->
+            <div class="box">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Upload Question</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="questionText">Question text</label>
+                            <input type="text" ng-model="newQuestion.questionText" class="form-control"
+                                   id="questionText"
+                                   placeholder="Enter Question">
+                        </div>
+                        <div class="form-group">
+                            <label for="questionPicture">Question Picture</label>
+                            <input type="file" id="questionPicture" fileread="newQuestion.questionPicture">
+                            <img data-ng-src="{{newQuestion.questionPicture}}"
+                                 data-err-src="vendor/adminlte/img/avatar.png"
+                                 style="height: 60px"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box -->
+            <!-- Answer -->
+            <div class="box">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Upload Answer</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="answerTextOne">Response text one</label>
+                            <input type="text" ng-model="newQuestion.answerTextOne" class="form-control"
+                                   id="answerTextOne"
+                                   placeholder="Enter Answer One">
+                        </div>
+                        <div class="form-group">
+                            <label for="answerTextTwo">Response text two</label>
+                            <input type="text" ng-model="newQuestion.answerTextTwo" class="form-control"
+                                   id="answerTextTwo"
+                                   placeholder="Enter Answer Two">
+                        </div>
+                        <hr/>
+                        <p>Or</p>
+                        <hr/>
+                        <div class="form-group">
+                            <label for="answerPictureOne">Answer picture One</label>
+                            <input type="file" id="answerPictureOne" fileread="newQuestion.answerPictureOne">
+                            <img data-ng-src="{{newQuestion.answerPictureOne}}"
+                                 data-err-src="vendor/adminlte/img/avatar.png"
+                                 style="height: 60px"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="answerPictureTwo">Answer picture Two</label>
+                            <input type="file" id="answerPictureTwo" fileread="newQuestion.answerPictureTwo">
+                            <img data-ng-src="{{newQuestion.answerPictureTwo}}"
+                                 data-err-src="vendor/adminlte/img/avatar.png"
+                                 style="height: 60px"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box -->
+            <!-- Description -->
+            <div class="box">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Add a description</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="description">Question description</label>
+                            <input type="text" ng-model="newQuestion.description" class="form-control" id="description"
+                                   placeholder="Enter Description">
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ion-content>
 </ion-view>
