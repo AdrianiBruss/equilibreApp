@@ -1,6 +1,11 @@
-angular.module('starter.controllers', [])
 
+angular.module('starter.controllers', ['starter.gameController', 'starter.accountController', 'starter.questionController'])
 
+    //.controller('ChatDetailCtrl', function ($scope, $stateParams, Chats) {
+    //  $scope.chat = Chats.get($stateParams.chatId);
+    //})
+
+    // ------------- Login Controller
     .controller('LoginCtrl', ['$scope', 'FacebookService', function ($scope, FacebookService) {
         console.log('LoginCtrl');
 
@@ -9,8 +14,10 @@ angular.module('starter.controllers', [])
         }
     }])
 
+
+    // ------------- Home page Controller
     .controller('HomeCtrl', ['$scope', '$state', 'FacebookService', function ($scope, $state, FacebookService) {
-        console.log('HomeCtrl')
+        console.log('HomeCtrl');
         $scope.getFriends = function () {
             FacebookService.getFriends();
         };
@@ -21,33 +28,4 @@ angular.module('starter.controllers', [])
         }
 
 
-    }])
-
-    .controller('QuestCtrl', function ($scope) {
-        console.log('QuesrCtrl')
-    })
-
-    .controller('GameCtrl', function ($scope, Chats) {
-        // With the new view caching in Ionic, Controllers are only called
-        // when they are recreated or on app start, instead of every page change.
-        // To listen for when this page is active (for example, to refresh data),
-        // listen for the $ionicView.enter event:
-        //
-        //$scope.$on('$ionicView.enter', function(e) {
-        //});
-
-        $scope.chats = Chats.all();
-        $scope.remove = function (chat) {
-            Chats.remove(chat);
-        };
-    })
-
-    //.controller('ChatDetailCtrl', function ($scope, $stateParams, Chats) {
-    //  $scope.chat = Chats.get($stateParams.chatId);
-    //})
-
-    .controller('AccountCtrl', function ($scope) {
-        $scope.settings = {
-            enableFriends: true
-        };
-    });
+    }]);

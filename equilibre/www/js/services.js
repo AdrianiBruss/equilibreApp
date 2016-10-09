@@ -1,4 +1,4 @@
-angular.module('starter.services', ['starter.facebookService'])
+angular.module('starter.services', ['starter.facebookService', 'starter.apiService'])
 
     .factory('Chats', function () {
         // Might use a resource here that returns a JSON array

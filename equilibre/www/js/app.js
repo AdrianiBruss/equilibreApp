@@ -6,7 +6,9 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
-
+    .constant('lbConfig', {
+        'url': 'http://equilibreapp-cloudbruss.rhcloud.com/api'
+    })
     .run(['$rootScope', '$window', '$ionicPlatform', 'FacebookService', function ($rootScope, $window, $ionicPlatform, FacebookService) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -45,12 +47,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             })
             .state('home', {
                 url: '/',
-                templateUrl: 'templates/home.html',
+                templateUrl: 'templates/pages/home.html',
                 controller: 'HomeCtrl'
             })
             .state('login', {
                 url: '/login',
-                templateUrl: 'templates/login.html',
+                templateUrl: 'templates/pages/login.html',
                 controller: 'LoginCtrl'
             })
             .state('logout', {
@@ -64,7 +66,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                 url: '/question',
                 views: {
                     'tab-dash': {
-                        templateUrl: 'templates/tab-question.html',
+                        templateUrl: 'templates/questions/question.html',
                         controller: 'QuestCtrl'
                     }
                 }
@@ -74,7 +76,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                 url: '/game',
                 views: {
                     'tab-chats': {
-                        templateUrl: 'templates/tab-game.html',
+                        templateUrl: 'templates/game/game.html',
                         controller: 'GameCtrl'
                     }
                 }
@@ -93,7 +95,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                 url: '/account',
                 views: {
                     'tab-account': {
-                        templateUrl: 'templates/tab-account.html',
+                        templateUrl: 'templates/account/account.html',
                         controller: 'AccountCtrl'
                     }
                 }
