@@ -9,7 +9,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     .constant('lbConfig', {
         'url': 'http://equilibreapp-cloudbruss.rhcloud.com/api'
     })
-    .run(['$rootScope', '$window', '$ionicPlatform', 'FacebookService', function ($rootScope, $window, $ionicPlatform, FacebookService) {
+    .run(['$rootScope', '$window', '$state', '$ionicPlatform', 'FacebookService', function ($rootScope, $window, $state, $ionicPlatform, FacebookService) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -25,9 +25,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         });
 
         $rootScope.user = {};
+        $rootScope.socket = null;
 
         FacebookService.init();
 
+        $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState)
+        {
+            if(toState.name === "tab.game")
+            {
+                $rootScope.socket = io.connect("http://localhost:8080/players");
+            }
+            else
+            {
+                if($rootScope.socket !== null)
+                {
+                    $rootScope.socket.disconnect();
+                }
+            }
+        });
 
     }])
 
