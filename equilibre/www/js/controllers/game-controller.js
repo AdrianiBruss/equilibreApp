@@ -9,6 +9,7 @@ angular.module('starter.gameController', [])
         //
         //$scope.$on('$ionicView.enter', function(e) {
         //});
+        $scope.question = null;
 
         $scope.chats = Chats.all();
 
@@ -27,7 +28,8 @@ angular.module('starter.gameController', [])
         });
 
         SOCKET.instance.on('provide one question', function(question){
-            alert(question.questionText + '\n' + question.description);
+            $scope.question = question;
+            $scope.$apply();
         });
 
     }]);
