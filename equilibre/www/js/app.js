@@ -9,43 +9,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     .constant('lbConfig', {
         'url': 'http://equilibreapp-cloudbruss.rhcloud.com/api'
     })
-    .run(['$rootScope', '$window', '$state', '$ionicPlatform', 'FacebookService', function ($rootScope, $window, $state, $ionicPlatform, FacebookService) {
-        $ionicPlatform.ready(function () {
-            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-            // for form inputs)
-            if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-                cordova.plugins.Keyboard.disableScroll(true);
-
-            }
-            if (window.StatusBar) {
-                // org.apache.cordova.statusbar required
-                StatusBar.styleDefault();
-            }
-        });
-
-        $rootScope.user = {};
-        $rootScope.socket = null;
-
-        FacebookService.init();
-
-        $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState)
-        {
-            if(toState.name === "tab.game")
-            {
-                $rootScope.socket = io.connect("http://localhost:8080/players");
-            }
-            else
-            {
-                if($rootScope.socket !== null)
-                {
-                    $rootScope.socket.disconnect();
-                }
-            }
-        });
-
-    }])
-
+    .constant('SOCKET',{
+        'url' : 'http://localhost:8080/players',
+        'instance' : null
+    })
     .config(function ($stateProvider, $urlRouterProvider) {
 
         // Ionic uses AngularUI Router which uses the concept of states
@@ -54,7 +21,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         // Each state's controller can be found in controllers.js
         $stateProvider
 
-            // setup an abstract state for the tabs directive
+        // setup an abstract state for the tabs directive
             .state('tab', {
                 url: '/tab',
                 abstract: true,
@@ -119,4 +86,40 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/');
 
-    });
+    })
+    .run(['$rootScope', '$window', '$state', '$ionicPlatform', 'FacebookService', 'SOCKET', function ($rootScope, $window, $state, $ionicPlatform, FacebookService, SOCKET) {
+        $ionicPlatform.ready(function () {
+            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+            // for form inputs)
+            if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+                cordova.plugins.Keyboard.disableScroll(true);
+
+            }
+            if (window.StatusBar) {
+                // org.apache.cordova.statusbar required
+                StatusBar.styleDefault();
+            }
+        });
+
+        $rootScope.user = {};
+
+        FacebookService.init();
+
+        $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState)
+        {
+            if(toState.name === "tab.game")
+            {
+                SOCKET.instance = io.connect(SOCKET.url);
+            }
+            else
+            {
+                if(SOCKET.instance !== null)
+                {
+                    SOCKET.instance.disconnect();
+                }
+            }
+        });
+
+    }]);
+

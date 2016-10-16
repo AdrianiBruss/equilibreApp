@@ -1,7 +1,7 @@
 angular.module('starter.gameController', [])
 
 
-    .controller('GameCtrl', function ($scope, $rootScope, Chats) {
+    .controller('GameCtrl', ['SOCKET', '$scope', 'Chats', function (SOCKET, $scope, Chats) {
         // With the new view caching in Ionic, Controllers are only called
         // when they are recreated or on app start, instead of every page change.
         // To listen for when this page is active (for example, to refresh data),
@@ -17,7 +17,17 @@ angular.module('starter.gameController', [])
         };
 
         $scope.playGame = function () {
-            console.log("play");
-            $rootScope.socket.emit("play");
+            console.log('play', SOCKET.instance);
+            SOCKET.instance.emit('play a game');
         };
-    });
+
+        SOCKET.instance.on('start game', function(){
+            console.log('start game');
+            this.emit('want one question', true);
+        });
+
+        SOCKET.instance.on('provide one question', function(question){
+            alert(question.questionText + '\n' + question.description);
+        });
+
+    }]);
