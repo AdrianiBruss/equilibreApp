@@ -8,6 +8,7 @@
     "gulp-minify-css": "^0.3.0",
     "gulp-rename": "^1.2.0",
     "gulp-sass": "^2.0.4",
+    "js-sha512": "^0.2.2",
     "loopback-component-passport": "^2.3.0",
     "passport-facebook": "^2.1.1",
     "socket.io": "^1.5.0"

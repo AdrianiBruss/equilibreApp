@@ -13,6 +13,10 @@ angular.module('starter.controllers', ['starter.gameController', 'starter.accoun
             console.log('fbLoginCtrl')
             FacebookService.login();
         }
+        $scope.register = function () {
+            console.log('fbRegisterCtrl')
+            FacebookService.register();
+        }
     }])
 
 

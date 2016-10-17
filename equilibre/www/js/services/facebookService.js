@@ -24,11 +24,14 @@ angular.module('starter.facebookService', [])
                 if (response.status === 'connected') {
                     console.log('connected');
 
-                    // getProfile(false);
-                    $state.go('home');
+                    $rootScope.user = response;
 
                     var uid = response.authResponse.userID;
                     var accessToken = response.authResponse.accessToken;
+
+                    getProfile(false)
+
+                    // $state.go('home');
 
                 } else if (response.status === 'not_authorized') {
 
@@ -48,10 +51,24 @@ angular.module('starter.facebookService', [])
         function facebookLogin() {
             console.log('fbLoginService')
 
+
+        }
+
+        function facebookLogout() {
+
+            FB.logout(function (response) {
+                console.log(response)
+            });
+        }
+
+        function facebookResgister() {
             FB.login(function (response) {
+
                 if (response.authResponse) {
                     console.log('connected to Facebook')
-                    // getProfile(true);
+                    console.log('facebookResgister', response)
+
+                    getProfile(true);
 
                 } else {
 
@@ -64,27 +81,17 @@ angular.module('starter.facebookService', [])
             });
         }
 
-        function facebookLogout() {
-
-            FB.logout(function (response) {
-                console.log(response)
-            });
-        }
-
         function getProfile(registerUser) {
 
             FB.api('/me?fields=id,name,email,picture', function (response) {
 
-                console.log(response)
-
                 $rootScope.user = response;
+                $rootScope.user['password'] = sha512_224(response.email+response.id)
 
-                // if (registerUser)
-                //     ApiService.registerUser($rootScope.user);
-                // else
-                //     $rootScope.user.password = 'password';
-                //     $rootScope.user.rememberMe = true;
-                //     ApiService.loginUser($rootScope.user);
+                if (registerUser)
+                    ApiService.registerUser($rootScope.user);
+                else
+                    ApiService.loginUser($rootScope.user);
             });
 
         }
@@ -111,6 +118,9 @@ angular.module('starter.facebookService', [])
             },
             getFriends: function () {
                 return getFriends()
+            },
+            register: function(){
+                return facebookResgister()
             }
 
 

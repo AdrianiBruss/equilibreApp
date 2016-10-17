@@ -7,7 +7,8 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     .constant('lbConfig', {
-        'url': 'http://equilibreapp-cloudbruss.rhcloud.com/api'
+        // 'url': 'http://equilibreapp-cloudbruss.rhcloud.com/api',
+        'url': 'http://localhost:3000/api',
     })
     .constant('SOCKET',{
         'url' : 'http://localhost:8080/players',
@@ -31,7 +32,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         $rootScope.user = {};
 
         FacebookService.init();
-        
+
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState)
         {
             if(toState.name === "tab.game")
@@ -119,6 +120,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             });
 
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/login');
 
     })
