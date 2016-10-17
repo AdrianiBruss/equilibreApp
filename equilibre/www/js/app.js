@@ -13,6 +13,41 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         'url' : 'http://localhost:8080/players',
         'instance' : null
     })
+    .run(['$rootScope', '$window', '$ionicPlatform', 'FacebookService', 'SOCKET', function ($rootScope, $window, $ionicPlatform, FacebookService, SOCKET) {
+        $ionicPlatform.ready(function () {
+            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+            // for form inputs)
+            if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+                cordova.plugins.Keyboard.disableScroll(true);
+
+            }
+            if (window.StatusBar) {
+                // org.apache.cordova.statusbar required
+                StatusBar.styleDefault();
+            }
+        });
+
+        $rootScope.user = {};
+
+        FacebookService.init();
+        
+        $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState)
+        {
+            if(toState.name === "tab.game")
+            {
+                SOCKET.instance = io.connect(SOCKET.url);
+            }
+            else
+            {
+                if(SOCKET.instance !== null)
+                {
+                    SOCKET.instance.disconnect();
+                }
+            }
+        });
+
+    }])
     .config(function ($stateProvider, $urlRouterProvider) {
 
         // Ionic uses AngularUI Router which uses the concept of states
@@ -87,39 +122,3 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         $urlRouterProvider.otherwise('/');
 
     })
-    .run(['$rootScope', '$window', '$state', '$ionicPlatform', 'FacebookService', 'SOCKET', function ($rootScope, $window, $state, $ionicPlatform, FacebookService, SOCKET) {
-        $ionicPlatform.ready(function () {
-            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-            // for form inputs)
-            if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-                cordova.plugins.Keyboard.disableScroll(true);
-
-            }
-            if (window.StatusBar) {
-                // org.apache.cordova.statusbar required
-                StatusBar.styleDefault();
-            }
-        });
-
-        $rootScope.user = {};
-
-        FacebookService.init();
-
-        $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState)
-        {
-            if(toState.name === "tab.game")
-            {
-                SOCKET.instance = io.connect(SOCKET.url);
-            }
-            else
-            {
-                if(SOCKET.instance !== null)
-                {
-                    SOCKET.instance.disconnect();
-                }
-            }
-        });
-
-    }]);
-

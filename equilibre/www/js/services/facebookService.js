@@ -1,6 +1,7 @@
 angular.module('starter.facebookService', [])
 
-    .service('FacebookService', ['$window', '$state', function ($window, $state) {
+    .service('FacebookService', ['$window', '$state', '$rootScope', 'ApiService',
+        function ($window, $state, $rootScope, ApiService) {
 
         function facebookInit() {
 
@@ -22,6 +23,8 @@ angular.module('starter.facebookService', [])
             FB.getLoginStatus(function (response) {
                 if (response.status === 'connected') {
                     console.log('connected');
+
+                    // getProfile(false);
                     $state.go('home');
 
                     var uid = response.authResponse.userID;
@@ -37,22 +40,26 @@ angular.module('starter.facebookService', [])
 
                     console.log('user not logged in');
                     // the user isn't logged in to Facebook.
+                    $state.go('login');
                 }
             });
         }
 
         function facebookLogin() {
+            console.log('fbLoginService')
 
             FB.login(function (response) {
                 if (response.authResponse) {
-                    console.log('Welcome!  Fetching your information.... ');
-                    $state.go('home')
+                    console.log('connected to Facebook')
+                    // getProfile(true);
+
                 } else {
+
                     console.log('User cancelled login or did not fully authorize.');
                     $state.go('login')
                 }
             }, {
-                scope: 'read_custom_friendlists',
+                scope: 'email, read_custom_friendlists',
                 return: true
             });
         }
@@ -64,10 +71,37 @@ angular.module('starter.facebookService', [])
             });
         }
 
+        function getProfile(registerUser) {
+
+            FB.api('/me?fields=id,name,email,picture', function (response) {
+
+                console.log(response)
+
+                $rootScope.user = response;
+
+                // if (registerUser)
+                //     ApiService.registerUser($rootScope.user);
+                // else
+                //     $rootScope.user.password = 'password';
+                //     $rootScope.user.rememberMe = true;
+                //     ApiService.loginUser($rootScope.user);
+            });
+
+        }
+
+        function getFriends() {
+
+            FB.api('/me?fields=id,name,friendlists', function (response) {
+                console.log('Good to see you, ' + response.name + '.');
+                console.log(response)
+            });
+
+        }
+
         return {
 
             init: function () {
-                return facebookInit();
+                return facebookInit()
             },
             login: function () {
                 return facebookLogin()
@@ -76,12 +110,7 @@ angular.module('starter.facebookService', [])
                 return facebookLogout()
             },
             getFriends: function () {
-
-                FB.api('/me?fields=id,name,friendlists', function (response) {
-                    console.log('Good to see you, ' + response.name + '.');
-                    console.log(response)
-                });
-
+                return getFriends()
             }
 
 
