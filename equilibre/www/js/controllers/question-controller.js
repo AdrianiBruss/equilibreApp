@@ -6,19 +6,19 @@ angular.module('starter.questionController', [])
             "questionText":     null,
             "questionPicture":  null,
             "description":      null,
-            "answerPictureOne": null,
-            "answerPictureTwo": null,
-            "answerTextOne":    null,
-            "answerTextTwo":    null
+            "answer":           []
         };
-        $scope.success = true;
 
+        $scope.success = true;
 
         $scope.addQuestion = function () {
 
-            if (($scope.newQuestion.questionText != null) &&
-                ($scope.newQuestion.description != null)) {
+            $scope.success = true;
 
+            if (($scope.newQuestion.questionText != null) &&
+                ($scope.newQuestion.description != null)  &&
+                ($scope.newQuestion.answer != []))
+            {
                 ApiService.addQuestion($scope.newQuestion);
 
             } else {

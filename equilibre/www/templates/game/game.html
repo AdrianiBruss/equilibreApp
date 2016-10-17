@@ -23,13 +23,24 @@
 
       <p>{{question.description}}</p>
 
-      <button class="button button-large button-dark">
-        VRAI
-      </button>
+      <ion-list ng-model="response" ng-if="question.answer[0] == 'text'">
 
-      <button class="button button-large button-dark">
-        FAUX
-      </button>
+        <ion-radio  ng-value="'A'">{{question.answer[1]}}</ion-radio>
+        <ion-radio  ng-value="'B'">{{question.answer[2]}}</ion-radio>
+
+      </ion-list>
+
+      <ion-list ng-model="response" ng-if="question.answer[0] == 'image'">
+
+        <ion-radio ng-value="'A'">
+          <img data-ng-src="{{question.answer[1]}}" style="height: 60px"/>
+        </ion-radio>
+
+        <ion-radio ng-value="'B'">
+          <img data-ng-src="{{question.answer[2]}}" style="height: 60px"/>
+        </ion-radio>
+
+      </ion-list>
 
     </div>
 

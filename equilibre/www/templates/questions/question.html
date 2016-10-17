@@ -2,11 +2,6 @@
     <ion-content class="padding">
         <h2>Create a question</h2>
 
-        <div class="alert alert-danger" ng-if="!success"><h4><i class="icon fa fa-ban"></i> Alert!</h4>Please fill out
-            all the
-            fields
-        </div>
-
         <!-- form start -->
         <form role="form" name="addForm" novalidate ng-submit="addQuestion()">
             <!-- Question -->
@@ -24,7 +19,7 @@
                         </div>
                         <div class="form-group">
                             <label for="questionPicture">Question Picture</label>
-                            <input type="file" id="questionPicture" fileread="newQuestion.questionPicture">
+                            <input type="file" id="questionPicture" fileread="newQuestion.questionPicture" ng-model="newQuestion.questionPicture">
                             <img data-ng-src="{{newQuestion.questionPicture}}"
                                  data-err-src="vendor/adminlte/img/avatar.png"
                                  style="height: 60px"/>
@@ -40,35 +35,44 @@
                         <h3 class="box-title">Upload Answer</h3>
                     </div>
                     <div class="box-body">
+
                         <div class="form-group">
-                            <label for="answerTextOne">Response text one</label>
-                            <input type="text" ng-model="newQuestion.answerTextOne" class="form-control"
-                                   id="answerTextOne"
-                                   placeholder="Enter Answer One">
+                            <label for="answerType">Type</label>
+                            <select class="form-control"  id="answerType" ng-model="newQuestion.answer[0]" required>
+                                <option value="" disabled selected>Please select a type</option>
+                                <option value="text" ng-model="answerType">Text</option>
+                                <option value="image" ng-model="answerType">Image</option>
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <label for="answerTextTwo">Response text two</label>
-                            <input type="text" ng-model="newQuestion.answerTextTwo" class="form-control"
-                                   id="answerTextTwo"
-                                   placeholder="Enter Answer Two">
+
+                        <div class="answer" ng-if="newQuestion.answer[0] == 'text'">
+                            <div class="form-group">
+                                <label for="answerTextOne">Response 1</label>
+                                <input type="text" ng-model="newQuestion.answer[1]" class="form-control" id="answerTextOne"
+                                       placeholder="Enter Answer One">
+                            </div>
+                            <div class="form-group">
+                                <label for="answerTextTwo">Response 2</label>
+                                <input type="text" ng-model="newQuestion.answer[2]" class="form-control" id="answerTextTwo"
+                                       placeholder="Enter Answer Two">
+                            </div>
                         </div>
-                        <hr/>
-                        <p>Or</p>
-                        <hr/>
-                        <div class="form-group">
-                            <label for="answerPictureOne">Answer picture One</label>
-                            <input type="file" id="answerPictureOne" fileread="newQuestion.answerPictureOne">
-                            <img data-ng-src="{{newQuestion.answerPictureOne}}"
-                                 data-err-src="vendor/adminlte/img/avatar.png"
-                                 style="height: 60px"/>
+
+                        <div class="answer" ng-if="newQuestion.answer[0] == 'image'">
+                            <div class="form-group">
+                                <label for="answerPictureOne">Picture 1</label>
+                                <input type="file" id="answerPictureOne" fileread="newQuestion.answer[1]">
+                                <img data-ng-src="{{newQuestion.answer[1]}}" data-err-src="vendor/adminlte/img/avatar.png"
+                                     style="height: 60px"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="answerPictureTwo">Picture 2</label>
+                                <input type="file" id="answerPictureTwo" fileread="newQuestion.answer[2]">
+                                <img data-ng-src="{{newQuestion.answer[2]}}" data-err-src="vendor/adminlte/img/avatar.png"
+                                     style="height: 60px"/>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="answerPictureTwo">Answer picture Two</label>
-                            <input type="file" id="answerPictureTwo" fileread="newQuestion.answerPictureTwo">
-                            <img data-ng-src="{{newQuestion.answerPictureTwo}}"
-                                 data-err-src="vendor/adminlte/img/avatar.png"
-                                 style="height: 60px"/>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -92,5 +96,10 @@
                 </div>
             </div>
         </form>
+
+        <div class="alert alert-danger" ng-if="!success"><h4><i class="icon fa fa-ban"></i> Alert!</h4>Please fill out the
+            parts "Upload Question", "Upload answer" and "Add a description".
+        </div>
+
     </ion-content>
 </ion-view>

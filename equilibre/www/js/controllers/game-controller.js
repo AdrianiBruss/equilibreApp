@@ -18,12 +18,15 @@ angular.module('starter.gameController', [])
         };
 
         $scope.playGame = function () {
-            console.log('play', SOCKET.instance);
             SOCKET.instance.emit('play a game');
         };
 
+        $scope.checkAnswer = function(response){
+
+        };
+
         SOCKET.instance.on('start game', function(){
-            console.log('start game');
+            alert('Game begins !');
             this.emit('want one question', true);
         });
 
