@@ -9,7 +9,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     .constant('lbConfig', {
         'url': 'http://equilibreapp-cloudbruss.rhcloud.com/api'
     })
-    .run(['$rootScope', '$window', '$ionicPlatform', 'FacebookService', function ($rootScope, $window, $ionicPlatform, FacebookService) {
+    .constant('SOCKET',{
+        'url' : 'http://localhost:8080/players',
+        'instance' : null
+    })
+    .run(['$rootScope', '$window', '$ionicPlatform', 'FacebookService', 'SOCKET', function ($rootScope, $window, $ionicPlatform, FacebookService, SOCKET) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -27,9 +31,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         $rootScope.user = {};
 
         FacebookService.init();
+        
+        $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState)
+        {
+            if(toState.name === "tab.game")
+            {
+                SOCKET.instance = io.connect(SOCKET.url);
+            }
+            else
+            {
+                if(SOCKET.instance !== null)
+                {
+                    SOCKET.instance.disconnect();
+                }
+            }
+        });
 
     }])
-
     .config(function ($stateProvider, $urlRouterProvider) {
 
         // Ionic uses AngularUI Router which uses the concept of states
@@ -38,7 +56,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         // Each state's controller can be found in controllers.js
         $stateProvider
 
-            // setup an abstract state for the tabs directive
+        // setup an abstract state for the tabs directive
             .state('tab', {
                 url: '/tab',
                 abstract: true,
@@ -103,4 +121,4 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/');
 
-    });
+    })

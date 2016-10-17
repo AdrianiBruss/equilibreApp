@@ -12,5 +12,27 @@
         </ion-option-button>
       </ion-item>
     </ion-list>
+
+    <button class="button button-assertive" style="margin:50px auto;display: block;" ng-click="playGame()">
+      Select friends
+    </button>
+
+    <div style="text-align: center;" ng-model="question">
+
+      <h1 class="title">{{question.questionText}}</h1>
+
+      <p>{{question.description}}</p>
+
+      <button class="button button-large button-dark">
+        VRAI
+      </button>
+
+      <button class="button button-large button-dark">
+        FAUX
+      </button>
+
+    </div>
+
+
   </ion-content>
 </ion-view>
