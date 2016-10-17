@@ -10,14 +10,16 @@ angular.module('starter.controllers', ['starter.gameController', 'starter.accoun
         console.log('LoginCtrl');
 
         $scope.login = function () {
+            console.log('fbLoginCtrl')
             FacebookService.login();
         }
     }])
 
 
     // ------------- Home page Controller
-    .controller('HomeCtrl', ['$scope', '$state', 'FacebookService', function ($scope, $state, FacebookService) {
+    .controller('HomeCtrl', ['$scope', '$rootScope', '$state', 'FacebookService', 'ApiService', function ($scope, $rootScope, $state, FacebookService, ApiService) {
         console.log('HomeCtrl');
+
         $scope.getFriends = function () {
             FacebookService.getFriends();
         };

@@ -28,7 +28,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
         FacebookService.init();
 
-
     }])
 
     .config(function ($stateProvider, $urlRouterProvider) {

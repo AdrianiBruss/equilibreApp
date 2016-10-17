@@ -16,6 +16,8 @@ angular.module('starter.questionController', [])
 
         $scope.addQuestion = function () {
 
+            console.log($scope.newQuestion);
+
             if (($scope.newQuestion.questionText != null) &&
                 ($scope.newQuestion.description != null)) {
 
