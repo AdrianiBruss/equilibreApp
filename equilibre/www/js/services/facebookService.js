@@ -1,7 +1,7 @@
 angular.module('starter.facebookService', [])
 
-    .service('FacebookService', ['$window', '$state', '$rootScope', 'ApiService',
-        function ($window, $state, $rootScope, ApiService) {
+    .service('FacebookService', ['$window', '$state', '$rootScope', 'ApiService', '$ionicLoading',
+        function ($window, $state, $rootScope, ApiService, $ionicLoading) {
 
         function facebookInit() {
 
@@ -21,23 +21,29 @@ angular.module('starter.facebookService', [])
         function facebookWatchLoginStatus() {
 
             FB.getLoginStatus(function (response) {
+
                 if (response.status === 'connected') {
                     console.log('connected');
 
-                    // getProfile(false);
-                    $state.go('home');
+                    $rootScope.user = response;
 
                     var uid = response.authResponse.userID;
                     var accessToken = response.authResponse.accessToken;
 
+                    getProfile(false)
+
+                    // $state.go('home');
+
                 } else if (response.status === 'not_authorized') {
 
                     console.log('not authorized');
+                    $ionicLoading.hide();
 
                     $state.go('login');
 
                 } else {
 
+                    $ionicLoading.hide();
                     console.log('user not logged in');
                     // the user isn't logged in to Facebook.
                     $state.go('login');
@@ -45,13 +51,22 @@ angular.module('starter.facebookService', [])
             });
         }
 
-        function facebookLogin() {
-            console.log('fbLoginService')
+        function facebookLogout() {
 
+            FB.logout(function (response) {
+                console.log('fb logout', response)
+            });
+            ApiService.logoutUser($rootScope.user.accessToken)
+        }
+
+        function facebookResgister(register) {
             FB.login(function (response) {
+
                 if (response.authResponse) {
                     console.log('connected to Facebook')
-                    // getProfile(true);
+                    console.log('facebookResgister', response)
+
+                    getProfile(register);
 
                 } else {
 
@@ -59,41 +74,24 @@ angular.module('starter.facebookService', [])
                     $state.go('login')
                 }
             }, {
-                scope: 'email, read_custom_friendlists',
+                scope: 'email, read_custom_friendlists, user_friends',
                 return: true
-            });
-        }
-
-        function facebookLogout() {
-
-            FB.logout(function (response) {
-                console.log(response)
             });
         }
 
         function getProfile(registerUser) {
 
-            FB.api('/me?fields=id,name,email,picture', function (response) {
-
-                console.log(response)
+            FB.api('/me?fields=id,name,email,picture,friends{picture,name}', function (response) {
 
                 $rootScope.user = response;
+                $rootScope.user['password'] = sha512_224(response.email+response.id)
 
-                // if (registerUser)
-                //     ApiService.registerUser($rootScope.user);
-                // else
-                //     $rootScope.user.password = 'password';
-                //     $rootScope.user.rememberMe = true;
-                //     ApiService.loginUser($rootScope.user);
-            });
+                console.log($rootScope.user)
 
-        }
-
-        function getFriends() {
-
-            FB.api('/me?fields=id,name,friendlists', function (response) {
-                console.log('Good to see you, ' + response.name + '.');
-                console.log(response)
+                if (registerUser)
+                    ApiService.registerUser($rootScope.user);
+                else
+                    ApiService.loginUser($rootScope.user);
             });
 
         }
@@ -104,13 +102,13 @@ angular.module('starter.facebookService', [])
                 return facebookInit()
             },
             login: function () {
-                return facebookLogin()
+                return facebookResgister(false)
             },
             logout: function () {
                 return facebookLogout()
             },
-            getFriends: function () {
-                return getFriends()
+            register: function(){
+                return facebookResgister(true)
             }
 
 

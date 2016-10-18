@@ -1,12 +1,13 @@
 angular.module('starter.questionController', [])
 
-    .controller('QuestCtrl', ['$scope', 'ApiService', function ($scope, ApiService) {
+    .controller('QuestCtrl', ['$scope', '$rootScope', 'ApiService', function ($scope, $rootScope, ApiService) {
 
         $scope.newQuestion = {
             "questionText":     null,
             "questionPicture":  null,
             "description":      null,
-            "answer":           []
+            "answer":           [],
+            "playerId":         $rootScope.user.userId
         };
 
         $scope.success = true;
