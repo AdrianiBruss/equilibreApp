@@ -1,14 +1,14 @@
 angular.module('starter.accountController', [])
 
-    .controller('AccountCtrl', ['$scope', '$rootScope', 'ApiService', function ($scope, $rootScope, ApiService) {
+    .controller('AccountCtrl', ['$scope', '$rootScope', 'ApiService','FacebookService', function ($scope, $rootScope, ApiService, FacebookService) {
 
         $scope.logout = function() {
-            console.log('logout fb')
+            FacebookService.logout();
         }
 
-        $scope.getQuestions = function(){
-            ApiService.getQuestions($rootScope.user.accessToken);
-        }
-
+        ApiService.getQuestions($rootScope.user.accessToken).then(function(data){
+            $scope.questions = data;
+            console.log('scope questions', $scope.questions)
+        })
 
     }]);

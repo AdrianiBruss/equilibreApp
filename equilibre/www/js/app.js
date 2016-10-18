@@ -11,11 +11,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         'url': 'http://localhost:3000/api',
     })
     .constant('SOCKET',{
-        'url' : 'http://localhost:8080/players',
+        'url' : 'http://localhost:8000/players',
         'instance' : null
     })
-    .run(['$rootScope', '$window', '$ionicPlatform', 'FacebookService', 'SOCKET', function ($rootScope, $window, $ionicPlatform, FacebookService, SOCKET) {
+    .run(['$rootScope', '$window', '$ionicPlatform', '$ionicLoading', 'FacebookService', 'SOCKET', function ($rootScope, $window, $ionicPlatform, $ionicLoading, FacebookService, SOCKET) {
         $ionicPlatform.ready(function () {
+            $rootScope.loader = $ionicLoading.show();
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -27,6 +28,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                 // org.apache.cordova.statusbar required
                 StatusBar.styleDefault();
             }
+
+
         });
 
         $rootScope.user = {};
@@ -99,15 +102,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                     }
                 }
             })
-            //.state('tab.chat-detail', {
-            //  url: '/chats/:chatId',
-            //  views: {
-            //    'tab-chats': {
-            //      templateUrl: 'templates/chat-detail.html',
-            //      controller: 'ChatDetailCtrl'
-            //    }
-            //  }
-            //})
 
             .state('tab.account', {
                 url: '/account',

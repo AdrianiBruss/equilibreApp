@@ -1,10 +1,12 @@
 angular.module('starter.apiService', [])
 
-    .service('ApiService', ['$window', '$state', 'lbConfig', '$http', '$rootScope', function ($window, $state, lbConfig, $http, $rootScope) {
+    .service('ApiService', ['$window', '$state', 'lbConfig', '$http', '$q', '$rootScope', '$ionicLoading',
+    function ($window, $state, lbConfig, $http, $q, $rootScope, $ionicLoading) {
 
         // ------------------------------------
-        function APIRequest(method, url, data) {
+        function APIRequest(method, url, data, methodName) {
 
+            var defer = $q.defer();
             // console.log('APIRequest : ', method, url, data)
 
             $http({
@@ -13,25 +15,33 @@ angular.module('starter.apiService', [])
                 data: data,
                 dataType: 'JSONP'
             }).then(function successCallback(response) {
-                // console.log(response)
 
-                if ( response.data.userId ) {
-                    $rootScope.user['userId'] = response.data.userId;
-                    $rootScope.user['accessToken'] = response.data.id;
-                    console.log('$rootScope.user', $rootScope.user);
+                switch(methodName) {
+                    case 'loginUser':
+                        $rootScope.user['userId'] = response.data.userId;
+                        $rootScope.user['accessToken'] = response.data.id;
+                        $state.go('home');
+                    break;
+                    case 'logout':
+                        $state.go('login');
+                    break;
+                    default:
+                        console.log('switch default')
+                    break;
+
                 }
 
-                console.log('data', response.data)
-                // $state.go('home');
+                defer.resolve(response.data);
+                $ionicLoading.hide()
 
             }, function errorCallback(response) {
-
                 console.log(response)
+                defer.reject(response);
 
                 // console.error(response.data.error.details.messages['username'][0])
-
-
             });
+
+            return defer.promise;
         }
 
         function registerUser(user) {
@@ -53,16 +63,19 @@ angular.module('starter.apiService', [])
 
         return {
             addQuestion: function (question) {
-                return APIRequest('POST', '/Questions', question);
+                return APIRequest('POST', '/Questions', question, 'addQuestion');
             },
             getQuestions: function(accessToken) {
-                return APIRequest('GET', '/Players/'+$rootScope.user.userId+'/questions?filter={"where":{"status":true}}&access_token='+accessToken, '')
+                return APIRequest('GET', '/Players/'+$rootScope.user.userId+'/questions?filter={"where":{"status":true}}&access_token='+accessToken, '', 'getQuestions')
             },
             registerUser: function (user) {
                 return registerUser(user)
             },
             loginUser: function(user) {
-                return APIRequest('POST', '/Players/login', user)
+                return APIRequest('POST', '/Players/login', user, 'loginUser')
+            },
+            logoutUser: function(accessToken) {
+                return APIRequest('POST', '/Players/logout?access_token='+accessToken, '', 'logout')
             }
 
         }
