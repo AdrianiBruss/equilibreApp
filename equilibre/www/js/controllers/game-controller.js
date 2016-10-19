@@ -23,7 +23,6 @@ angular.module('starter.gameController', [])
             else
                 $scope.room.push(friend.id);
 
-            console.log($scope.room)
         }
 
         $scope.playGame = function () {
