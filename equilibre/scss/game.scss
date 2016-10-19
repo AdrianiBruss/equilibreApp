@@ -3,6 +3,9 @@
 	.friends-list {
 		p {
 			color: red;
+			&.online {
+				color: green;
+			}
 		}
 	}
 

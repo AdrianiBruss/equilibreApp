@@ -9817,3 +9817,5 @@ a.button {
 
 .template-game .friends-list p {
   color: red; }
+  .template-game .friends-list p.online {
+    color: green; }

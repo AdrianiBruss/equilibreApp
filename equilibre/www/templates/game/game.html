@@ -2,7 +2,7 @@
     <ion-content>
 
         <ion-list ng-repeat="f in friends" class="friends-list">
-            <p ng-click="addFriend(f, $index)" ng-class="{'selected': f.selected}">
+            <p ng-click="addFriend(f, $index)" ng-class="{'online': f.online}">
                 friend #{{$index+1}}: <img ng-src="{{f.picture.data.url}}" alt="" />   {{f.name}}
             </p>
         </ion-list>

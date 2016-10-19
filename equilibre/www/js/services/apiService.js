@@ -1,7 +1,7 @@
 angular.module('starter.apiService', [])
 
-    .service('ApiService', ['$window', '$state', 'lbConfig', '$http', '$q', '$rootScope', '$ionicLoading',
-    function ($window, $state, lbConfig, $http, $q, $rootScope, $ionicLoading) {
+    .service('ApiService', ['$window', '$state', 'lbConfig', '$http', '$q', '$rootScope', '$ionicLoading', 'SocketService',
+    function ($window, $state, lbConfig, $http, $q, $rootScope, $ionicLoading, SocketService) {
 
         // ------------------------------------
         function APIRequest(method, url, data, methodName) {
@@ -18,9 +18,7 @@ angular.module('starter.apiService', [])
 
                 switch(methodName) {
                     case 'loginUser':
-                        $rootScope.user['userId'] = response.data.userId;
-                        $rootScope.user['accessToken'] = response.data.id;
-                        $state.go('home');
+                        setUser(response.data)
                     break;
                     case 'logout':
                         $state.go('login');
@@ -57,6 +55,17 @@ angular.module('starter.apiService', [])
             };
 
             APIRequest('POST', '/Players', newUser)
+
+        }
+
+        function setUser(data) {
+
+            $rootScope.user['userId']       = data.userId;
+            $rootScope.user['accessToken']  = data.id;
+
+            SocketService.connection($rootScope.user.id)
+            
+            $state.go('home');
 
         }
 

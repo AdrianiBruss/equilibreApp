@@ -40,7 +40,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
         SocketService.init(SOCKET.instance, SOCKET.url);
 
-        SocketService.addEvents();
+        // SocketService.getConnectedUsers()
 
 
     }])
@@ -88,7 +88,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             .state('tab.game', {
                 url: '/game',
                 views: {
-                    'tab-chats': {
+                    'tab-game': {
                         templateUrl: 'templates/game/game.html',
                         controller: 'GameCtrl'
                     }

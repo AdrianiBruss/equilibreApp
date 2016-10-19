@@ -1,7 +1,7 @@
 angular.module('starter.gameController', [])
 
 
-    .controller('GameCtrl', ['SocketService', '$scope', '$rootScope', 'Chats', function (SocketService, $scope, $rootScope, Chats) {
+    .controller('GameCtrl', ['SocketService', '$scope', '$rootScope', function (SocketService, $scope, $rootScope) {
         // With the new view caching in Ionic, Controllers are only called
         // when they are recreated or on app start, instead of every page change.
         // To listen for when this page is active (for example, to refresh data),
@@ -11,6 +11,7 @@ angular.module('starter.gameController', [])
         //});
 
         $scope.friends = $rootScope.user.friends.data;
+        $rootScope.users = [];
         $scope.question = null;
         $scope.room = [];
 
@@ -18,16 +19,26 @@ angular.module('starter.gameController', [])
 
             $scope.friends[index].selected = !$scope.friends[index].selected;
 
-            if ($scope.room.indexOf(friend.id) > -1)
-                $scope.room.splice(index, 1);
-            else
-                $scope.room.push(friend.id);
+            if ($scope.room.indexOf(friend.id) > -1) {
+                $scope.room.splice($scope.room.indexOf(friend.id), 1);
+            }else {
+                if ( friend.online ) {
+                    $scope.room.push({
+                        'socketID': friend.socketID,
+                        'userID': friend.id
+                    });
+                }
 
+            }
         }
 
         $scope.playGame = function () {
             console.log($scope.room);
-            // SOCKET.instance.emit('play a game');
+            if ( $scope.room.length > 0 ) {
+            }else {
+                console.error('select users to play with')
+            }
+            SocketService.playGame($scope.room)
         };
 
         $scope.checkAnswer = function(response){

@@ -17,6 +17,7 @@ angular.module('starter.controllers', ['starter.gameController', 'starter.accoun
 
     // ------------- Home page Controller
     .controller('HomeCtrl', ['$scope', '$rootScope', '$state', 'FacebookService', 'ApiService', function ($scope, $rootScope, $state, FacebookService, ApiService) {
+
         $scope.getFriends = function () {
             FacebookService.getFriends();
         };
