@@ -9816,6 +9816,9 @@ a.button {
   transition-duration: 0s; }
 
 .template-game .friends-list p {
-  color: red; }
+  cursor: pointer;
+  color: grey; }
   .template-game .friends-list p.online {
     color: green; }
+  .template-game .friends-list p.selected {
+    color: blue; }

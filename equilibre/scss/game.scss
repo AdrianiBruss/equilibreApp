@@ -2,9 +2,15 @@
 
 	.friends-list {
 		p {
-			color: red;
+			cursor: pointer;
+
+			color: grey;
 			&.online {
 				color: green;
+			}
+
+			&.selected {
+				color: blue;
 			}
 		}
 	}
