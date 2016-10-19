@@ -7,8 +7,6 @@ angular.module('starter.socketService', [])
         function socketInit(instance, url) {
             instance = io.connect(url);
             socket = instance;
-
-
         }
 
         function onConnection(id){
@@ -64,6 +62,5 @@ angular.module('starter.socketService', [])
             }
 
         }
-
 
     }]);

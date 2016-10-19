@@ -5,11 +5,11 @@ angular.module('starter.controllers', ['starter.gameController', 'starter.accoun
     .controller('LoginCtrl', ['$scope', 'FacebookService', function ($scope, FacebookService) {
 
         $scope.login = function () {
-            console.log('fbLoginCtrl')
+            // console.log('fbLoginCtrl');
             FacebookService.login();
-        }
+        };
         $scope.register = function () {
-            console.log('fbRegisterCtrl')
+            // console.log('fbRegisterCtrl').
             FacebookService.register();
         }
     }])
