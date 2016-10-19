@@ -23,20 +23,20 @@ angular.module('starter.facebookService', [])
             FB.getLoginStatus(function (response) {
 
                 if (response.status === 'connected') {
-                    console.log('connected');
+                    // console.log('connected');
 
                     $rootScope.user = response;
 
                     var uid = response.authResponse.userID;
                     var accessToken = response.authResponse.accessToken;
 
-                    getProfile(false)
+                    getProfile(false);
 
                     // $state.go('home');
 
                 } else if (response.status === 'not_authorized') {
 
-                    console.log('not authorized');
+                    // console.log('not authorized');
                     $ionicLoading.hide();
 
                     $state.go('login');
@@ -44,7 +44,7 @@ angular.module('starter.facebookService', [])
                 } else {
 
                     $ionicLoading.hide();
-                    console.log('user not logged in');
+                    // console.log('user not logged in');
                     // the user isn't logged in to Facebook.
                     $state.go('login');
                 }
@@ -54,7 +54,7 @@ angular.module('starter.facebookService', [])
         function facebookLogout() {
 
             FB.logout(function (response) {
-                console.log('fb logout', response)
+                // console.log('fb logout', response);
             });
             ApiService.logoutUser($rootScope.user.accessToken)
         }
@@ -63,14 +63,14 @@ angular.module('starter.facebookService', [])
             FB.login(function (response) {
 
                 if (response.authResponse) {
-                    console.log('connected to Facebook')
-                    console.log('facebookResgister', response)
+                    // console.log('connected to Facebook');
+                    // console.log('facebookResgister', response);
 
                     getProfile(register);
 
                 } else {
 
-                    console.log('User cancelled login or did not fully authorize.');
+                    // console.log('User cancelled login or did not fully authorize.');
                     $state.go('login')
                 }
             }, {
@@ -86,7 +86,7 @@ angular.module('starter.facebookService', [])
                 $rootScope.user = response;
                 $rootScope.user['password'] = sha512_224(response.email+response.id)
 
-                console.log($rootScope.user)
+                // console.log($rootScope.user);
 
                 if (registerUser)
                     ApiService.registerUser($rootScope.user);
