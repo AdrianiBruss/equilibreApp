@@ -39,6 +39,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         FacebookService.init();
 
         SocketService.init(SOCKET.instance, SOCKET.url);
+        SocketService.onInvit();
 
         // SocketService.getConnectedUsers()
 

@@ -29,11 +29,14 @@ angular.module('starter.socketService', [])
         }
 
         function onInvit(response){
-            socket.on('send an invitation', function(){
-                if(typeof response == 'boolean')
-                    socket.emit('respond to invitation', response);
-                else
-                    alert('Response is not a boolean');
+            console.log('onInvit')
+            socket.on('send an invitation', function(roomID){
+
+                console.log('On a recu linvitatoin de Ronald OKLLLLMMM', roomID)
+                // if(typeof response == 'boolean')
+                //     socket.emit('respond to invitation', response);
+                // else
+                //     alert('Response is not a boolean');
             });
         }
 
@@ -49,8 +52,8 @@ angular.module('starter.socketService', [])
                 return socketInit(instance, url);
             },
 
-            playGame:function(){
-                return playGame();
+            playGame:function(friends){
+                return playGame(friends);
             },
 
             connection:function(id){
@@ -59,6 +62,9 @@ angular.module('starter.socketService', [])
 
             getConnectedUsers: function(){
                 return onGetUsers()
+            },
+            onInvit: function(){
+                return onInvit();
             }
 
         }
