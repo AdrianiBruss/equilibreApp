@@ -41,10 +41,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
         SOCKET.instance.on('connected', function(){
             console.log('You are connected !');
-        });
-
-        SOCKET.instance.on('disconnected', function(){
-            console.log('You are disconnected !');
+            this.emit('send user ID', '34565434543432');
         });
 
     }])
