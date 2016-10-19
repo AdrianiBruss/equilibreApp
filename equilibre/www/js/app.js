@@ -8,14 +8,15 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     .constant('lbConfig', {
         // 'url': 'http://equilibreapp-cloudbruss.rhcloud.com/api',
-        'url': 'http://localhost:3000/api',
+        'url': 'http://localhost:3000/api'
     })
-    .constant('SOCKET',{
+    .constant('SOCKET', {
         // 'url' : 'http://equilibresocket-cloudbruss.rhcloud.com:8000',
-        'url' : 'http://localhost:8000',
-        'instance' : null
+        'url': 'http://localhost:8000',
+        'instance': null
     })
-    .run(['$rootScope', '$window', '$ionicPlatform', '$ionicLoading', 'FacebookService', 'SOCKET', function ($rootScope, $window, $ionicPlatform, $ionicLoading, FacebookService, SOCKET) {
+    .run(['$rootScope', '$window', '$ionicPlatform', '$ionicLoading', 'FacebookService', 'SocketService', 'SOCKET',
+        function ($rootScope, $window, $ionicPlatform, $ionicLoading, FacebookService, SocketService, SOCKET) {
         $ionicPlatform.ready(function () {
             $rootScope.loader = $ionicLoading.show();
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -37,12 +38,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
         FacebookService.init();
 
-        SOCKET.instance = io.connect(SOCKET.url);
+        SocketService.init(SOCKET.instance, SOCKET.url);
 
-        SOCKET.instance.on('connected', function(){
-            console.log('You are connected !');
-            this.emit('send user ID', '34565434543432');
-        });
+        SocketService.addEvents();
+
 
     }])
     .config(function ($stateProvider, $urlRouterProvider) {
@@ -109,4 +108,4 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/login');
 
-    })
+    });
