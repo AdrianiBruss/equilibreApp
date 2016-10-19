@@ -11,7 +11,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         'url': 'http://localhost:3000/api',
     })
     .constant('SOCKET',{
-        'url' : 'http://localhost:8000/players',
+        // 'url' : 'http://equilibresocket-cloudbruss.rhcloud.com:8000',
+        'url' : 'http://localhost:8000',
         'instance' : null
     })
     .run(['$rootScope', '$window', '$ionicPlatform', '$ionicLoading', 'FacebookService', 'SOCKET', function ($rootScope, $window, $ionicPlatform, $ionicLoading, FacebookService, SOCKET) {
@@ -36,19 +37,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
         FacebookService.init();
 
-        $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState)
-        {
-            if(toState.name === "tab.game")
-            {
-                SOCKET.instance = io.connect(SOCKET.url);
-            }
-            else
-            {
-                if(SOCKET.instance !== null)
-                {
-                    SOCKET.instance.disconnect();
-                }
-            }
+        SOCKET.instance = io.connect(SOCKET.url);
+
+        SOCKET.instance.on('connected', function(){
+            console.log('You are connected !');
+        });
+
+        SOCKET.instance.on('disconnected', function(){
+            console.log('You are disconnected !');
         });
 
     }])
