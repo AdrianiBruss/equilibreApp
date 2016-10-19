@@ -54,7 +54,7 @@ angular.module('starter.apiService', [])
 
             };
 
-            APIRequest('POST', '/Players', newUser)
+            APIRequest('POST', '/Players', newUser, 'loginUser')
 
         }
 
@@ -64,7 +64,7 @@ angular.module('starter.apiService', [])
             $rootScope.user['accessToken']  = data.id;
 
             SocketService.connection($rootScope.user.id)
-            
+
             $state.go('home');
 
         }

@@ -26,6 +26,7 @@ angular.module('starter.socketService', [])
 
         function playGame(friends){
             socket.emit('want to play game', friends );
+            console.log('friends send', friends);
         }
 
         function onInvit(response){
@@ -33,7 +34,8 @@ angular.module('starter.socketService', [])
             socket.on('send an invitation', function(roomID){
                 console.log('On a recu linvitatoin de Ronald OKLLLLMMM', roomID)
 
-                openPopin()
+                openPopin(roomID);
+                onGame();
 
                 // if(typeof response == 'boolean')
                 //     socket.emit('respond to invitation', response);
@@ -43,12 +45,12 @@ angular.module('starter.socketService', [])
         }
 
         function onGame(){
-            socket.on('game start', function () {
-                alert('game begins');
+            socket.on('game start', function (firstQuestion) {
+                console.log('game starts : ', firstQuestion)
             })
         }
 
-        function openPopin() {
+        function openPopin(roomID) {
 
             var confirmPopup = $ionicPopup.confirm({
                 title: 'Joue avec moi !',
@@ -56,10 +58,11 @@ angular.module('starter.socketService', [])
             });
 
             confirmPopup.then(function(res) {
+                console.log('roomID', roomID)
                 if(res) {
-                    socket.emit('play a game', true)
+                    socket.emit('play a game', [true, roomID])
                 } else {
-                    socket.emit('play a game', false)
+                    socket.emit('play a game', [false, roomID])
                 }
            });
         }

@@ -32,7 +32,7 @@ angular.module('starter.gameController', [])
         }
 
         $scope.playGame = function () {
-            console.log($scope.room);
+
             if ( $scope.room.length > 0 ) {
             }else {
                 console.error('select users to play with')
