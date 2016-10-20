@@ -1,6 +1,6 @@
 angular.module('starter.gameController', [])
 
-    .controller('GameCtrl', ['SocketService', '$scope', '$rootScope', 'SocketService', '$state', function (SocketService, $scope, $rootScope, SocketService, $state) {
+    .controller('GameCtrl', ['SocketService', '$scope', '$rootScope', 'SocketService', '$state', 'SOCKET', function (SocketService, $scope, $rootScope, SocketService, $state, SOCKET) {
 
         $scope.friends = $rootScope.user.friends.data;
         $rootScope.users = [];
@@ -47,7 +47,7 @@ angular.module('starter.gameController', [])
         // [Socket] : waiting for new questions
         function startGame(){
             //--- hide loader
-            socket.on('game start', function (question) {
+            SOCKET.instance.on('game start', function (question) {
                 console.log('game starts : ', question)
 
             })

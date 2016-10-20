@@ -1,13 +1,12 @@
 angular.module('starter.socketService', [])
 
-    .service('SocketService', ['$rootScope', 'UserService', '$ionicPopup', '$state', function ($rootScope, UserService, $ionicPopup, $state) {
+    .service('SocketService', ['$rootScope', 'UserService', '$ionicPopup', '$state', 'SOCKET', function ($rootScope, UserService, $ionicPopup, $state, SOCKET) {
 
         var socket;
 
         // [Socket] : initalisation
         function socketInit(instance, url) {
-            instance = io.connect(url);
-            socket = instance;
+            SOCKET.instance = socket = io.connect(url);
         }
 
         // [Socket] : sending user's id to socket
