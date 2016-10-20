@@ -1,23 +1,24 @@
 angular.module('starter.gameController', [])
 
-    .controller('GameCtrl', ['SocketService', '$scope', '$rootScope', 'SocketService', function (SocketService, $scope, $rootScope, SocketService) {
-        // With the new view caching in Ionic, Controllers are only called
-        // when they are recreated or on app start, instead of every page change.
-        // To listen for when this page is active (for example, to refresh data),
-        // listen for the $ionicView.enter event:
-        //
-        //$scope.$on('$ionicView.enter', function(e) {
-        //});
+    .controller('GameCtrl', ['SocketService', '$scope', '$rootScope', 'SocketService', '$state', function (SocketService, $scope, $rootScope, SocketService, $state) {
 
         $scope.friends = $rootScope.user.friends.data;
         $rootScope.users = [];
         $scope.question = null;
         $scope.room = [];
 
+        // checking if an invitation has been send
+        if ($state.params.question) {
+            console.log('ready for receiving questions')
+            startGame()
+        }
+
+        // add friend to play
         $scope.addFriend = function(friend, index){
 
             $scope.friends[index].selected = !$scope.friends[index].selected;
 
+            // checking for friend connection
             if ($scope.room.indexOf(friend.id) > -1) {
                 $scope.room.splice($scope.room.indexOf(friend.id), 1);
             }else {
@@ -31,17 +32,25 @@ angular.module('starter.gameController', [])
             }
         }
 
+        // [Socket]: Sending invitation
         $scope.playGame = function () {
 
             if ( $scope.room.length > 0 ) {
+                //loader --
+                SocketService.playGame($scope.room)
             }else {
                 console.error('select users to play with')
             }
-            SocketService.playGame($scope.room)
-        };
-
-        $scope.checkAnswer = function(response){
 
         };
+
+        // [Socket] : waiting for new questions
+        function startGame(){
+            //--- hide loader
+            socket.on('game start', function (question) {
+                console.log('game starts : ', question)
+
+            })
+        }
 
     }]);

@@ -4,6 +4,7 @@ angular.module('starter.apiService', [])
     function ($window, $state, lbConfig, $http, $q, $rootScope, $ionicLoading, SocketService) {
 
         // ------------------------------------
+        // [API] : Call to API
         function APIRequest(method, url, data, methodName) {
 
             var defer = $q.defer();
@@ -42,6 +43,7 @@ angular.module('starter.apiService', [])
             return defer.promise;
         }
 
+        // [API] : Register new user
         function registerUser(user) {
 
             var newUser = {
@@ -58,6 +60,8 @@ angular.module('starter.apiService', [])
 
         }
 
+        
+        // [Socket] : Connect user to socket
         function setUser(data) {
 
             $rootScope.user['userId']       = data.userId;

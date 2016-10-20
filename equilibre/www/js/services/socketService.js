@@ -1,55 +1,50 @@
 angular.module('starter.socketService', [])
 
-    .service('SocketService', ['$rootScope', 'UserService', '$ionicPopup', function ($rootScope, UserService, $ionicPopup) {
+    .service('SocketService', ['$rootScope', 'UserService', '$ionicPopup', '$state', function ($rootScope, UserService, $ionicPopup, $state) {
 
         var socket;
 
+        // [Socket] : initalisation
         function socketInit(instance, url) {
             instance = io.connect(url);
             socket = instance;
         }
 
+        // [Socket] : sending user's id to socket
         function onConnection(id){
             socket.emit('send user ID', id);
             onGetUsers();
         }
 
+        // [Socket] : waiting for friends' online status
         function onGetUsers(){
             socket.on('send all users', function(users){
                 $rootScope.users = users;
                 $rootScope.$apply();
 
+                // Update friends' status
                 UserService.updateUsersStatus();
 
             });
         }
 
+        // [Socket] : send invitation to socket
         function playGame(friends){
             socket.emit('want to play game', friends );
             console.log('friends send', friends);
         }
 
+        // [Socket] : waiting for an invitation
         function onInvit(response){
-            console.log('onInvit')
             socket.on('send an invitation', function(roomID){
-                console.log('On a recu linvitatoin de Ronald OKLLLLMMM', roomID)
-
+                console.log('Invitation received w/ the roomId : ', roomID)
+                $state.go('tab.game', {'question': true})
+                // open request invitation popin
                 openPopin(roomID);
-                onGame();
-
-                // if(typeof response == 'boolean')
-                //     socket.emit('respond to invitation', response);
-                // else
-                //     alert('Response is not a boolean');
             });
         }
 
-        function onGame(){
-            socket.on('game start', function (firstQuestion) {
-                console.log('game starts : ', firstQuestion)
-            })
-        }
-
+        // request invitation popin
         function openPopin(roomID) {
 
             var confirmPopup = $ionicPopup.confirm({
@@ -57,6 +52,7 @@ angular.module('starter.socketService', [])
                 template: 'Répond oui et tu auras des des bonbons'
             });
 
+            // [Socket] : send a response to invitation
             confirmPopup.then(function(res) {
                 console.log('roomID', roomID)
                 if(res) {

@@ -2,6 +2,7 @@ angular.module('starter.userService', [])
 
     .service('UserService', ['$rootScope', function ($rootScope) {
 
+        // Update Facebook status
         function updateUsersStatus() {
 
             // connected users  : $rootScope.users

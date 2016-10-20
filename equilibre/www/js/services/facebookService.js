@@ -3,6 +3,7 @@ angular.module('starter.facebookService', [])
     .service('FacebookService', ['$window', '$state', '$rootScope', 'ApiService', '$ionicLoading',
         function ($window, $state, $rootScope, ApiService, $ionicLoading) {
 
+        // [Facebook] : init service
         function facebookInit() {
 
             $window.fbAsyncInit = function () {
@@ -18,59 +19,57 @@ angular.module('starter.facebookService', [])
 
         }
 
+        // [Facebook] : watching for login status
         function facebookWatchLoginStatus() {
 
             FB.getLoginStatus(function (response) {
 
                 if (response.status === 'connected') {
-                    // console.log('connected');
+                    // User connected
 
                     $rootScope.user = response;
 
                     var uid = response.authResponse.userID;
                     var accessToken = response.authResponse.accessToken;
 
+                    // get profile datas from Facebook and login to API
                     getProfile(false);
 
-                    // $state.go('home');
-
                 } else if (response.status === 'not_authorized') {
+                    // User not authorized
 
-                    // console.log('not authorized');
                     $ionicLoading.hide();
 
                     $state.go('login');
 
                 } else {
-
+                    // User not logged in to Facebook
                     $ionicLoading.hide();
-                    // console.log('user not logged in');
-                    // the user isn't logged in to Facebook.
                     $state.go('login');
                 }
             });
         }
 
+        // [Facebook] : Facebook logout
+        // [API] : Logout user
         function facebookLogout() {
 
-            FB.logout(function (response) {
-                // console.log('fb logout', response);
-            });
+            FB.logout();
             ApiService.logoutUser($rootScope.user.accessToken)
         }
 
+        // [Facebook] : Facebook register
         function facebookResgister(register) {
             FB.login(function (response) {
 
                 if (response.authResponse) {
-                    // console.log('connected to Facebook');
-                    // console.log('facebookResgister', response);
+                    // User connected to Facebook
 
+                    // get profile datas from Facebook and register to API
                     getProfile(register);
 
                 } else {
-
-                    // console.log('User cancelled login or did not fully authorize.');
+                    // User cancelled login or did not fully authorize
                     $state.go('login')
                 }
             }, {
@@ -79,6 +78,8 @@ angular.module('starter.facebookService', [])
             });
         }
 
+        // [Facebook] : get profile datas
+        // [API] : Login or register User to API
         function getProfile(registerUser) {
 
             FB.api('/me?fields=id,name,email,picture,friends{picture,name}', function (response) {

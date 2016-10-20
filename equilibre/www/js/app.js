@@ -1,10 +1,3 @@
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.services' is found in services.js
-// 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     .constant('lbConfig', {
         // 'url': 'http://equilibreapp-cloudbruss.rhcloud.com/api',
@@ -19,8 +12,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         function ($rootScope, $window, $ionicPlatform, $ionicLoading, FacebookService, SocketService, SOCKET) {
         $ionicPlatform.ready(function () {
             $rootScope.loader = $ionicLoading.show();
-            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-            // for form inputs)
+
             if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
                 cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
                 cordova.plugins.Keyboard.disableScroll(true);
@@ -31,51 +23,46 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                 StatusBar.styleDefault();
             }
 
-
         });
 
+        // Global user variable
         $rootScope.user = {};
 
+        // [Facebook] : Init Facebook connection
         FacebookService.init();
 
+        // [Socket] : Init Socket connection
         SocketService.init(SOCKET.instance, SOCKET.url);
         SocketService.onInvit();
-
-        // SocketService.getConnectedUsers()
-
 
     }])
     .config(function ($stateProvider, $urlRouterProvider) {
 
-        // Ionic uses AngularUI Router which uses the concept of states
-        // Learn more here: https://github.com/angular-ui/ui-router
-        // Set up the various states which the app can be in.
-        // Each state's controller can be found in controllers.js
         $stateProvider
-
-        // setup an abstract state for the tabs directive
             .state('tab', {
                 url: '/tab',
                 abstract: true,
                 templateUrl: 'templates/tabs.html'
             })
+            // Home page state
             .state('home', {
                 url: '/',
                 templateUrl: 'templates/pages/home.html',
                 controller: 'HomeCtrl'
             })
+            // Login page state
             .state('login', {
                 url: '/login',
                 templateUrl: 'templates/pages/login.html',
                 controller: 'LoginCtrl'
             })
+            // Logout page state
             .state('logout', {
                 url: '/logout',
                 controller: 'LogoutCtrl'
             })
 
-            // Each tab has its own nav history stack:
-
+            // Question page state
             .state('tab.question', {
                 url: '/question',
                 views: {
@@ -86,6 +73,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                 }
             })
 
+            // Game page state
             .state('tab.game', {
                 url: '/game',
                 views: {
@@ -93,9 +81,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                         templateUrl: 'templates/game/game.html',
                         controller: 'GameCtrl'
                     }
+                },
+                params: {
+                    question: null
                 }
             })
 
+            // Account page state
             .state('tab.account', {
                 url: '/account',
                 views: {

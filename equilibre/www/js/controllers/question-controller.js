@@ -12,6 +12,7 @@ angular.module('starter.questionController', [])
 
         $scope.success = true;
 
+        // [API] : Adding a new question
         $scope.addQuestion = function () {
 
             $scope.success = true;
