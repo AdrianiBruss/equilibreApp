@@ -66,17 +66,19 @@ angular.module('starter.gameController', [])
             //--- hide loader
 
             SOCKET.instance.on('invitation sent', function (nbr) {
-                console.log('Vous avez reçu ' + nbr + ' réponse(s) à votre invitation');
+                // console.log('Vous avez reçu ' + nbr + ' réponse(s) à votre invitation');
                 $scope.usersResponses.responses = $scope.usersResponses.responses - nbr;
                 $scope.$apply();
             });
 
 
-            SOCKET.instance.on('send question', function(question, roomID){
-                console.log('Question received', question, roomID)
+            SOCKET.instance.on('send question', function(data){
+                console.log('Question received', data[0], data[1])
+
+                $scope.usersResponses.active = false;
                 $scope.game = true;
-                $scope.question = question;
-                $scope.roomID = roomID;
+                $scope.question = data[0];
+                $scope.roomID = data[1];
 
                 $scope.$apply();
             });
@@ -87,8 +89,8 @@ angular.module('starter.gameController', [])
                     return obj.userID == $rootScope.user.id
                 })[0];
 
-                console.log('fb friends : ', $rootScope.user.friends.data)
-                console.log('owner user', $scope.user);
+                // console.log('fb friends : ', $rootScope.user.friends.data)
+                // console.log('owner user', $scope.user);
 
                 $scope.$apply();
             })
@@ -97,27 +99,28 @@ angular.module('starter.gameController', [])
         // [Socket] : send response to Socket
         $scope.sendResponse = function(response){
 
-            // [roomID, [bool]true answer, indexV, indexR, pos]
-            var sendResponse = [$scope.roomID, false, $scope.user.firstIndex, $scope.user.secondIndex, $scope.user.position];
+            // [roomID, [bool]true answer, pos]
+            var sendResponse = [$scope.roomID, false, $scope.user.position];
             var stat = {
-                "goodAnswer": $scope.question.goodAnswer,
-                "badAnswer": $scope.question.goodAnswer
+                "goodAnswer": $scope.question.stats.goodAnswer,
+                "badAnswer": $scope.question.stats.goodAnswer
             }
             if ( parseInt($scope.question.trueAnswer) == response ) {
                 console.log('bien repondu')
+                // good or bad response ?
                 sendResponse[1] = true;
 
+                // update player position +1
                 sendResponse[2] = sendResponse[2] + 1;
-                sendResponse[4] = sendResponse[4] + 1;
 
                 stat['goodAnswer'] = stat['goodAnswer'] + 1;
             }else {
                 console.log('mauvaise réponse')
 
-                sendResponse[3] = sendResponse[3] + 1;
-                sendResponse[4] = sendResponse[4] - 1;
-                if ( sendResponse[4] < 0 )
-                    sendResponse[4] = 0;
+                // update player position +1
+                sendResponse[2] = sendResponse[2] - 1;
+                if ( sendResponse[2] < 0 )
+                    sendResponse[2] = 0;
 
                 stat['badAnswer'] = stat['badAnswer'] + 1;
             }
