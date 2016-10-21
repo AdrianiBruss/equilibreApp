@@ -11,6 +11,7 @@ angular.module('starter.socketService', [])
 
         // [Socket] : sending user's id to socket
         function onConnection(id){
+            $rootScope.user.socketID = socket.id;
             socket.emit('send user ID', id);
             onGetUsers();
         }

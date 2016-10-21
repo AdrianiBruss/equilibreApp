@@ -1,41 +1,63 @@
 <ion-view view-title="Game" class="template-game">
     <ion-content>
 
-        <ion-list ng-repeat="f in friends" class="friends-list">
-            <p ng-click="addFriend(f, $index)" ng-class="{'online': f.online, 'selected': f.selected}">
-                friend #{{$index+1}}: <img ng-src="{{f.picture.data.url}}" alt="" />   {{f.name}}
-            </p>
-        </ion-list>
+        <div ng-if="!game">
 
-        <button class="button button-assertive" style="margin:50px auto;display: block;" ng-click="playGame()">
-          Select friends
-        </button>
-
-        <div style="text-align: center;" ng-model="question">
-
-            <h1 class="title">{{question.questionText}}</h1>
-
-            <p>{{question.description}}</p>
-
-            <ion-list ng-model="response" ng-if="question.answer[0] == 'text'">
-
-                <ion-radio  ng-value="'A'">{{question.answer[1]}}</ion-radio>
-                <ion-radio  ng-value="'B'">{{question.answer[2]}}</ion-radio>
-
+            <ion-list ng-repeat="f in friends" class="friends-list">
+                <p ng-click="addFriend(f, $index)" ng-class="{'online': f.online, 'selected': f.selected}">
+                    friend #{{$index+1}}: <img ng-src="{{f.picture.data.url}}" alt="" />   {{f.name}}
+                </p>
             </ion-list>
 
-            <ion-list ng-model="response" ng-if="question.answer[0] == 'image'">
-
-                <ion-radio ng-value="'A'">
-                    <img data-ng-src="{{question.answer[1]}}" style="height: 60px"/>
-                </ion-radio>
-
-                <ion-radio ng-value="'B'">
-                    <img data-ng-src="{{question.answer[2]}}" style="height: 60px"/>
-                </ion-radio>
-
-            </ion-list>
+            <button class="button button-assertive" style="margin:50px auto;display: block;" ng-click="playGame()">
+              Select friends
+            </button>
 
         </div>
+
+
+        <!-- Game part -->
+
+        <div ng-if="game">
+
+            <h1>Question template</h1>
+
+            <div style="text-align: center;" ng-model="question">
+
+                <h1 class="title">{{question.questionText}}</h1>
+
+                <p>{{question.description}}</p>
+
+                <ion-list ng-model="response" ng-if="question.answer[0] == 'text'">
+
+                    <ion-radio ng-click="sendResponse(1)" ng-value="'A'">{{question.answer[1]}}</ion-radio>
+                    <ion-radio ng-click="sendResponse(2)" ng-value="'B'">{{question.answer[2]}}</ion-radio>
+
+                </ion-list>
+
+                <ion-list ng-model="response" ng-if="question.answer[0] == 'image'">
+
+                    <ion-radio ng-click="sendResponse(1)" ng-value="'A'">
+                        <img data-ng-src="{{question.answer[1]}}" style="height: 60px"/>
+                    </ion-radio>
+
+                    <ion-radio ng-click="sendResponse(2)" ng-value="'B'">
+                        <img data-ng-src="{{question.answer[2]}}" style="height: 60px"/>
+                    </ion-radio>
+
+                </ion-list>
+
+            </div>
+
+            <div class="">
+                <h2>Friends position</h2>
+                <ion-list ng-repeat="friend in users">
+                    {{friend}}
+                </ion-list>
+            </div>
+
+        </div>
+
+
     </ion-content>
 </ion-view>
