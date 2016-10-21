@@ -93,6 +93,10 @@ angular.module('starter.gameController', [])
                 // console.log('owner user', $scope.user);
 
                 $scope.$apply();
+            });
+
+            SOCKET.instance.on('game stop', function(data){
+                console.log("c'est la fin du game !", data);
             })
         }
 
@@ -100,11 +104,11 @@ angular.module('starter.gameController', [])
         $scope.sendResponse = function(response){
 
             // [roomID, [bool]true answer, pos]
-            var sendResponse = [$scope.roomID, false, $scope.user.position];
-            var stat = {
-                "goodAnswer": $scope.question.stats.goodAnswer,
-                "badAnswer": $scope.question.stats.goodAnswer
-            }
+            var sendResponse = [$scope.roomID, false, $scope.user.position, $scope.user.firstIndex, $scope.user.secondIndex];
+            // var stat = {
+            //     "goodAnswer": $scope.question.stats.goodAnswer,
+            //     "badAnswer": $scope.question.stats.goodAnswer
+            // }
             if ( parseInt($scope.question.trueAnswer) == response ) {
                 console.log('bien repondu')
                 // good or bad response ?
@@ -113,7 +117,7 @@ angular.module('starter.gameController', [])
                 // update player position +1
                 sendResponse[2] = sendResponse[2] + 1;
 
-                stat['goodAnswer'] = stat['goodAnswer'] + 1;
+                // stat['goodAnswer'] = stat['goodAnswer'] + 1;
             }else {
                 console.log('mauvaise réponse')
 
@@ -122,13 +126,13 @@ angular.module('starter.gameController', [])
                 if ( sendResponse[2] < 0 )
                     sendResponse[2] = 0;
 
-                stat['badAnswer'] = stat['badAnswer'] + 1;
+                // stat['badAnswer'] = stat['badAnswer'] + 1;
             }
 
             console.log('emit to socket : ', sendResponse)
 
             // [API] : send good or bad answer to api
-            console.log('stat', stat, $scope.question._id)
+            // console.log('stat', stat, $scope.question._id)
             // ApiService.answerQuestion(stat, $scope.question._id)
 
             SOCKET.instance.emit('submit question', sendResponse)
