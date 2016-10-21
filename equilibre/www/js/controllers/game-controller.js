@@ -12,6 +12,7 @@ angular.module('starter.gameController', [])
         $scope.game = false;
         $scope.gameEnded = false;
         $scope.score = 0;
+        $scope.waiting = false;
         $scope.timer = {
             'msec': 0,
             'sec': 0,
@@ -30,6 +31,8 @@ angular.module('starter.gameController', [])
         // checking if an invitation has been send
         if ($state.params.question) {
             startGame()
+            $scope.waiting = true;
+            $scope.invitation = false;
         }
 
         // add friend to play
@@ -88,14 +91,18 @@ angular.module('starter.gameController', [])
 
                 // If it's the first question
                 if (data[2]) {
+
+                    $scope.waiting = false;
+                    $scope.usersResponses.active = false;
+                    $scope.invitation = false;
+                    $scope.game = true;
+
                     // Start timer
                     start = new Date();
                     startChrono();
+
                 }
 
-                $scope.usersResponses.active = false;
-                $scope.invitation = false;
-                $scope.game = true;
                 $scope.question = data[0];
                 $scope.roomID = data[1];
 
