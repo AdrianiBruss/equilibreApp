@@ -90,9 +90,8 @@ angular.module('starter.apiService', [])
             logoutUser: function(accessToken) {
                 return APIRequest('POST', '/Players/logout?access_token='+accessToken, '', 'logout')
             },
-            answerQuestion(answer, id, accessToken) {
-                return APIRequest('PUT', '/Questions/'+ id+'?access_token='+accessToken, answer, 'answerQuestion')
-                //Questions/5809e0c9916a7746a0b85bfd?access_token=06KRjc6YdqyjgM8dGs1Fms5YaW56QZ8RZ4XdzyL738ZIpqqor7ZDr8QuXCexiDwx
+            answerQuestion(answer, id) {
+                return APIRequest('PUT', '/Questions/'+ id, answer, 'answerQuestion')
             }
 
         }

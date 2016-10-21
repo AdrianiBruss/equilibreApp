@@ -37,8 +37,8 @@ angular.module('starter.socketService', [])
         // [Socket] : waiting for an invitation
         function onInvit(response){
             socket.on('send an invitation', function(roomID){
-                console.log('Invitation received w/ the roomId : ', roomID)
-                $state.go('tab.game', {'question': true})
+                console.log('Invitation received ! \n the roomId : ', roomID);
+                $state.go('tab.game', {'question': true});
                 // open request invitation popin
                 openPopin(roomID);
             });
@@ -54,7 +54,6 @@ angular.module('starter.socketService', [])
 
             // [Socket] : send a response to invitation
             confirmPopup.then(function(res) {
-                console.log('roomID', roomID)
                 if(res) {
                     socket.emit('play a game', [true, roomID])
                 } else {
