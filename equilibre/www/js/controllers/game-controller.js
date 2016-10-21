@@ -8,12 +8,15 @@ angular.module('starter.gameController', [])
         $scope.question = null;
         $scope.users = null;
         $scope.game = false;
-
-        startGame()
+        $scope.usersResponses = {
+            'active': false,
+            'responses': 0
+        };
 
         // checking if an invitation has been send
         if ($state.params.question) {
             console.log('ready for receiving questions');
+            startGame()
         }
 
         // add friend to play
@@ -49,28 +52,40 @@ angular.module('starter.gameController', [])
                 console.error('select users to play with')
             }
 
+            $scope.usersResponses.active = true;
+            $scope.usersResponses.responses = $scope.room.length - 1;
+
+            startGame();
+
         };
 
         // [Socket] : waiting for new questions
         function startGame(){
             console.log('game created !');
 
-            SOCKET.instance.on('invitation sent', function (nbr) {
-                console.log('Vous avez reçu ' + nbr + ' réponse(s) à votre invitation');
-            });
             //--- hide loader
 
-            SOCKET.instance.on('game start', function (response) {
-                console.log('game starts : ', response)
-                $scope.game = true;
+            SOCKET.instance.on('invitation sent', function (nbr) {
+                console.log('Vous avez reçu ' + nbr + ' réponse(s) à votre invitation');
+                $scope.usersResponses.responses = $scope.usersResponses.responses - nbr;
+                $scope.$apply();
+            });
 
-                $scope.question = response[0];
-                $scope.users = response[1];
-                $scope.user = response[1].filter(function(obj) {
+
+            SOCKET.instance.on('send question', function(question, roomID){
+                console.log('Question received', question, roomID)
+                $scope.game = true;
+                $scope.question = question;
+                $scope.roomID = roomID;
+
+                $scope.$apply();
+            });
+
+            SOCKET.instance.on('users position updated', function(users){
+                $scope.users = users;
+                $scope.user = users.filter(function(obj) {
                     return obj.userID == $rootScope.user.id
                 })[0];
-
-                $scope.roomID = response[2];
 
                 console.log('fb friends : ', $rootScope.user.friends.data)
                 console.log('owner user', $scope.user);

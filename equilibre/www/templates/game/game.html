@@ -1,6 +1,7 @@
 <ion-view view-title="Game" class="template-game">
     <ion-content>
 
+        <!-- Invitation game template -->
         <div ng-if="!game">
 
             <ion-list ng-repeat="f in friends" class="friends-list">
@@ -15,8 +16,16 @@
 
         </div>
 
+        <!-- Waiting for users template -->
 
-        <!-- Game part -->
+        <div class="" ng-if="usersResponses.active">
+            <h1>En attente de joueurs ...</h1>
+            <p>
+                Il ne reste plus que {{usersResponses.responses}} joueur(s) à attendre ...
+            </p>
+        </div>
+
+        <!-- Game template -->
 
         <div ng-if="game">
 
