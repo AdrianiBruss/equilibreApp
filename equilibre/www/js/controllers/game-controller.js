@@ -5,14 +5,27 @@ angular.module('starter.gameController', [])
 
         $scope.friends = $rootScope.user.friends.data;
         $scope.room = [];
+        $scope.invitation = true;
         $scope.roomId = null;
         $scope.question = null;
         $scope.users = null;
         $scope.game = false;
+        $scope.gameEnded = false;
+        $scope.score = 0;
+        $scope.timer = {
+            'msec': 0,
+            'sec': 0,
+            'min': 0,
+            'timestamp': 0
+        }
+        $scope.questionList = [];
+        $scope.goodAnswer = 0;
         $scope.usersResponses = {
             'active': false,
             'responses': 0
         };
+
+        var start = 0;
 
         // checking if an invitation has been send
         if ($state.params.question) {
@@ -64,15 +77,24 @@ angular.module('starter.gameController', [])
             //--- hide loader
             SOCKET.instance.on('invitation sent', function (nbr) {
                 // console.log('Vous avez reçu ' + nbr + ' réponse(s) à votre invitation');
+                $scope.invitation = false;
                 $scope.usersResponses.responses = $scope.usersResponses.responses - nbr;
                 $scope.$apply();
             });
 
 
             SOCKET.instance.on('send question', function(data){
-                console.log('Question received', data[0], data[1])
+                // console.log('Question received', data[0], data[1], data[2])
+
+                // If it's the first question
+                if (data[2]) {
+                    // Start timer
+                    start = new Date();
+                    startChrono();
+                }
 
                 $scope.usersResponses.active = false;
+                $scope.invitation = false;
                 $scope.game = true;
                 $scope.question = data[0];
                 $scope.roomID = data[1];
@@ -82,9 +104,7 @@ angular.module('starter.gameController', [])
 
             SOCKET.instance.on('users position updated', function(users){
 
-                console.log('users received', users)
-                // console.log('fb friends : ', $rootScope.user.friends.data)
-                // console.log('owner user', $scope.user);
+                // console.log('users received', users)
 
                 $scope.user = users.filter(function(obj) {
                     return obj.userID == $rootScope.user.id
@@ -111,7 +131,17 @@ angular.module('starter.gameController', [])
             });
 
             SOCKET.instance.on('game stop', function(data){
-                console.log("c'est la fin du game !", data);
+
+                $scope.game = false;
+                $scope.gameEnded = true;
+                $scope.questionList = data[1];
+
+                // Stop timer
+                stopChrono();
+                $scope.score = 1 / (( $scope.goodAnswer * 2 * $scope.timer.timestamp ) + $scope.timer.timestamp);
+
+                // [Socket] : send final score to socket
+                // SOCKET.instance.emit('submit score', $scope.score)
             })
         }
 
@@ -126,8 +156,9 @@ angular.module('starter.gameController', [])
             // }
             if ( parseInt($scope.question.trueAnswer) == response ) {
 
-                // good or bad response ?
+                // good response !
                 sendResponse[1] = true;
+                $scope.goodAnswer = $scope.goodAnswer + 1;
 
                 // update player position +1
                 sendResponse[2] = sendResponse[2] + 1;
@@ -152,4 +183,29 @@ angular.module('starter.gameController', [])
             SOCKET.instance.emit('submit question', sendResponse)
         }
 
+        var end = 0, diff = 0, timer = null;
+
+        function startChrono() {
+
+            end = new Date();
+            diff = end - start;
+            diff = new Date(diff);
+
+            $scope.timer.msec = diff.getMilliseconds();
+            $scope.timer.sec = diff.getSeconds();
+            $scope.timer.min = diff.getMinutes();
+
+            $scope.timer.timestamp = diff.getTime();
+
+            $scope.$apply()
+
+            timer = setTimeout(function(){
+                startChrono()
+            }, 10)
+
+        }
+
+        function stopChrono() {
+            clearTimeout(timer)
+        }
     }]);

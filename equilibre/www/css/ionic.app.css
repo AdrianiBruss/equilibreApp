@@ -9822,3 +9822,9 @@ a.button {
     color: green; }
   .template-game .friends-list p.selected {
     color: blue; }
+
+.template-game .questionListItem .true-answer-1 p:first-child {
+  color: green; }
+
+.template-game .questionListItem .true-answer-2 p:last-child {
+  color: green; }
