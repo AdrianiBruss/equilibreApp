@@ -39,20 +39,19 @@
 
                 <ion-list ng-model="response" ng-if="question.answer[0] == 'text'">
 
-                    <ion-radio ng-click="sendResponse(1)" ng-value="'A'">{{question.answer[1]}}</ion-radio>
-                    <ion-radio ng-click="sendResponse(2)" ng-value="'B'">{{question.answer[2]}}</ion-radio>
+                    <button class="button" ng-click="sendResponse(1)">{{question.answer[1]}}</button>
+                    <button class="button" ng-click="sendResponse(2)">{{question.answer[2]}}</button>
 
                 </ion-list>
 
                 <ion-list ng-model="response" ng-if="question.answer[0] == 'image'">
 
-                    <ion-radio ng-click="sendResponse(1)" ng-value="'A'">
-                        <img data-ng-src="{{question.answer[1]}}" style="height: 60px"/>
-                    </ion-radio>
 
-                    <ion-radio ng-click="sendResponse(2)" ng-value="'B'">
-                        <img data-ng-src="{{question.answer[2]}}" style="height: 60px"/>
-                    </ion-radio>
+                    <img ng-click="sendResponse(1)" data-ng-src="{{question.answer[1]}}" style="height: 60px"/>
+
+
+                    <img ng-click="sendResponse(2)" data-ng-src="{{question.answer[2]}}" style="height: 60px"/>
+
 
                 </ion-list>
 
@@ -61,7 +60,15 @@
             <div class="">
                 <h2>Friends position</h2>
                 <ion-list ng-repeat="friend in users">
-                    {{friend}}
+                    <div class="user">
+                        <p>
+                            Nom:{{friend.name}}
+                        </p>
+                        <p>
+                            Position: {{friend.position}}
+                        </p>
+                        <img ng-src="{{friend.picture.data.url}}" alt="" />
+                    </div>
                 </ion-list>
             </div>
 

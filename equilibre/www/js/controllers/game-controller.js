@@ -1,6 +1,7 @@
 angular.module('starter.gameController', [])
 
-    .controller('GameCtrl', ['SocketService', '$scope', '$rootScope', 'SocketService', '$state', 'SOCKET', 'ApiService', function (SocketService, $scope, $rootScope, SocketService, $state, SOCKET, ApiService) {
+    .controller('GameCtrl', ['SocketService', '$scope', '$rootScope', 'SocketService', '$state', 'SOCKET', 'ApiService', 'UserService',
+    function (SocketService, $scope, $rootScope, SocketService, $state, SOCKET, ApiService, UserService) {
 
         $scope.friends = $rootScope.user.friends.data;
         $scope.room = [];
@@ -15,7 +16,6 @@ angular.module('starter.gameController', [])
 
         // checking if an invitation has been send
         if ($state.params.question) {
-            console.log('ready for receiving questions');
             startGame()
         }
 
@@ -61,10 +61,7 @@ angular.module('starter.gameController', [])
 
         // [Socket] : waiting for new questions
         function startGame(){
-            console.log('game created !');
-
             //--- hide loader
-
             SOCKET.instance.on('invitation sent', function (nbr) {
                 // console.log('Vous avez reçu ' + nbr + ' réponse(s) à votre invitation');
                 $scope.usersResponses.responses = $scope.usersResponses.responses - nbr;
@@ -84,13 +81,31 @@ angular.module('starter.gameController', [])
             });
 
             SOCKET.instance.on('users position updated', function(users){
-                $scope.users = users;
+
+                console.log('users received', users)
+                // console.log('fb friends : ', $rootScope.user.friends.data)
+                // console.log('owner user', $scope.user);
+
                 $scope.user = users.filter(function(obj) {
                     return obj.userID == $rootScope.user.id
                 })[0];
 
-                // console.log('fb friends : ', $rootScope.user.friends.data)
-                // console.log('owner user', $scope.user);
+                // update users during game
+                $scope.users = [];
+                angular.forEach(users, function(value, key){
+
+                    if ( value.userID == $rootScope.user.id ) {
+                        $scope.users.push(angular.extend({}, value, $rootScope.user))
+                    }
+                    angular.forEach($rootScope.user.friends.data, function(v, k){
+
+                        if ( value.userID === v.id ){
+                            $scope.users.push(angular.extend({}, value, v))
+                        }
+
+                    })
+
+                })
 
                 $scope.$apply();
             })
@@ -101,34 +116,33 @@ angular.module('starter.gameController', [])
 
             // [roomID, [bool]true answer, pos]
             var sendResponse = [$scope.roomID, false, $scope.user.position];
-            var stat = {
-                "goodAnswer": $scope.question.stats.goodAnswer,
-                "badAnswer": $scope.question.stats.goodAnswer
-            }
+            // var stat = {
+            //     "goodAnswer": $scope.question.stats.goodAnswer,
+            //     "badAnswer": $scope.question.stats.goodAnswer
+            // }
             if ( parseInt($scope.question.trueAnswer) == response ) {
-                console.log('bien repondu')
+
                 // good or bad response ?
                 sendResponse[1] = true;
 
                 // update player position +1
                 sendResponse[2] = sendResponse[2] + 1;
 
-                stat['goodAnswer'] = stat['goodAnswer'] + 1;
+                // stat['goodAnswer'] = stat['goodAnswer'] + 1;
             }else {
-                console.log('mauvaise réponse')
 
                 // update player position +1
                 sendResponse[2] = sendResponse[2] - 1;
                 if ( sendResponse[2] < 0 )
                     sendResponse[2] = 0;
 
-                stat['badAnswer'] = stat['badAnswer'] + 1;
+                // stat['badAnswer'] = stat['badAnswer'] + 1;
             }
 
             console.log('emit to socket : ', sendResponse)
 
             // [API] : send good or bad answer to api
-            console.log('stat', stat, $scope.question._id)
+            // console.log('stat', stat, $scope.question._id)
             // ApiService.answerQuestion(stat, $scope.question._id)
 
             SOCKET.instance.emit('submit question', sendResponse)

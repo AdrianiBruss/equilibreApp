@@ -31,13 +31,11 @@ angular.module('starter.socketService', [])
         // [Socket] : send invitation to socket
         function playGame(friends){
             socket.emit('want to play game', friends );
-            console.log('friends send', friends);
         }
 
         // [Socket] : waiting for an invitation
         function onInvit(response){
             socket.on('send an invitation', function(roomID){
-                console.log('Invitation received ! \n the roomId : ', roomID);
                 $state.go('tab.game', {'question': true});
                 // open request invitation popin
                 openPopin(roomID);
