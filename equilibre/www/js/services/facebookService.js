@@ -37,6 +37,7 @@ angular.module('starter.facebookService', [])
 
                 } else if (response.status === 'not_authorized') {
                     // User not authorized
+                    console.log('not authorized');
 
                     $ionicLoading.hide();
 
@@ -44,6 +45,7 @@ angular.module('starter.facebookService', [])
 
                 } else {
                     // User not logged in to Facebook
+                    console.log('login');
                     $ionicLoading.hide();
                     $state.go('login');
                 }
@@ -53,7 +55,6 @@ angular.module('starter.facebookService', [])
         // [Facebook] : Facebook logout
         // [API] : Logout user
         function facebookLogout() {
-
             FB.logout();
             ApiService.logoutUser($rootScope.user.accessToken)
         }
