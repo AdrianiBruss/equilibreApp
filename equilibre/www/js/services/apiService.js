@@ -19,13 +19,13 @@ angular.module('starter.apiService', [])
 
                 switch(methodName) {
                     case 'loginUser':
-                        setUser(response.data)
+                        setUser(response.data);
                     break;
                     case 'logout':
                         $state.go('login');
                     break;
                     default:
-                        console.log('switch default')
+                        console.log('switch default');
                     break;
 
                 }
@@ -67,7 +67,7 @@ angular.module('starter.apiService', [])
             $rootScope.user['userId']       = data.userId;
             $rootScope.user['accessToken']  = data.id;
 
-            SocketService.connection($rootScope.user.id)
+            SocketService.connection($rootScope.user.id);
 
             $state.go('home');
 
@@ -90,7 +90,7 @@ angular.module('starter.apiService', [])
             logoutUser: function(accessToken) {
                 return APIRequest('POST', '/Players/logout?access_token='+accessToken, '', 'logout')
             },
-            answerQuestion(answer, id) {
+            answerQuestion: function(answer, id) {
                 return APIRequest('PUT', '/Questions/'+ id, answer, 'answerQuestion')
             }
 

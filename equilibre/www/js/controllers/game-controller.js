@@ -18,7 +18,7 @@ angular.module('starter.gameController', [])
             'sec': 0,
             'min': 0,
             'timestamp': 0
-        }
+        };
         $scope.questionList = [];
         $scope.goodAnswer = 0;
         $scope.usersResponses = {
@@ -30,7 +30,7 @@ angular.module('starter.gameController', [])
 
         // checking if an invitation has been send
         if ($state.params.question) {
-            startGame()
+            startGame();
             $scope.waiting = true;
             $scope.invitation = false;
         }
@@ -132,7 +132,7 @@ angular.module('starter.gameController', [])
 
                     })
 
-                })
+                });
 
                 $scope.$apply();
             });
@@ -188,7 +188,7 @@ angular.module('starter.gameController', [])
             // ApiService.answerQuestion(stat, $scope.question._id)
 
             SOCKET.instance.emit('submit question', sendResponse)
-        }
+        };
 
         var end = 0, diff = 0, timer = null;
 
@@ -204,7 +204,7 @@ angular.module('starter.gameController', [])
 
             $scope.timer.timestamp = diff.getTime();
 
-            $scope.$apply()
+            $scope.$apply();
 
             timer = setTimeout(function(){
                 startChrono()

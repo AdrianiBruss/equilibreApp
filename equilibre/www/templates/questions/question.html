@@ -60,8 +60,18 @@
                                 <input type="text" ng-model="newQuestion.answer[2]" class="form-control" id="answerTextTwo"
                                        placeholder="Enter Answer Two">
                             </div>
+                            <div class="form-group answer trueAnswer"  ng-if="newQuestion.answer[1] != '' && newQuestion.answer[2] != ''">
+                                <label>True Answer</label>
+                                <p ng-if="newQuestion.answer[1] != null && newQuestion.answer[1] != ''">
+                                    <input type="radio" class="radio" ng-model="newQuestion.trueAnswer" ng-value="1">
+                                    <span>{{newQuestion.answer[1]}}</span>
+                                </p>
+                                <p ng-if="newQuestion.answer[2] != null && newQuestion.answer[2] != ''">
+                                    <input type="radio" class="radio" ng-model="newQuestion.trueAnswer" ng-value="2">
+                                    <span>{{newQuestion.answer[2]}}</span>
+                                </p>
+                            </div>
                         </div>
-
                         <div class="answer" ng-if="newQuestion.answer[0] == 'image'">
                             <div class="form-group">
                                 <label for="answerPictureOne">Picture 1</label>
@@ -74,6 +84,17 @@
                                 <input type="file" id="answerPictureTwo" fileread="newQuestion.answer[2]">
                                 <img data-ng-src="{{newQuestion.answer[2]}}" data-err-src="vendor/adminlte/img/avatar.png"
                                      style="height: 60px"/>
+                            </div>
+                            <div class="form-group answer trueAnswer" ng-model="newQuestion.trueAnswer" ng-if="newQuestion.answer[1] != '' && newQuestion.answer[2] != ''">
+                                <label>True Answer</label>
+                                <p ng-if="newQuestion.answer[1] != null && newQuestion.answer[1] != ''">
+                                    <input type="radio" class="radio" ng-model="newQuestion.trueAnswer" ng-value="1">
+                                    <img data-ng-src="{{newQuestion.answer[1]}}"/>
+                                </p>
+                                <p ng-if="newQuestion.answer[2] != null && newQuestion.answer[2] != ''">
+                                    <input type="radio" class="radio" ng-model="newQuestion.trueAnswer" ng-value="2">
+                                    <img data-ng-src="{{newQuestion.answer[2]}}"/>
+                                </p>
                             </div>
                         </div>
 

@@ -7,8 +7,12 @@ angular.module('starter.questionController', [])
             "questionPicture":  null,
             "description":      null,
             "answer":           [],
+            "trueAnswer":       null,
+            "stats":            [],
             "playerId":         $rootScope.user.userId
         };
+
+        $scope.newQuestion.answer[1] = $scope.newQuestion.answer[2] = '';
 
         $scope.success = true;
 
@@ -19,13 +23,21 @@ angular.module('starter.questionController', [])
 
             if (($scope.newQuestion.questionText != null) &&
                 ($scope.newQuestion.description != null)  &&
-                ($scope.newQuestion.answer != []))
+                ($scope.newQuestion.answer != [])         &&
+                ($scope.newQuestion.trueAnswer != null))
             {
                 ApiService.addQuestion($scope.newQuestion);
 
             } else {
                 $scope.success = false;
             }
+        };
+
+        $scope.clearAnswerFields = function(){
+            $scope.newQuestion.answer[1] = '';
+            $scope.newQuestion.answer[2] = '';
+            $scope.trueAnswer = '';
+            angular.element("input.radio").attr('checked', '');
         };
 
     }]);

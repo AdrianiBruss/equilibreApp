@@ -1,19 +1,24 @@
 <ion-view view-title="Account">
     <ion-content class="has-header">
-        <img ng-src="{{user.picture.data.url}}" alt="" />
+        <img ng-src="{{ user.picture.data.url }}" alt="" />
         <p>{{ user.name }}</p>
-
+        <p>Expérience : {{ experience }}</p>
         <hr>
 
         <h2>list of questions : </h2>
         <p ng-repeat="q in questions">
-            <span>Question: {{q.questionText}}</span></br>
-            <span>Description: {{q.description}}</span>
+            <span>Question : {{ q.questionText }}</span></br>
+            <span>Bonnes réponses : {{ q.stats[0] }}</span>
+            <span>Mauvaises réponses : {{ q.stats[1] }}</span>
         </p>
 
         <hr>
 
-        <h2>Statistiques</h2>
+        <h2>Classement général</h2>
+        <p ng-repeat="user in usersRanking">
+            <span>Name : {{ user.name }}</span></br>
+            <span>Expérience : {{ user.experience }}</span>
+        </p>
 
         <button class="button button-danger" ng-click="logout()">Facebook Logout</button>
     </ion-content>

@@ -28,13 +28,18 @@ angular.module('starter.socketService', [])
             });
         }
 
+        // [Socket] : get all users for ranking
+        function getUsersRanking(){
+            socket.emit('get users ranking');
+        }
+
         // [Socket] : send invitation to socket
         function playGame(friends){
             socket.emit('want to play game', friends );
         }
 
         // [Socket] : waiting for an invitation
-        function onInvit(response){
+        function onInvit(){
             socket.on('send an invitation', function(roomID){
                 $state.go('tab.game', {'question': true});
                 // open request invitation popin
@@ -66,17 +71,22 @@ angular.module('starter.socketService', [])
                 return socketInit(instance, url);
             },
 
-            playGame:function(friends){
+            getRanking: function () {
+              return getUsersRanking();
+            },
+
+            playGame: function(friends){
                 return playGame(friends);
             },
 
             connection:function(id){
-                return onConnection(id);
+                return  onConnection(id);
             },
 
             getConnectedUsers: function(){
                 return onGetUsers()
             },
+
             onInvit: function(){
                 return onInvit();
             }
