@@ -11,7 +11,7 @@ angular.module('starter.accountController', [])
                 if( obj._id === $rootScope.user.userId )
                     console.log('scope expérience', obj.experience)
                     // $scope.experience = obj.experience;
-gi            })[0];
+                })[0];
 
             $scope.$apply();
         });
