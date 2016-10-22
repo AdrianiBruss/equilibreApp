@@ -175,10 +175,10 @@ angular.module('starter.gameController', [])
             }
 
             // console.log('emit to socket : ', sendResponse)
+            console.log('$scope.user.score : ', $scope.user.score)
 
             // [API] : send good or bad answer to api
-            console.log('stat', sendResponse[1], $scope.question._id)
-            ApiService.answerQuestion(sendResponse[1], $scope.question._id)
+            ApiService.getStatsQuestion(sendResponse[1], $scope.question._id)
 
             SOCKET.instance.emit('submit question', sendResponse)
         };

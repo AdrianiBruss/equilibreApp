@@ -5,7 +5,7 @@ angular.module('starter.apiService', [])
 
         // ------------------------------------
         // [API] : Call to API
-        function APIRequest(method, url, data, methodName) {
+        function APIRequest(method, url, data, methodName, scopeData) {
 
             var defer = $q.defer();
             // console.log('APIRequest : ', method, url, data)
@@ -25,7 +25,12 @@ angular.module('starter.apiService', [])
                         $state.go('login');
                     break;
                     case 'getStatsQuestion':
-                        putStatQuestion(response);
+                        putStatQuestion(response.data.stats, scopeData);
+                    break;
+                    case 'putStatsQuestion':
+                        break;
+                    case 'addQuestion':
+                        $state.go('tab.account');
                     break;
                     default:
                         console.log('switch default');
@@ -76,8 +81,22 @@ angular.module('starter.apiService', [])
 
         }
 
-        function putStatQuestion(data) {
-            console.log('putStatQuestion', data)
+        function putStatQuestion(stats, data) {
+
+            var statTrue;
+            var statFalse;
+            (stats[0] == undefined) ? statTrue = 0 : statTrue = stats[0];
+            (stats[1] == undefined) ? statFalse = 0 : statFalse = stats[1];
+
+            var newstat = {"stats": [statTrue, statFalse]}
+
+            if (data[0]) {
+                newstat.stats[0] = newstat.stats[0] + 1
+            }else {
+                newstat.stats[1] = newstat.stats[1] + 1
+            }
+
+            APIRequest('PUT', '/Questions/'+ data[1], newstat, 'putStatsQuestion')
         }
 
 
@@ -99,7 +118,7 @@ angular.module('starter.apiService', [])
                 return APIRequest('POST', '/Players/logout?access_token='+accessToken, '', 'logout')
             },
             getStatsQuestion: function(answer, id) {
-                return APIRequest('GET', '/Questions/'+ id, '', 'getStatsQuestion')
+                return APIRequest('GET', '/Questions/'+ id, '', 'getStatsQuestion', [answer, id])
             }
 
         }
