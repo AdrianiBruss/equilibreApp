@@ -24,6 +24,9 @@ angular.module('starter.apiService', [])
                     case 'logout':
                         $state.go('login');
                     break;
+                    case 'getStatsQuestion':
+                        putStatQuestion(response);
+                    break;
                     default:
                         console.log('switch default');
                     break;
@@ -73,13 +76,18 @@ angular.module('starter.apiService', [])
 
         }
 
+        function putStatQuestion(data) {
+            console.log('putStatQuestion', data)
+        }
+
 
         return {
             addQuestion: function (question) {
                 return APIRequest('POST', '/Questions', question, 'addQuestion');
             },
             getQuestions: function(accessToken) {
-                return APIRequest('GET', '/Players/'+$rootScope.user.userId+'/questions?filter={"where":{"status":true}}&access_token='+accessToken, '', 'getQuestions')
+                return APIRequest('GET', '/Players/'+$rootScope.user.userId+'/questions?access_token='+accessToken, '', 'getQuestions')
+                // filter={"where":{"status":true}}
             },
             registerUser: function (user) {
                 return registerUser(user)
@@ -90,8 +98,8 @@ angular.module('starter.apiService', [])
             logoutUser: function(accessToken) {
                 return APIRequest('POST', '/Players/logout?access_token='+accessToken, '', 'logout')
             },
-            answerQuestion: function(answer, id) {
-                return APIRequest('PUT', '/Questions/'+ id, answer, 'answerQuestion')
+            getStatsQuestion: function(answer, id) {
+                return APIRequest('GET', '/Questions/'+ id, '', 'getStatsQuestion')
             }
 
         }
