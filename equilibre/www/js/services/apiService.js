@@ -5,7 +5,7 @@ angular.module('starter.apiService', [])
 
         // ------------------------------------
         // [API] : Call to API
-        function APIRequest(method, url, data, methodName) {
+        function APIRequest(method, url, data, methodName, scopeData) {
 
             var defer = $q.defer();
             // console.log('APIRequest : ', method, url, data)
@@ -23,6 +23,14 @@ angular.module('starter.apiService', [])
                     break;
                     case 'logout':
                         $state.go('login');
+                    break;
+                    case 'getStatsQuestion':
+                        putStatQuestion(response.data.stats, scopeData);
+                    break;
+                    case 'putStatsQuestion':
+                        break;
+                    case 'addQuestion':
+                        $state.go('tab.account');
                     break;
                     default:
                         console.log('switch default');
@@ -73,13 +81,32 @@ angular.module('starter.apiService', [])
 
         }
 
+        function putStatQuestion(stats, data) {
+
+            var statTrue;
+            var statFalse;
+            (stats[0] == undefined) ? statTrue = 0 : statTrue = stats[0];
+            (stats[1] == undefined) ? statFalse = 0 : statFalse = stats[1];
+
+            var newstat = {"stats": [statTrue, statFalse]}
+
+            if (data[0]) {
+                newstat.stats[0] = newstat.stats[0] + 1
+            }else {
+                newstat.stats[1] = newstat.stats[1] + 1
+            }
+
+            APIRequest('PUT', '/Questions/'+ data[1], newstat, 'putStatsQuestion')
+        }
+
 
         return {
             addQuestion: function (question) {
                 return APIRequest('POST', '/Questions', question, 'addQuestion');
             },
             getQuestions: function(accessToken) {
-                return APIRequest('GET', '/Players/'+$rootScope.user.userId+'/questions?filter={"where":{"status":true}}&access_token='+accessToken, '', 'getQuestions')
+                return APIRequest('GET', '/Players/'+$rootScope.user.userId+'/questions?access_token='+accessToken, '', 'getQuestions')
+                // filter={"where":{"status":true}}
             },
             registerUser: function (user) {
                 return registerUser(user)
@@ -90,8 +117,8 @@ angular.module('starter.apiService', [])
             logoutUser: function(accessToken) {
                 return APIRequest('POST', '/Players/logout?access_token='+accessToken, '', 'logout')
             },
-            answerQuestion: function(answer, id) {
-                return APIRequest('PUT', '/Questions/'+ id, answer, 'answerQuestion')
+            getStatsQuestion: function(answer, id) {
+                return APIRequest('GET', '/Questions/'+ id, '', 'getStatsQuestion', [answer, id])
             }
 
         }

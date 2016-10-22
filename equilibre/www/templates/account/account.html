@@ -1,5 +1,6 @@
-<ion-view view-title="Account">
+<ion-view view-title="Account" class="template-account">
     <ion-content class="has-header">
+        <img class="cover" ng-src="{{ user.cover.source }}" alt="" />
         <img ng-src="{{ user.picture.data.url }}" alt="" />
         <p>{{ user.name }}</p>
         <p>Expérience : {{ experience }}</p>

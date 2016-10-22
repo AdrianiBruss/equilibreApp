@@ -8,7 +8,7 @@ angular.module('starter.questionController', [])
             "description":      null,
             "answer":           [],
             "trueAnswer":       null,
-            "stats":            [],
+            "stats":            [0, 0],
             "playerId":         $rootScope.user.userId
         };
 

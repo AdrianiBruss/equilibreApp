@@ -111,7 +111,7 @@ angular.module('starter.gameController', [])
 
             SOCKET.instance.on('users position updated', function(users){
 
-                // console.log('users received', users)
+                console.log('users received', users)
 
                 $scope.user = users.filter(function(obj) {
                     return obj.userID == $rootScope.user.id
@@ -145,47 +145,40 @@ angular.module('starter.gameController', [])
 
                 // Stop timer
                 stopChrono();
-                $scope.score = 1 / (( $scope.goodAnswer * 2 * $scope.timer.timestamp ) + $scope.timer.timestamp);
+                // $scope.score = (1 / (( $scope.goodAnswer * 2 * $scope.timer.timestamp ) + $scope.timer.timestamp)) * 100000;
 
                 // [Socket] : send final score to socket
-                // SOCKET.instance.emit('submit score', $scope.score)
+                // SOCKET.instance.emit('submit score', $scope.timer.timestamp)
             })
         }
 
         // [Socket] : send response to Socket
         $scope.sendResponse = function(response){
 
-            // [roomID, [bool]true answer, pos]
-            var sendResponse = [$scope.roomID, false, $scope.user.position, $scope.user.firstIndex, $scope.user.secondIndex];
-            // var stat = {
-            //     "goodAnswer": $scope.question.stats.goodAnswer,
-            //     "badAnswer": $scope.question.stats.goodAnswer
-            // }
+            // [roomID, [bool]true answer, pos, score]
+            var sendResponse = [$scope.roomID, false, $scope.user.position, $scope.user.firstIndex, $scope.user.secondIndex, $scope.user.score];
+
             if ( parseInt($scope.question.trueAnswer) == response ) {
 
                 // good response !
                 sendResponse[1] = true;
-                $scope.goodAnswer = $scope.goodAnswer + 1;
 
                 // update player position +1
                 sendResponse[2] = sendResponse[2] + 1;
 
-                // stat['goodAnswer'] = stat['goodAnswer'] + 1;
             }else {
 
                 // update player position +1
                 sendResponse[2] = sendResponse[2] - 1;
                 if ( sendResponse[2] < 0 )
                     sendResponse[2] = 0;
-
-                // stat['badAnswer'] = stat['badAnswer'] + 1;
             }
 
-            console.log('emit to socket : ', sendResponse)
+            // console.log('emit to socket : ', sendResponse)
+            console.log('$scope.user.score : ', $scope.user.score)
 
             // [API] : send good or bad answer to api
-            // console.log('stat', stat, $scope.question._id)
-            // ApiService.answerQuestion(stat, $scope.question._id)
+            ApiService.getStatsQuestion(sendResponse[1], $scope.question._id)
 
             SOCKET.instance.emit('submit question', sendResponse)
         };

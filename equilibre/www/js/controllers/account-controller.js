@@ -4,6 +4,8 @@ angular.module('starter.accountController', [])
 
         SocketService.getRanking();
 
+        console.log($rootScope.user)
+
         SOCKET.instance.on('send users ranking', function(users){
             $scope.usersRanking = users;
 
@@ -11,7 +13,7 @@ angular.module('starter.accountController', [])
                 if( obj._id === $rootScope.user.userId )
                     console.log('scope expérience', obj.experience)
                     // $scope.experience = obj.experience;
-                })[0];
+            })[0];
 
             $scope.$apply();
         });
@@ -21,7 +23,7 @@ angular.module('starter.accountController', [])
             FacebookService.logout();
         };
 
-        // [API] Get user's questions 
+        // [API] Get user's questions
         ApiService.getQuestions($rootScope.user.accessToken).then(function(data){
             $scope.questions = data;
             console.log('scope questions', $scope.questions)
