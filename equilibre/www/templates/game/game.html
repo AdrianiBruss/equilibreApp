@@ -83,7 +83,7 @@
         <div class="ranking" ng-if="gameEnded">
             <h1>Fin du jeu !</h1>
             <h2>Classement</h2>
-            <ion-list ng-repeat="friend in users | orderBy:'score'">
+            <ion-list ng-repeat="friend in users | orderBy:'-score'">
                 <div class="user">
                     <p>
                         <img ng-src="{{friend.picture.data.url}}" alt="" />

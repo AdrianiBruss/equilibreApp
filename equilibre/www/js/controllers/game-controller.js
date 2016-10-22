@@ -145,10 +145,11 @@ angular.module('starter.gameController', [])
 
                 // Stop timer
                 stopChrono();
+                console.log('timestamp', $scope.timer.timestamp);
                 // $scope.score = (1 / (( $scope.goodAnswer * 2 * $scope.timer.timestamp ) + $scope.timer.timestamp)) * 100000;
 
                 // [Socket] : send final score to socket
-                // SOCKET.instance.emit('submit score', $scope.timer.timestamp)
+                SOCKET.instance.emit('submit question', [$scope.roomID, false, $scope.user.position, null, null, $scope.user.score, $scope.timer.timestamp])
             })
         }
 
