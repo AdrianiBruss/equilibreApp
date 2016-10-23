@@ -1,3 +1,17 @@
+/*
+* Fonts
+*/
+@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900');
+h1, h2, h3, p, a {
+	font-family: 'Rubik', sans-serif;
+}
+h1 {
+	font-size: 30px;
+}
+
+/*
+* Templates
+*/
 .template {
 	background: $black;
 }
@@ -10,4 +24,40 @@
 }
 .tab-item.tab-item-active {
 	color: $white;
+}
+
+
+/*
+* Common
+*/
+.logo {
+
+	display: block;
+
+	max-width: 250px;
+
+	margin: 50px auto 50px auto;
+
+}
+
+.btn {
+
+	display: block;
+
+	max-width: 250px;
+
+	margin: 20px auto;
+	padding: 25px 0;
+
+	border: 1px solid $white;
+	background: transparent;
+
+	font-size: 17px;
+	font-weight: $font-medium;
+
+	color: $white;
+	text-transform: uppercase;
+	text-decoration: none;
+	text-align: center;
+
 }

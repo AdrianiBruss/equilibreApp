@@ -62,7 +62,7 @@ angular.module('starter.gameController', [])
                 $scope.room.push({
                     'socketID': $rootScope.user.socketID,
                     'userID': $rootScope.user.id
-                })
+                });
                 SocketService.playGame($scope.room)
             }else {
                 console.error('select users to play with')
@@ -77,6 +77,9 @@ angular.module('starter.gameController', [])
 
         // [Socket] : waiting for new questions
         function startGame(){
+
+            var experienceUser = 0;
+
             //--- hide loader
             SOCKET.instance.on('invitation sent', function (nbr) {
                 // console.log('Vous avez reçu ' + nbr + ' réponse(s) à votre invitation');
@@ -84,7 +87,6 @@ angular.module('starter.gameController', [])
                 $scope.usersResponses.responses = $scope.usersResponses.responses - nbr;
                 $scope.$apply();
             });
-
 
             SOCKET.instance.on('send question', function(data){
                 // console.log('Question received', data[0], data[1], data[2])
@@ -100,7 +102,6 @@ angular.module('starter.gameController', [])
                     // Start timer
                     start = new Date();
                     startChrono();
-
                 }
 
                 $scope.question = data[0];
@@ -111,25 +112,27 @@ angular.module('starter.gameController', [])
 
             SOCKET.instance.on('users position updated', function(users){
 
-                console.log('users received', users)
+                // console.log('users received', users)
 
                 $scope.user = users.filter(function(obj) {
-                    return obj.userID == $rootScope.user.id
+                    return obj.userID == $rootScope.user.id;
                 })[0];
 
                 // update users during game
                 $scope.users = [];
+
                 angular.forEach(users, function(value, key){
 
-                    if ( value.userID == $rootScope.user.id ) {
-                        $scope.users.push(angular.extend({}, value, $rootScope.user))
+                    if ( value.userID == $rootScope.user.id )
+                    {
+                        $scope.users.push(angular.extend({}, value, $rootScope.user));
+                        experienceUser += value.score;
                     }
-                    angular.forEach($rootScope.user.friends.data, function(v, k){
 
+                    angular.forEach($rootScope.user.friends.data, function(v, k){
                         if ( value.userID === v.id ){
                             $scope.users.push(angular.extend({}, value, v))
                         }
-
                     })
 
                 });
@@ -139,20 +142,30 @@ angular.module('starter.gameController', [])
 
             SOCKET.instance.on('game stop', function(data){
 
-                console.log('game stop')
+                var score = data[1];
+                var timestamp = $scope.timer.timestamp;
 
                 $scope.game = false;
                 $scope.gameEnded = true;
-                $scope.questionList = data[1];
+                $scope.questionList = data[0];
+                $scope.user.score = Math.round( (1 / (timestamp * score + timestamp)) * 100000000);
+                console.log('votre score est', $scope.user.score);
+
+                // update user experience
+                ApiService.getUser($rootScope.user.accessToken).then(function (data) {
+                    data.experience += $scope.user.score;
+                    console.log(data.experience);
+                    ApiService.updateUser($rootScope.user.accessToken, {"experience":data.experience}).then(function (data) {
+                        console.log(data)
+                    });
+                });
 
                 // Stop timer
                 stopChrono();
-                console.log('timestamp', $scope.timer.timestamp);
-                // $scope.score = (1 / (( $scope.goodAnswer * 2 * $scope.timer.timestamp ) + $scope.timer.timestamp)) * 100000;
 
                 console.log('scope.user.position', $scope.user.position)
                 // [Socket] : send final score to socket
-                SOCKET.instance.emit('submit question', [$scope.roomID, false, $scope.user.position, null, null, $scope.user.score, $scope.timer.timestamp])
+                SOCKET.instance.emit('submit question', [$scope.roomID, false, null, null, null, $scope.user.score])
             })
         }
 
@@ -178,11 +191,8 @@ angular.module('starter.gameController', [])
                     sendResponse[2] = 0;
             }
 
-            // console.log('emit to socket : ', sendResponse)
-            console.log('$scope.user.score : ', $scope.user.score)
-
             // [API] : send good or bad answer to api
-            ApiService.getStatsQuestion(sendResponse[1], $scope.question._id)
+            ApiService.getStatsQuestion(sendResponse[1], $scope.question._id);
 
             SOCKET.instance.emit('submit question', sendResponse)
         };

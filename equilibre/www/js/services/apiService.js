@@ -20,21 +20,21 @@ angular.module('starter.apiService', [])
                 switch(methodName) {
                     case 'loginUser':
                         setUser(response.data);
-                    break;
+                        break;
                     case 'logout':
                         $state.go('login');
-                    break;
+                        break;
                     case 'getStatsQuestion':
                         putStatQuestion(response.data.stats, scopeData);
-                    break;
+                        break;
                     case 'putStatsQuestion':
                         break;
                     case 'addQuestion':
                         $state.go('tab.account');
-                    break;
+                        break;
                     default:
                         console.log('switch default');
-                    break;
+                        break;
 
                 }
 
@@ -88,7 +88,7 @@ angular.module('starter.apiService', [])
             (stats[0] == undefined) ? statTrue = 0 : statTrue = stats[0];
             (stats[1] == undefined) ? statFalse = 0 : statFalse = stats[1];
 
-            var newstat = {"stats": [statTrue, statFalse]}
+            var newstat = {"stats": [statTrue, statFalse]};
 
             if (data[0]) {
                 newstat.stats[0] = newstat.stats[0] + 1
@@ -99,7 +99,6 @@ angular.module('starter.apiService', [])
             APIRequest('PUT', '/Questions/'+ data[1], newstat, 'putStatsQuestion')
         }
 
-
         return {
             addQuestion: function (question) {
                 return APIRequest('POST', '/Questions', question, 'addQuestion');
@@ -107,6 +106,12 @@ angular.module('starter.apiService', [])
             getQuestions: function(accessToken) {
                 return APIRequest('GET', '/Players/'+$rootScope.user.userId+'/questions?access_token='+accessToken, '', 'getQuestions')
                 // filter={"where":{"status":true}}
+            },
+            getUser: function (accessToken) {
+                return APIRequest('GET', '/Players/'+$rootScope.user.userId+'?access_token='+accessToken, '', 'getQuestions')
+            },
+            updateUser: function (accessToken, data) {
+                return APIRequest('PUT', '/Players/'+$rootScope.user.userId+'?access_token='+accessToken, data, 'getQuestions')
             },
             registerUser: function (user) {
                 return registerUser(user)
