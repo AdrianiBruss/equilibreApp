@@ -87,7 +87,6 @@ angular.module('starter.facebookService', [])
 
                 $rootScope.user = response;
                 $rootScope.user['password'] = sha512_224(response.email+response.id);
-
                 if (registerUser)
                     ApiService.registerUser($rootScope.user);
                 else

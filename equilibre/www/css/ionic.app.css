@@ -9829,16 +9829,6 @@ a.button {
 .template-game .questionListItem .true-answer-2 p:last-child {
   color: green; }
 
-.template-game .friends-list p {
-  cursor: pointer;
-  color: grey; }
-  .template-game .friends-list p.online {
-    color: green; }
-  .template-game .friends-list p.selected {
-    color: blue; }
-
-.template-game .questionListItem .true-answer-1 p:first-child {
-  color: green; }
-
-.template-game .questionListItem .true-answer-2 p:last-child {
-  color: green; }
+.template-account .cover {
+  z-index: -1;
+  position: absolute; }
