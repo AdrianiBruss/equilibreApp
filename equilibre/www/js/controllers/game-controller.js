@@ -139,6 +139,8 @@ angular.module('starter.gameController', [])
 
             SOCKET.instance.on('game stop', function(data){
 
+                console.log('game stop')
+
                 $scope.game = false;
                 $scope.gameEnded = true;
                 $scope.questionList = data[1];
@@ -148,6 +150,7 @@ angular.module('starter.gameController', [])
                 console.log('timestamp', $scope.timer.timestamp);
                 // $scope.score = (1 / (( $scope.goodAnswer * 2 * $scope.timer.timestamp ) + $scope.timer.timestamp)) * 100000;
 
+                console.log('scope.user.position', $scope.user.position)
                 // [Socket] : send final score to socket
                 SOCKET.instance.emit('submit question', [$scope.roomID, false, $scope.user.position, null, null, $scope.user.score, $scope.timer.timestamp])
             })
