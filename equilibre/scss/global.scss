@@ -3,13 +3,19 @@
 */
 @import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900');
 h1, h2, h3, p, a {
-	font-family: 'Rubik', sans-serif;
+	font-family: $font-family;
 	font-weight: $font-regular;
 }
 h1 {
 	font-size: $font-size-h1;
 	text-align: center;
 	margin: 60px auto 40px auto;
+}
+
+h2 {
+	text-align: center;
+	font-size: $font-size-title;
+	margin: 15px auto;
 }
 
 /*
@@ -42,6 +48,7 @@ h1 {
 	display: block;
 
 	max-width: 250px;
+	width: 100%;
 
 	margin: 20px auto;
 	padding: 25px 0;
@@ -78,7 +85,7 @@ span.line {
 
 	background: $white;
 
-    margin: 40px auto;
+    margin: 40px auto 0 auto;
 
 	&.thin-line {
 		opacity: 0.4;

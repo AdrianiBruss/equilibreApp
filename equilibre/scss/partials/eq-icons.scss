@@ -15,26 +15,32 @@
 
 		margin: 10px;
 
+		&:hover {
+			background: rgba(0,0,0,0.2);
+		}
+
 		.eq-icon-camera {
 			display: block;
 
-			margin: 0 auto;
+			margin: 6px auto;
 
-			width: 35px;
-			height: 25px;
+			width: 45px;
+			height: 35px;
 
-			background: url('../img/eq-icon-camera.svg');
+			background: url('../img/eq-icon-camera.svg') no-repeat;
+			background-size: contain;
 		}
 
 		.eq-icon-files {
 			display: block;
 
-			margin: 0 auto;
+			margin: 6px auto;
 
-			width: 22px;
-			height: 28px;
+		    width: 28px;
+		    height: 28px;
 
-			background: url('../img/eq-icon-files.svg');
+			background: url('../img/eq-icon-files.svg') no-repeat;
+			background-size: contain;
 		}
 	}
 
