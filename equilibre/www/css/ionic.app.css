@@ -7739,6 +7739,67 @@ span.line {
   span.line.thin-line {
     opacity: 0.4; }
 
+span.bullet {
+  position: absolute;
+  left: 0px;
+  top: 7px;
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%; }
+  span.bullet.bullet-black {
+    border: 1px solid #2b2b2b; }
+  span.bullet.bullet-white {
+    border: 1px solid #ecf0f1; }
+
+.users-list {
+  position: relative;
+  margin: 10px 0; }
+  .users-list .index {
+    margin-right: 0px; }
+  .users-list .picture {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #ecf0f1;
+    border-radius: 50%;
+    overflow: hidden; }
+    .users-list .picture img {
+      max-width: 100%;
+      -webkit-filter: grayscale(100%);
+      filter: grayscale(100%); }
+  .users-list .text {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 20px; }
+    .users-list .text .name {
+      font-weight: 300; }
+    .users-list .text .xp {
+      text-transform: uppercase; }
+      .users-list .text .xp span {
+        font-weight: 500; }
+
+/*
+* Slick Slider
+*/
+.slick-dots {
+  margin-top: 20px; }
+  .slick-dots li {
+    display: inline-block; }
+    .slick-dots li button {
+      width: 8px;
+      height: 8px;
+      padding: 0;
+      margin: 0 5px;
+      color: transparent;
+      background: transparent;
+      border-radius: 50%;
+      border: 1px solid #2b2b2b; }
+    .slick-dots li.slick-active button {
+      background: #2b2b2b; }
+
 /*
 * Eq icons
 */
@@ -8053,3 +8114,18 @@ select {
         font-weight: 500; }
     .template-account .content .profile .name {
       font-size: 16px; }
+  .template-account .content .profile-questions #questions {
+    text-align: center; }
+    .template-account .content .profile-questions #questions p {
+      position: relative;
+      text-align: left;
+      padding: 0 10px; }
+      .template-account .content .profile-questions #questions p.eq-text {
+        margin-bottom: 10px; }
+      .template-account .content .profile-questions #questions p.eq-stats span {
+        position: absolute;
+        right: 10px; }
+      .template-account .content .profile-questions #questions p.eq-stats.eq-gr span {
+        color: #26c281; }
+      .template-account .content .profile-questions #questions p.eq-stats.eq-br span {
+        color: #f64747; }

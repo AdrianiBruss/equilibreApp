@@ -10,6 +10,8 @@ angular.module('starter.accountController', [])
         SOCKET.instance.on('send users ranking', function(users){
             $scope.usersRanking = users;
 
+            console.log(users);
+
             users.filter(function ( obj ) {
                 if( obj._id === $rootScope.user.userId )
                     $scope.experience = obj.experience;
@@ -27,9 +29,13 @@ angular.module('starter.accountController', [])
         ApiService.getQuestions($rootScope.user.accessToken).then(function(data){
             $scope.questions = data;
 
-            console.log($scope.questions);
+            setTimeout(function(){
+                $('.template-account #questions').slick({
+                    dots: true,
+                    arrows: false
+                })
+            }, 0)
 
-            console.log($('.template-account #questions'))
 
             $ionicLoading.hide();
         })

@@ -15,27 +15,37 @@
                     <h2>My questions </h2>
                     <div id="questions">
                         <div ng-repeat="q in questions">
-                            <p>
+                            <p class="eq-text">
+                                <span class="bullet bullet-black"></span>
                                 {{ q.questionText }}
                             </p>
-                            <p>
-                                Bonnes réponses <span>{{ q.stats[0] }}</span>
+                            <p class="eq-stats eq-gr">
+                                Good answers <span>{{ q.stats[0] * 100 / (q.stats[0] + q.stats[1]) | number:1 }} %</span>
                             </p>
-                            <p>
-                                Mauvaises réponses <span>{{ q.stats[1] }}</span>
+                            <p class="eq-stats eq-br">
+                                Bad answers <span>{{ q.stats[1] * 100 / (q.stats[0] + q.stats[1]) | number:1 }} %</span>
                             </p>
                         </div>
                     </div>
                 </div>
-
+                <span class="line thin-line"></span>
                 <div class="profile-ranking">
                     <h2>Ranking</h2>
 
-                    <p ng-repeat="user in usersRanking">
-                        <span>Name : {{ user.name }}</span></br>
-                        <span>Expérience : {{ user.experience }}</span>
-                    </p>
-
+                    <div class="users-list" ng-repeat="user in usersRanking">
+                        <span class="index">{{$index + 1}}. </span> 
+                        <div class="picture">
+                            <img ng-src="{{user.profilePicture}}" alt="" />
+                        </div>
+                        <div class="text">
+                            <p class="name">
+                                {{ user.name }}
+                            </p>
+                            <p class="xp">
+                                xp <span>{{user.experience}}</span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
             </div>
