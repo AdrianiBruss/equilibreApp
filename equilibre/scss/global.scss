@@ -2,7 +2,7 @@
 * Fonts
 */
 @import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900');
-h1, h2, h3, p, a {
+h1, h2, h3, p, a, span {
 	font-family: $font-family;
 	font-weight: $font-regular;
 }
@@ -17,6 +17,9 @@ h2 {
 	font-size: $font-size-title;
 	margin: 15px auto;
 }
+p {
+	font-size: $font-size-content;
+}
 
 /*
 * Tabs
@@ -29,6 +32,9 @@ h2 {
 	color: $white !important;
 }
 
+.scroll {
+	min-height: 100%;
+}
 
 /*
 * Common
@@ -96,3 +102,4 @@ span.line {
 @import "partials/eq-icons";
 @import "partials/input";
 @import "partials/template";
+@import "partials/slick";

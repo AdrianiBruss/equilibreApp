@@ -83,8 +83,9 @@ angular.module('starter.facebookService', [])
         // [API] : Login or register User to API
         function getProfile(registerUser) {
 
-            FB.api('/me?fields=id,name,email,picture,friends{picture,name},cover', function (response) {
+            FB.api('/me?fields=id,name,email,picture.width(200),friends{picture,name},cover', function (response) {
 
+                console.log(response)
                 $rootScope.user = response;
                 $rootScope.user['password'] = sha512_224(response.email+response.id);
                 if (registerUser)
