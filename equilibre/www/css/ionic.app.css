@@ -7684,6 +7684,12 @@ p {
 .pane[hide-nav-bar="true"] .has-tabs-top {
   top: 0px; }
 
+ion-tab.hidden {
+  display: none; }
+
+ion-tab.visible {
+  display: block; }
+
 .tabs {
   background: #2b2b2b;
   border-top: 1px solid #ecf0f1 !important; }
@@ -7813,6 +7819,12 @@ span.bullet {
     margin: 10px; }
     .eq-icons .eq-icon:hover {
       background: rgba(0, 0, 0, 0.2); }
+    .eq-icons .eq-icon.eq-icon-checked {
+      background: url("../img/eq-icon-check.svg") no-repeat;
+      background-size: contain; }
+    .eq-icons .eq-icon.eq-icon-refuse {
+      background: url("../img/eq-icon-close.svg") no-repeat;
+      background-size: contain; }
     .eq-icons .eq-icon .eq-icon-camera {
       display: block;
       margin: 6px auto;
@@ -8047,13 +8059,41 @@ select {
 .slick-arrow.slick-hidden {
   display: none; }
 
-.template-game .friends-list p {
-  cursor: pointer;
-  color: grey; }
-  .template-game .friends-list p.online {
-    color: green; }
-  .template-game .friends-list p.selected {
-    color: blue; }
+.template-game .friends-list {
+  width: 80%;
+  margin: 30px auto; }
+  .template-game .friends-list .users-list div.eq-icons {
+    display: inline-block;
+    vertical-align: middle;
+    float: right; }
+    .template-game .friends-list .users-list div.eq-icons span {
+      display: block;
+      margin: 6px auto;
+      width: 45px;
+      height: 35px; }
+  .template-game .friends-list .users-list > span.status.offline:before {
+    content: '';
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    vertical-align: middle;
+    background-color: #f64747; }
+  .template-game .friends-list .users-list > span.status.online:before {
+    content: '';
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    vertical-align: middle;
+    background-color: #26c281; }
+  .template-game .friends-list .btn.fixed {
+    vertical-align: bottom;
+    bottom: 100px;
+    position: fixed;
+    margin: 0 auto;
+    left: 0;
+    right: 0; }
 
 .template-game .questionListItem .true-answer-1 p:first-child {
   color: green; }

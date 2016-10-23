@@ -85,7 +85,6 @@ angular.module('starter.facebookService', [])
 
             FB.api('/me?fields=id,name,email,picture.width(200),friends{picture,name},cover', function (response) {
 
-                console.log(response)
                 $rootScope.user = response;
                 $rootScope.user['password'] = sha512_224(response.email+response.id);
                 if (registerUser)

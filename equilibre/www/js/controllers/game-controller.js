@@ -4,6 +4,7 @@ angular.module('starter.gameController', [])
     function (SocketService, $scope, $rootScope, SocketService, $state, SOCKET, ApiService, UserService) {
 
         $scope.friends = $rootScope.user.friends.data;
+        // console.log($rootScope.user.friends.data);
         $scope.room = [];
         $scope.invitation = true;
         $scope.roomId = null;
@@ -27,19 +28,22 @@ angular.module('starter.gameController', [])
 
         var start = 0;
 
+        $('div.tab-nav.tabs').hide();
+
         // checking if an invitation has been send
         if ($state.params.question) {
             startGame();
             // // $scope.waiting = true;
-            $scope.invitation = false;
+            // $scope.invitation = false;
             $scope.participants = $state.params.participants;
-            $scope.usersResponses.active = true;
         }
 
         // add friend to play
         $scope.addFriend = function(friend, index){
 
-            $scope.friends[index].selected = !$scope.friends[index].selected;
+            if(friend.online){
+                $scope.friends[index].selected = !$scope.friends[index].selected;
+            }
 
             // checking for friend connection
             if ($scope.room.indexOf(friend.id) > -1) {
@@ -69,8 +73,6 @@ angular.module('starter.gameController', [])
                 console.error('select users to play with')
             }
 
-            $scope.usersResponses.active = true;
-
             startGame();
 
         };
@@ -80,8 +82,11 @@ angular.module('starter.gameController', [])
 
             //--- hide loader
             SOCKET.instance.on('invitation sent', function (guests) {
-                $scope.participants = guests;
                 $scope.invitation = false;
+                $scope.usersResponses.active = true;
+
+                getFacebookProfile($scope, guests);
+
                 $scope.$apply();
             });
 
@@ -107,10 +112,12 @@ angular.module('starter.gameController', [])
                 $scope.$apply();
             });
 
-            SOCKET.instance.on('users position updated', function(users){
+            SOCKET.instance.on('users updated', function(data){
 
-                // console.log('users received', users)
+                var users = data[1];
 
+                $scope.invitation = false;
+                $scope.usersResponses.active = data[0];
                 $scope.user = users.filter(function(obj) {
                     return obj.userID == $rootScope.user.id;
                 })[0];
@@ -118,7 +125,7 @@ angular.module('starter.gameController', [])
                 // update users during game
                 getFacebookProfile($scope, users);
 
-                console.log($scope.users);
+                // console.log($scope.users);
 
                 $scope.$apply();
 
@@ -134,21 +141,21 @@ angular.module('starter.gameController', [])
                 $scope.gameEnded = true;
                 $scope.questionList = data[0];
                 $scope.user.score = Math.round( (1 / (timestamp * score + timestamp)) * 100000000);
-                console.log('votre score est', $scope.user.score);
+                // console.log('votre score est', $scope.user.score);
 
                 // update user experience
                 ApiService.getUser($rootScope.user.accessToken).then(function (data) {
                     data.experience += $scope.user.score;
-                    console.log(data.experience);
+                    // console.log(data.experience);
                     ApiService.updateUser($rootScope.user.accessToken, {"experience":data.experience}).then(function (data) {
-                        console.log(data)
+                        // console.log(data)
                     });
                 });
 
                 // Stop timer
                 stopChrono();
 
-                console.log('scope.user.position', $scope.user.position)
+                // console.log('scope.user.position', $scope.user.position);
                 // [Socket] : send final score to socket
                 SOCKET.instance.emit('submit question', [$scope.roomID, false, null, null, null, $scope.user.score])
             })

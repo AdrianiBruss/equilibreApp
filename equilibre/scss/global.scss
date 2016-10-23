@@ -32,6 +32,15 @@ p {
   top: 0px;
 }
 
+ion-tab{
+  &.hidden{
+    display: none;
+  }
+  &.visible{
+    display: block;
+  }
+}
+
 .tabs {
   background: $black;
   border-top: 1px solid $white !important;

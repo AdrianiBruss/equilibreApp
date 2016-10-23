@@ -28,6 +28,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         // Global user variable
         $rootScope.user = {};
 
+        $rootScope.hideTabs = false;
+
         // [Facebook] : Init Facebook connection
         FacebookService.init();
 

@@ -1,125 +1,130 @@
 <ion-view view-title="Game" class="template template-game template-black" hide-nav-bar="true">
     <ion-content class="padding">
 
-        <h1>Select friends</h1>
-        <span class="line thin-line"></span>
-
         <!-- Invitation game template -->
-        <div ng-if="invitation" class="template-select-friends template-black">
+        <div ng-if="invitation">
 
-            <ion-list ng-repeat="f in friends" class="friends-list">
-                <p ng-click="addFriend(f, $index)" ng-class="{'online': f.online, 'selected': f.selected}">
-                    friend #{{$index+1}}: <img ng-src="{{f.picture.data.url}}" alt="" />   {{f.name}}
-                </p>
-            </ion-list>
+            <h1>Select friends</h1>
 
-            <div class="">
-                <ion-list ng-repeat="friend in users">
-                    <div class="user">
-                        <p>
-                            Nom:{{friend.name}}
-                        </p>
-                        <p>
-                            Position: {{friend.position}}
-                        </p>
+            <span class="line thin-line"></span>
+
+            <div class="friends-list">
+                <div class="users-list" ng-repeat="friend in friends" ng-click="addFriend(friend, $index)">
+                    <span class="status" ng-class="friend.online ? 'online': 'offline'"></span>
+                    <div class="picture">
                         <img ng-src="{{friend.picture.data.url}}" alt="" />
                     </div>
-                </ion-list>
+                    <div class="text">
+                        <p class="name">
+                            {{ friend.name }}
+                        </p>
+                    </div>
+                    <div class="eq-icons">
+                        <span class="eq-icon" ng-class="friend.selected ? 'eq-icon-checked': ''"></span></p>
+                    </div>
+                </div>
+                <button class="btn fixed" ng-click="playGame()">Play</button>
             </div>
-
-            <button class="button button-assertive" style="margin:50px auto;display: block;" ng-click="playGame()">
-                Select friends
-            </button>
 
         </div>
 
         <!-- Waiting for users template -->
-        <!--<div class="template-waiting template-black waiting-users-invitation" ng-if="waiting">-->
-        <!--<h1>En attente de joueurs ...</h1>-->
-        <!--</div>-->
+        <div ng-if="usersResponses.active">
 
-        <div class="template-waiting template-black waiting-users" ng-if="usersResponses.active">
-            <h1>En attente de joueurs ...</h1>
-            <ion-list ng-repeat="p in participants" class="friends-list">
-                <p>
-                    <!--friend #{{$index+1}}: <img ng-src="{{f.picture.data.url}}" alt="" />   {{f.name}}-->
-                    {{p}}
-                </p>
-            </ion-list>
+            <h1>Waiting for players</h1>
+
+            <span class="line thin-line"></span>
+
+            <div class="friends-list" ng-repeat="participant in users">
+                <div class="users-list" ng-if="$last == false">
+                    <div class="picture">
+                        <img ng-src="{{participant.picture.data.url}}" alt="" />
+                    </div>
+                    <div class="text">
+                        <p class="name">
+                            {{ participant.name }}
+                        </p>
+                    </div>
+                    <div class="eq-icons">
+                        <span class="eq-icon" ng-class="participant.invitation ? 'eq-icon-checked': 'eq-icon-refuse'"></span></p>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <!-- Game template -->
 
-        <div ng-if="game" class="template-play template-black">
+        <!--<div ng-if="game" class="template-play template-black">-->
 
-            <div class="timestamp">
-                <p>
-                    {{timer.min}} : {{timer.sec}} : {{timer.msec}}
-                </p>
-            </div>
+            <!--<div class="timestamp">-->
+                <!--<p>-->
+                    <!--{{timer.min}} : {{timer.sec}} : {{timer.msec}}-->
+                <!--</p>-->
+            <!--</div>-->
 
-            <h1>Question template</h1>
+            <!--<h1>Question template</h1>-->
 
-            <div style="text-align: center;" ng-model="question">
+            <!--<div style="text-align: center;" ng-model="question">-->
 
-                <h1 class="title">{{question.questionText}}</h1>
-                <img class="questionPicture" ng-if="question.questionPicture" data-ng-src="{{question.questionPicture}}"/>
+                <!--<h1 class="title">{{question.questionText}}</h1>-->
+                <!--<img class="questionPicture" ng-if="question.questionPicture" data-ng-src="{{question.questionPicture}}"/>-->
 
-                <ion-list ng-model="response" ng-if="question.answer[0] == 'text'">
+                <!--<ion-list ng-model="response" ng-if="question.answer[0] == 'text'">-->
 
-                    <button class="button" ng-click="sendResponse(1)">{{question.answer[1]}}</button>
-                    <button class="button" ng-click="sendResponse(2)">{{question.answer[2]}}</button>
+                    <!--<button class="button" ng-click="sendResponse(1)">{{question.answer[1]}}</button>-->
+                    <!--<button class="button" ng-click="sendResponse(2)">{{question.answer[2]}}</button>-->
 
-                </ion-list>
+                <!--</ion-list>-->
 
-                <ion-list ng-model="response" ng-if="question.answer[0] == 'image'">
+                <!--<ion-list ng-model="response" ng-if="question.answer[0] == 'image'">-->
 
-                    <img ng-click="sendResponse(1)" data-ng-src="{{question.answer[1]}}" style="height: 60px"/>
-                    <img ng-click="sendResponse(2)" data-ng-src="{{question.answer[2]}}" style="height: 60px"/>
+                    <!--<img ng-click="sendResponse(1)" data-ng-src="{{question.answer[1]}}" style="height: 60px"/>-->
+                    <!--<img ng-click="sendResponse(2)" data-ng-src="{{question.answer[2]}}" style="height: 60px"/>-->
 
-                </ion-list>
+                <!--</ion-list>-->
 
-            </div>
+            <!--</div>-->
 
 
 
-        </div>
+        <!--</div>-->
 
 
         <!-- Rank template -->
-        <div class="template-ranking template-white" ng-if="gameEnded">
-            <h1>Fin du jeu !</h1>
-            <h2>Classement</h2>
-            <ion-list ng-repeat="friend in users | orderBy:'-score'">
-                <div class="user">
-                    <p>
-                        <img ng-src="{{friend.picture.data.url}}" alt="" />
-                        Nom: {{friend.name}}
-                        Score: {{friend.score}}
-                    </p>
-                </div>
-            </ion-list>
-            <hr>
-            <h2>Liste des questions</h2>
-            <ion-list ng-repeat="ql in questionList">
-                <div class="questionListItem">
-                    <h2>{{ql.questionText}}</h2>
-                    <img class="questionPicture" ng-if="ql.questionPicture" data-ng-src="{{ql.questionPicture}}"/>
-                    <p class="description">
-                        {{ql.description}}
-                    </p>
-                    <ion-list ng-if="ql.answer[0] == 'text'" ng-class="true-answer-{{ql.trueAnswer}}">
-                        <p>{{ql.answer[1]}}</p>
-                        <p>{{ql.answer[2]}}</p>
-                    </ion-list>
-                    <ion-list ng-if="ql.answer[0] == 'image'" ng-class="true-answer-{{ql.trueAnswer}}">
-                        <img data-ng-src="{{ql.answer[1]}}" style="height: 60px"/>
-                        <img data-ng-src="{{ql.answer[2]}}" style="height: 60px"/>
-                    </ion-list>
-                </div>
-            </ion-list>
+        <!--<div class="template-ranking template-white" ng-if="gameEnded">-->
+            <!--<h1>Fin du jeu !</h1>-->
+            <!--<h2>Classement</h2>-->
+            <!--<ion-list ng-repeat="friend in users | orderBy:'-score'">-->
+                <!--<div class="user">-->
+                    <!--<p>-->
+                        <!--<img ng-src="{{friend.picture.data.url}}" alt="" />-->
+                        <!--Nom: {{friend.name}}-->
+                        <!--Score: {{friend.score}}-->
+                    <!--</p>-->
+                <!--</div>-->
+            <!--</ion-list>-->
+            <!--<hr>-->
+            <!--<h2>Liste des questions</h2>-->
+            <!--<ion-list ng-repeat="ql in questionList">-->
+                <!--<div class="questionListItem">-->
+                    <!--<h2>{{ql.questionText}}</h2>-->
+                    <!--<img class="questionPicture" ng-if="ql.questionPicture" data-ng-src="{{ql.questionPicture}}"/>-->
+                    <!--<p class="description">-->
+                        <!--{{ql.description}}-->
+                    <!--</p>-->
+                    <!--<ion-list ng-if="ql.answer[0] == 'text'" ng-class="true-answer-{{ql.trueAnswer}}">-->
+                        <!--<p>{{ql.answer[1]}}</p>-->
+                        <!--<p>{{ql.answer[2]}}</p>-->
+                    <!--</ion-list>-->
+                    <!--<ion-list ng-if="ql.answer[0] == 'image'" ng-class="true-answer-{{ql.trueAnswer}}">-->
+                        <!--<img data-ng-src="{{ql.answer[1]}}" style="height: 60px"/>-->
+                        <!--<img data-ng-src="{{ql.answer[2]}}" style="height: 60px"/>-->
+                    <!--</ion-list>-->
+                <!--</div>-->
+            <!--</ion-list>-->
 
-        </div>
+        <!--</div>-->
 
     </ion-content>
 </ion-view>

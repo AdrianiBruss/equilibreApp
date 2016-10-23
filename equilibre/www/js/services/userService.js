@@ -13,11 +13,10 @@ angular.module('starter.userService', [])
 
             angular.forEach($rootScope.users, function(v, k){
                 onlineUsers.push(v.userID)
-
-            })
+            });
 
             angular.forEach($rootScope.user.friends.data, function(value, key) {
-                variable = onlineUsers.indexOf(value.id)
+                variable = onlineUsers.indexOf(value.id);
                 if ( variable > -1 ) {
                     $rootScope.user.friends.data[key].online = true;
                     $rootScope.user.friends.data[key].socketID = $rootScope.users[variable].socketID;

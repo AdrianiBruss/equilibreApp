@@ -1,19 +1,60 @@
 .template-game {
 
-	.friends-list {
-		p {
-			cursor: pointer;
+	.friends-list{
 
-			color: grey;
-			&.online {
-				color: green;
+		width:80%;
+		margin: 30px auto;
+
+		.users-list {
+			div.eq-icons{
+				display: inline-block;
+				vertical-align: middle;
+				float: right;
+				span{
+					display: block;
+					margin: 6px auto;
+					width: 45px;
+					height: 35px;
+				}
 			}
+			> span.status{
+				&.offline{
+					&:before{
+						content: '';
+						border-radius: 50%;
+						width: 12px;
+						height: 12px;
+						display: inline-block;
+						vertical-align: middle;
+						background-color: $red;
+					}
+				}
+				&.online{
+					&:before{
+						content: '';
+						border-radius: 50%;
+						width: 12px;
+						height: 12px;
+						display: inline-block;
+						vertical-align: middle;
+						background-color: $green;
+					}
+				}
 
-			&.selected {
-				color: blue;
 			}
 		}
+
+		.btn.fixed{
+			vertical-align: bottom;
+			bottom: 100px;
+			position: fixed;
+			margin: 0 auto;
+			left: 0;
+			right: 0;
+		}
+
 	}
+
 
 	.questionListItem {
 		

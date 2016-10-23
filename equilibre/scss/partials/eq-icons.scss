@@ -19,6 +19,16 @@
 			background: rgba(0,0,0,0.2);
 		}
 
+		&.eq-icon-checked {
+			background: url('../img/eq-icon-check.svg') no-repeat;
+			background-size: contain;
+		}
+
+		&.eq-icon-refuse {
+			background: url('../img/eq-icon-close.svg') no-repeat;
+			background-size: contain;
+		}
+
 		.eq-icon-camera {
 			display: block;
 
