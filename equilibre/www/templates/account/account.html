@@ -28,15 +28,24 @@
                         </div>
                     </div>
                 </div>
-
+                <span class="line thin-line"></span>
                 <div class="profile-ranking">
                     <h2>Ranking</h2>
 
-                    <p ng-repeat="user in usersRanking">
-                        <span>Name : {{ user.name }}</span></br>
-                        <span>Expérience : {{ user.experience }}</span>
-                    </p>
-
+                    <div class="users-list" ng-repeat="user in usersRanking">
+                        <span class="index">{{$index + 1}}. </span> 
+                        <div class="picture">
+                            <img ng-src="{{user.profilePicture}}" alt="" />
+                        </div>
+                        <div class="text">
+                            <p class="name">
+                                {{ user.name }}
+                            </p>
+                            <p class="xp">
+                                xp <span>{{user.experience}}</span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
             </div>

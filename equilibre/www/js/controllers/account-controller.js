@@ -10,6 +10,8 @@ angular.module('starter.accountController', [])
         SOCKET.instance.on('send users ranking', function(users){
             $scope.usersRanking = users;
 
+            console.log(users);
+
             users.filter(function ( obj ) {
                 if( obj._id === $rootScope.user.userId )
                     $scope.experience = obj.experience;

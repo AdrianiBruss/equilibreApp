@@ -7738,6 +7738,35 @@ span.bullet {
   span.bullet.bullet-white {
     border: 1px solid #ecf0f1; }
 
+.users-list {
+  position: relative;
+  margin: 10px 0; }
+  .users-list .index {
+    margin-right: 0px; }
+  .users-list .picture {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #ecf0f1;
+    border-radius: 50%;
+    overflow: hidden; }
+    .users-list .picture img {
+      max-width: 100%;
+      -webkit-filter: grayscale(100%);
+      filter: grayscale(100%); }
+  .users-list .text {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 20px; }
+    .users-list .text .name {
+      font-weight: 300; }
+    .users-list .text .xp {
+      text-transform: uppercase; }
+      .users-list .text .xp span {
+        font-weight: 500; }
+
 /*
 * Slick Slider
 */

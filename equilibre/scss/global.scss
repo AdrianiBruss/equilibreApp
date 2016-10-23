@@ -120,6 +120,57 @@ span.bullet {
 
 }
 
+.users-list {
+
+	position: relative;
+	margin: 10px 0;
+
+	.index {
+		margin-right: 0px;
+	}
+
+	.picture {
+		display: inline-block;
+		vertical-align: middle;
+
+		margin-left: 10px;
+
+		width: 50px;
+		height: 50px;
+
+		border: 1px solid $white;
+		border-radius: 50%;
+
+		overflow: hidden;
+
+		img {
+			max-width: 100%;
+
+			-webkit-filter: grayscale(100%);
+			filter: grayscale(100%);
+		}
+
+	}
+
+	.text {
+		display: inline-block;
+		vertical-align: middle;
+
+		margin-left: 20px;
+
+		.name {
+			font-weight: $font-light;
+		}
+		.xp {
+			text-transform: uppercase;
+			span {
+				font-weight: $font-medium;
+			}
+		}
+	}
+
+}
+
 /*
 * Slick Slider
 */
