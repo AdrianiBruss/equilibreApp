@@ -98,6 +98,60 @@ span.line {
 	}
 }
 
+span.bullet {
+
+	position: absolute;
+	left: 0px;
+	top: 7px;
+	display: inline-block;
+
+	width: 5px;
+	height: 5px;
+
+	border-radius: 50%;
+
+	&.bullet-black {
+		border: 1px solid $black;
+	}
+
+	&.bullet-white {
+		border: 1px solid $white;
+	}
+
+}
+
+/*
+* Slick Slider
+*/
+.slick-dots {
+
+	margin-top: 20px;
+
+    li {
+        display: inline-block;
+		button {
+
+			width: 8px;
+			height: 8px;
+
+			padding: 0;
+			margin: 0 5px;
+
+			color: transparent;
+			background: transparent;
+
+			border-radius: 50%;
+			border: 1px solid $black;
+		}
+
+		&.slick-active {
+			button {
+				background: $black;
+			}
+		}
+    }
+}
+
 
 @import "partials/eq-icons";
 @import "partials/input";

@@ -27,9 +27,13 @@ angular.module('starter.accountController', [])
         ApiService.getQuestions($rootScope.user.accessToken).then(function(data){
             $scope.questions = data;
 
-            console.log($scope.questions);
+            setTimeout(function(){
+                $('.template-account #questions').slick({
+                    dots: true,
+                    arrows: false
+                })
+            }, 0)
 
-            console.log($('.template-account #questions'))
 
             $ionicLoading.hide();
         })

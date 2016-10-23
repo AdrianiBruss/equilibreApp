@@ -7725,6 +7725,38 @@ span.line {
   span.line.thin-line {
     opacity: 0.4; }
 
+span.bullet {
+  position: absolute;
+  left: 0px;
+  top: 7px;
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%; }
+  span.bullet.bullet-black {
+    border: 1px solid #2b2b2b; }
+  span.bullet.bullet-white {
+    border: 1px solid #ecf0f1; }
+
+/*
+* Slick Slider
+*/
+.slick-dots {
+  margin-top: 20px; }
+  .slick-dots li {
+    display: inline-block; }
+    .slick-dots li button {
+      width: 8px;
+      height: 8px;
+      padding: 0;
+      margin: 0 5px;
+      color: transparent;
+      background: transparent;
+      border-radius: 50%;
+      border: 1px solid #2b2b2b; }
+    .slick-dots li.slick-active button {
+      background: #2b2b2b; }
+
 /*
 * Eq icons
 */
@@ -8039,3 +8071,18 @@ select {
         font-weight: 500; }
     .template-account .content .profile .name {
       font-size: 16px; }
+  .template-account .content .profile-questions #questions {
+    text-align: center; }
+    .template-account .content .profile-questions #questions p {
+      position: relative;
+      text-align: left;
+      padding: 0 10px; }
+      .template-account .content .profile-questions #questions p.eq-text {
+        margin-bottom: 10px; }
+      .template-account .content .profile-questions #questions p.eq-stats span {
+        position: absolute;
+        right: 10px; }
+      .template-account .content .profile-questions #questions p.eq-stats.eq-gr span {
+        color: #26c281; }
+      .template-account .content .profile-questions #questions p.eq-stats.eq-br span {
+        color: #f64747; }

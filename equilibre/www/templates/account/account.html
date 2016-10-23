@@ -15,14 +15,15 @@
                     <h2>My questions </h2>
                     <div id="questions">
                         <div ng-repeat="q in questions">
-                            <p>
+                            <p class="eq-text">
+                                <span class="bullet bullet-black"></span>
                                 {{ q.questionText }}
                             </p>
-                            <p>
-                                Bonnes réponses <span>{{ q.stats[0] }}</span>
+                            <p class="eq-stats eq-gr">
+                                Good answers <span>{{ q.stats[0] * 100 / (q.stats[0] + q.stats[1]) | number:1 }} %</span>
                             </p>
-                            <p>
-                                Mauvaises réponses <span>{{ q.stats[1] }}</span>
+                            <p class="eq-stats eq-br">
+                                Bad answers <span>{{ q.stats[1] * 100 / (q.stats[0] + q.stats[1]) | number:1 }} %</span>
                             </p>
                         </div>
                     </div>

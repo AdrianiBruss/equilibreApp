@@ -99,6 +99,51 @@
 			}
 		}
 
+		.profile-questions {
+
+			#questions {
+
+				text-align: center;
+
+				p {
+
+					position: relative;
+					text-align: left;
+					padding: 0 10px;
+
+					&.eq-text {
+						margin-bottom: 10px;
+					}
+
+					&.eq-stats {
+
+						span {
+
+							position: absolute;
+							right: 10px;
+
+						}
+
+						&.eq-gr {
+							span {
+								color: $green;
+							}
+						}
+
+						&.eq-br {
+							span {
+								color: $red;
+							}
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
 	}
 
 }
