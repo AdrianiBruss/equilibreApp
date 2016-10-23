@@ -22,8 +22,7 @@ angular.module('starter.gameController', [])
         $scope.questionList = [];
         $scope.goodAnswer = 0;
         $scope.usersResponses = {
-            'active': false,
-            'responses': 0
+            'active': false
         };
 
         var start = 0;
@@ -31,8 +30,10 @@ angular.module('starter.gameController', [])
         // checking if an invitation has been send
         if ($state.params.question) {
             startGame();
-            $scope.waiting = true;
+            // // $scope.waiting = true;
             $scope.invitation = false;
+            $scope.participants = $state.params.participants;
+            $scope.usersResponses.active = true;
         }
 
         // add friend to play
@@ -69,7 +70,6 @@ angular.module('starter.gameController', [])
             }
 
             $scope.usersResponses.active = true;
-            $scope.usersResponses.responses = $scope.room.length - 1;
 
             startGame();
 
@@ -78,13 +78,10 @@ angular.module('starter.gameController', [])
         // [Socket] : waiting for new questions
         function startGame(){
 
-            var experienceUser = 0;
-
             //--- hide loader
-            SOCKET.instance.on('invitation sent', function (nbr) {
-                // console.log('Vous avez reçu ' + nbr + ' réponse(s) à votre invitation');
+            SOCKET.instance.on('invitation sent', function (guests) {
+                $scope.participants = guests;
                 $scope.invitation = false;
-                $scope.usersResponses.responses = $scope.usersResponses.responses - nbr;
                 $scope.$apply();
             });
 
@@ -94,7 +91,7 @@ angular.module('starter.gameController', [])
                 // If it's the first question
                 if (data[2]) {
 
-                    $scope.waiting = false;
+                    // $scope.waiting = false;
                     $scope.usersResponses.active = false;
                     $scope.invitation = false;
                     $scope.game = true;
@@ -126,7 +123,6 @@ angular.module('starter.gameController', [])
                     if ( value.userID == $rootScope.user.id )
                     {
                         $scope.users.push(angular.extend({}, value, $rootScope.user));
-                        experienceUser += value.score;
                     }
 
                     angular.forEach($rootScope.user.friends.data, function(v, k){

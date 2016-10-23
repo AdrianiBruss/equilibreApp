@@ -83,7 +83,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                     }
                 },
                 params: {
-                    question: null
+                    question: null,
+                    participants: null
                 }
             })
 

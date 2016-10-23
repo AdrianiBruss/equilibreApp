@@ -17,15 +17,18 @@
         </div>
 
         <!-- Waiting for users template -->
-        <div class="template-waiting template-black waiting-users-invitation" ng-if="waiting">
-            <h1>En attente de joueurs ...</h1>
-        </div>
+        <!--<div class="template-waiting template-black waiting-users-invitation" ng-if="waiting">-->
+            <!--<h1>En attente de joueurs ...</h1>-->
+        <!--</div>-->
 
         <div class="template-waiting template-black waiting-users" ng-if="usersResponses.active">
             <h1>En attente de joueurs ...</h1>
-            <p>
-                Il ne reste plus que {{usersResponses.responses}} joueur(s) à attendre ...
-            </p>
+            <ion-list ng-repeat="p in participants" class="friends-list">
+                <p>
+                    <!--friend #{{$index+1}}: <img ng-src="{{f.picture.data.url}}" alt="" />   {{f.name}}-->
+                    {{p}}
+                </p>
+            </ion-list>
         </div>
 
         <!-- Game template -->

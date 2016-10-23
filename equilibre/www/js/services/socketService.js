@@ -40,8 +40,10 @@ angular.module('starter.socketService', [])
 
         // [Socket] : waiting for an invitation
         function onInvit(){
-            socket.on('send an invitation', function(roomID){
-                $state.go('tab.game', {'question': true});
+            socket.on('send an invitation', function(data){
+                var roomID = data[0];
+                var participants = data[1];
+                $state.go('tab.game', {'question': true, 'participants': participants});
                 // open request invitation popin
                 openPopin(roomID);
             });

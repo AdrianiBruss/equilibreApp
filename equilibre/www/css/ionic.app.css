@@ -4210,7 +4210,7 @@ ion-infinite-scroll {
     color: #444; }
 
 .tabs-striped .tabs {
-  background-color: white;
+  /*background-color: white;*/
   background-image: none;
   border: none;
   border-bottom: 1px solid #ddd;
