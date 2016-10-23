@@ -25,29 +25,23 @@
                             <h2>Illustrate your question</h2>
                             <!-- <input type="file" id="questionPicture" fileread="newQuestion.questionPicture" ng-model="newQuestion.questionPicture"> -->
                             <div class="eq-icons">
-                                <a href="#" class="eq-icon" ng-click="openCamera()"><span class="eq-icon-camera"></span></a>
-                                <a href="#" class="eq-icon" ng-click="openMedias()"><span class="eq-icon-medias"></span></a>
+                                <div class="eq-icon" ng-click="openCamera()"><span class="eq-icon-camera"></span></div>
+                                <div class="eq-icon" ng-click="openMedias()"><span class="eq-icon-files"></span></div>
                             </div>
-                            <img data-ng-src="{{newQuestion.questionPicture}}"
-                                 data-err-src="vendor/adminlte/img/avatar.png"
-                                 style="height: 60px"/>
+                            <img ng-if="newQuestion.questionPicture" data-ng-src="{{newQuestion.questionPicture}}"/>
                         </div>
                     </div>
                 </div>
             </div>
+            <span class="line thin-line"></span>
             <!-- /.box -->
             <!-- Answer -->
             <div class="box">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Upload Answer</h3>
-                    </div>
+                <div class="box">
                     <div class="box-body">
-
                         <div class="form-group">
-                            <label for="answerType">Type</label>
-                            <select class="form-control"  id="answerType" ng-model="newQuestion.answer[0]" required>
-                                <option value="" disabled selected>Please select a type</option>
+                            <select ng-model="newQuestion.answer[0]" required>
+                                <option value="" disabled selected>Select a type of answer</option>
                                 <option value="text" ng-model="answerType">Text</option>
                                 <option value="image" ng-model="answerType">Image</option>
                             </select>
@@ -55,74 +49,103 @@
 
                         <div class="answer" ng-if="newQuestion.answer[0] == 'text'">
                             <div class="form-group">
-                                <label for="answerTextOne">Response 1</label>
-                                <input type="text" ng-model="newQuestion.answer[1]" class="form-control" id="answerTextOne"
-                                       placeholder="Enter Answer One">
+                                <span class="input input--nao">
+    				                <input class="input__field input__field--nao" type="text" id="answerTextOne" ng-model="newQuestion.answer[1]"/>
+    					            <label class="input__label input__label--nao" for="answerTextOne">
+    						            <span class="input__label-content input__label-content--nao">Response 1</span>
+    					            </label>
+    					            <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+    						            <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"/>
+    					            </svg>
+    				            </span>
                             </div>
                             <div class="form-group">
-                                <label for="answerTextTwo">Response 2</label>
-                                <input type="text" ng-model="newQuestion.answer[2]" class="form-control" id="answerTextTwo"
-                                       placeholder="Enter Answer Two">
+                                <span class="input input--nao">
+    				                <input class="input__field input__field--nao" type="text" id="answerTextTwo" ng-model="newQuestion.answer[2]"/>
+    					            <label class="input__label input__label--nao" for="answerTextTwo">
+    						            <span class="input__label-content input__label-content--nao">Response 2</span>
+    					            </label>
+    					            <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+    						            <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"/>
+    					            </svg>
+    				            </span>
                             </div>
                             <div class="form-group answer trueAnswer"  ng-if="newQuestion.answer[1] != '' && newQuestion.answer[2] != ''">
-                                <label>True Answer</label>
-                                <p ng-if="newQuestion.answer[1] != null && newQuestion.answer[1] != ''">
-                                    <input type="radio" class="radio" ng-model="newQuestion.trueAnswer" ng-value="1">
-                                    <span>{{newQuestion.answer[1]}}</span>
-                                </p>
-                                <p ng-if="newQuestion.answer[2] != null && newQuestion.answer[2] != ''">
-                                    <input type="radio" class="radio" ng-model="newQuestion.trueAnswer" ng-value="2">
-                                    <span>{{newQuestion.answer[2]}}</span>
-                                </p>
+                                <select ng-model="newQuestion.trueAnswer" required>
+                                    <option value="" disabled selected>Select the good answer</option>
+                                    <option ng-if="newQuestion.answer[1] != null && newQuestion.answer[1] != ''"
+                                            ng-value="1"
+                                            ng-model="answerType">
+                                            {{newQuestion.answer[1]}}
+                                    </option>
+                                    <option ng-if="newQuestion.answer[2] != null && newQuestion.answer[2] != ''"
+                                            ng-value="2"
+                                            ng-model="answerType">
+                                            {{newQuestion.answer[2]}}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                         <div class="answer" ng-if="newQuestion.answer[0] == 'image'">
                             <div class="form-group">
-                                <label for="answerPictureOne">Picture 1</label>
-                                <input type="file" id="answerPictureOne" fileread="newQuestion.answer[1]">
-                                <img data-ng-src="{{newQuestion.answer[1]}}" data-err-src="vendor/adminlte/img/avatar.png"
-                                     style="height: 60px"/>
+                                <p>Response 1</p>
+                                <div class="eq-icons">
+                                    <div class="eq-icon" ng-click="openCamera()"><span class="eq-icon-camera"></span></div>
+                                    <div class="eq-icon" ng-click="openMedias()"><span class="eq-icon-files"></span></div>
+                                </div>
+                                <img ng-if="newQuestion.answer[1]" data-ng-src="{{newQuestion.answer[1]}}"/>
+                                <!-- <input type="file" id="answerPictureOne" fileread="newQuestion.answer[1]"> -->
+                                <!-- <img data-ng-src="{{newQuestion.answer[1]}}" data-err-src="vendor/adminlte/img/avatar.png" -->
+                                     <!-- style="height: 60px"/> -->
                             </div>
                             <div class="form-group">
-                                <label for="answerPictureTwo">Picture 2</label>
+                                <p>Response 2</p>
+                                <div class="eq-icons">
+                                    <div class="eq-icon" ng-click="openCamera()"><span class="eq-icon-camera"></span></div>
+                                    <div class="eq-icon" ng-click="openMedias()"><span class="eq-icon-files"></span></div>
+                                </div>
+                                <img ng-if="newQuestion.answer[2]" data-ng-src="{{newQuestion.answer[2]}}"/>
+                                <!-- <label for="answerPictureTwo">Response 2</label>
                                 <input type="file" id="answerPictureTwo" fileread="newQuestion.answer[2]">
                                 <img data-ng-src="{{newQuestion.answer[2]}}" data-err-src="vendor/adminlte/img/avatar.png"
-                                     style="height: 60px"/>
+                                     style="height: 60px"/> -->
                             </div>
-                            <div class="form-group answer trueAnswer" ng-model="newQuestion.trueAnswer" ng-if="newQuestion.answer[1] != '' && newQuestion.answer[2] != ''">
-                                <label>True Answer</label>
-                                <p ng-if="newQuestion.answer[1] != null && newQuestion.answer[1] != ''">
-                                    <input type="radio" class="radio" ng-model="newQuestion.trueAnswer" ng-value="1">
-                                    <img data-ng-src="{{newQuestion.answer[1]}}"/>
-                                </p>
-                                <p ng-if="newQuestion.answer[2] != null && newQuestion.answer[2] != ''">
-                                    <input type="radio" class="radio" ng-model="newQuestion.trueAnswer" ng-value="2">
-                                    <img data-ng-src="{{newQuestion.answer[2]}}"/>
-                                </p>
+                            <div class="form-group answer trueAnswer"  ng-if="newQuestion.answer[1] != '' && newQuestion.answer[2] != ''">
+                                <select ng-model="newQuestion.trueAnswer" required>
+                                    <option value="" disabled selected>Select the good answer</option>
+                                    <option ng-if="newQuestion.answer[1] != null && newQuestion.answer[1] != ''"
+                                            ng-value="1"
+                                            ng-model="answerType">
+                                            Response 1
+                                    </option>
+                                    <option ng-if="newQuestion.answer[2] != null && newQuestion.answer[2] != ''"
+                                            ng-value="2"
+                                            ng-model="answerType">
+                                            Response 2
+                                    </option>
+                                </select>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
+            <span class="line thin-line"></span>
             <!-- /.box -->
             <!-- Description -->
             <div class="box">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Add a description</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="form-group">
-                            <label for="description">Question description</label>
-                            <input type="text" ng-model="newQuestion.description" class="form-control" id="description"
-                                   placeholder="Enter Description">
-                        </div>
-                    </div>
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
+                <h2>Add a description</h2>
+                <div class="form-group">
+                    <span class="input input--nao">
+                        <input class="input__field input__field--nao" type="text" id="description" ng-model="newQuestion.description"/>
+                        <label class="input__label input__label--nao" for="description">
+                            <span class="input__label-content input__label-content--nao">Question description</span>
+                        </label>
+                        <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+                            <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"/>
+                        </svg>
+                    </span>
                 </div>
+                <button type="submit" class="btn">Submit</button>
             </div>
         </form>
 

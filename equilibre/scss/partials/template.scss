@@ -11,6 +11,13 @@
 		color: $white;
 	}
 
+	.btn {
+
+		&:hover {
+			background: rgba(255, 255, 255, 0.2)
+		}
+	}
+
 	span.line {
 		background: $white;
 	}
@@ -20,6 +27,15 @@
 
 	h1, h2, p, a {
 		color: $black;
+	}
+
+	.btn {
+		border: 1px solid $black;
+		color: $black;
+
+		&:hover {
+			background: rgba(0, 0, 0, 0.2)
+		}
 	}
 
 	span.line {

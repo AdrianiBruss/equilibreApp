@@ -1,6 +1,9 @@
 angular.module('starter.accountController', [])
 
-    .controller('AccountCtrl', ['$scope', '$rootScope', 'ApiService','FacebookService', 'SocketService', 'SOCKET',function ($scope, $rootScope, ApiService, FacebookService, SocketService, SOCKET) {
+    .controller('AccountCtrl', ['$scope', '$rootScope', 'ApiService','FacebookService', 'SocketService', 'SOCKET', '$ionicLoading',
+    function ($scope, $rootScope, ApiService, FacebookService, SocketService, SOCKET, $ionicLoading) {
+
+        $ionicLoading.show();
 
         SocketService.getRanking();
 
@@ -23,6 +26,12 @@ angular.module('starter.accountController', [])
         // [API] Get user's questions
         ApiService.getQuestions($rootScope.user.accessToken).then(function(data){
             $scope.questions = data;
+
+            console.log($scope.questions);
+
+            console.log($('.template-account #questions'))
+
+            $ionicLoading.hide();
         })
 
     }]);
