@@ -4,7 +4,7 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900');
 h1, h2, h3, p, a, span {
 	font-family: $font-family;
-	font-weight: $font-regular;
+	font-weight: $font-light;
 }
 h1 {
 	font-size: $font-size-h1;
@@ -24,10 +24,29 @@ p {
 /*
 * Tabs
 */
+.nav-bar-tabs-top.hide ~ .view-container .tabs-top .tabs {
+	top: initial;
+}
+
+.pane[hide-nav-bar="true"] .has-tabs-top {
+  top: 0px;
+}
+
 .tabs {
+  background: $black;
+  border-top: 1px solid $white !important;
+}
+
+.tabs-striped .tabs {
 	background: $black;
 	border-top: 1px solid $white !important;
+    border-bottom: none;
 }
+
+ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.tab-item-active, ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.active, ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.activated {
+  border:none;
+}
+
 .tab-item, &.tab-item-active {
 	color: $white !important;
 }
@@ -63,7 +82,7 @@ p {
 	background: transparent;
 
 	font-size: $font-size-btn;
-	font-weight: $font-medium;
+	font-weight: $font-regular;
 
 	color: $white;
 	text-transform: uppercase;

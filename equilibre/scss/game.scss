@@ -18,12 +18,12 @@
 	.questionListItem {
 		
 		.true-answer-1 {
-			p:first-child() {
+			p:first-child{
 				color: green;
 			}
 		}
 		.true-answer-2 {
-			p:last-child() {
+			p:last-child{
 				color: green;
 			}
 		}

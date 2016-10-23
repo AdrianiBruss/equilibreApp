@@ -4210,7 +4210,7 @@ ion-infinite-scroll {
     color: #444; }
 
 .tabs-striped .tabs {
-  /*background-color: white;*/
+  background-color: white;
   background-image: none;
   border: none;
   border-bottom: 1px solid #ddd;
@@ -7660,7 +7660,7 @@ ion-slides {
 */
 h1, h2, h3, p, a, span {
   font-family: "Rubik", sans-serif;
-  font-weight: 400; }
+  font-weight: 300; }
 
 h1 {
   font-size: 30px;
@@ -7678,9 +7678,23 @@ p {
 /*
 * Tabs
 */
+.nav-bar-tabs-top.hide ~ .view-container .tabs-top .tabs {
+  top: initial; }
+
+.pane[hide-nav-bar="true"] .has-tabs-top {
+  top: 0px; }
+
 .tabs {
   background: #2b2b2b;
   border-top: 1px solid #ecf0f1 !important; }
+
+.tabs-striped .tabs {
+  background: #2b2b2b;
+  border-top: 1px solid #ecf0f1 !important;
+  border-bottom: none; }
+
+ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.tab-item-active, ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.active, ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.activated {
+  border: none; }
 
 .tab-item, .tab-item-active {
   color: #ecf0f1 !important; }
@@ -7705,7 +7719,7 @@ p {
   border: 1px solid #ecf0f1;
   background: transparent;
   font-size: 17px;
-  font-weight: 500;
+  font-weight: 400;
   color: #ecf0f1;
   text-transform: uppercase;
   text-decoration: none;

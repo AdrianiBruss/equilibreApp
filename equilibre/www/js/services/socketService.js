@@ -85,10 +85,6 @@ angular.module('starter.socketService', [])
                 return  onConnection(id);
             },
 
-            getConnectedUsers: function(){
-                return onGetUsers()
-            },
-
             onInvit: function(){
                 return onInvit();
             }

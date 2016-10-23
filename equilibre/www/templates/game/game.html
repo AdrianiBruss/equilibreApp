@@ -1,5 +1,8 @@
-<ion-view view-title="Game" class="template template-game" hide-nav-bar="true">
-    <ion-content>
+<ion-view view-title="Game" class="template template-game template-black" hide-nav-bar="true">
+    <ion-content class="padding">
+
+        <h1>Select friends</h1>
+        <span class="line thin-line"></span>
 
         <!-- Invitation game template -->
         <div ng-if="invitation" class="template-select-friends template-black">
@@ -10,15 +13,29 @@
                 </p>
             </ion-list>
 
+            <div class="">
+                <ion-list ng-repeat="friend in users">
+                    <div class="user">
+                        <p>
+                            Nom:{{friend.name}}
+                        </p>
+                        <p>
+                            Position: {{friend.position}}
+                        </p>
+                        <img ng-src="{{friend.picture.data.url}}" alt="" />
+                    </div>
+                </ion-list>
+            </div>
+
             <button class="button button-assertive" style="margin:50px auto;display: block;" ng-click="playGame()">
-              Select friends
+                Select friends
             </button>
 
         </div>
 
         <!-- Waiting for users template -->
         <!--<div class="template-waiting template-black waiting-users-invitation" ng-if="waiting">-->
-            <!--<h1>En attente de joueurs ...</h1>-->
+        <!--<h1>En attente de joueurs ...</h1>-->
         <!--</div>-->
 
         <div class="template-waiting template-black waiting-users" ng-if="usersResponses.active">
@@ -64,20 +81,7 @@
 
             </div>
 
-            <div class="">
-                <h2>Friends position</h2>
-                <ion-list ng-repeat="friend in users">
-                    <div class="user">
-                        <p>
-                            Nom:{{friend.name}}
-                        </p>
-                        <p>
-                            Position: {{friend.position}}
-                        </p>
-                        <img ng-src="{{friend.picture.data.url}}" alt="" />
-                    </div>
-                </ion-list>
-            </div>
+
 
         </div>
 

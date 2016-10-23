@@ -116,24 +116,13 @@ angular.module('starter.gameController', [])
                 })[0];
 
                 // update users during game
-                $scope.users = [];
+                getFacebookProfile($scope, users);
 
-                angular.forEach(users, function(value, key){
-
-                    if ( value.userID == $rootScope.user.id )
-                    {
-                        $scope.users.push(angular.extend({}, value, $rootScope.user));
-                    }
-
-                    angular.forEach($rootScope.user.friends.data, function(v, k){
-                        if ( value.userID === v.id ){
-                            $scope.users.push(angular.extend({}, value, v))
-                        }
-                    })
-
-                });
+                console.log($scope.users);
 
                 $scope.$apply();
+
+
             });
 
             SOCKET.instance.on('game stop', function(data){
@@ -194,6 +183,26 @@ angular.module('starter.gameController', [])
         };
 
         var end = 0, diff = 0, timer = null;
+
+        function getFacebookProfile(scope, profiles){
+            scope.users = [];
+
+            angular.forEach(profiles, function(value, key){
+
+                if ( value.userID == $rootScope.user.id )
+                {
+                    scope.users.push(angular.extend({}, value, $rootScope.user));
+                }
+
+                angular.forEach($rootScope.user.friends.data, function(v, k){
+                    if ( value.userID === v.id ){
+                        scope.users.push(angular.extend({}, value, v))
+                    }
+                })
+
+            });
+
+        }
 
         function startChrono() {
 
