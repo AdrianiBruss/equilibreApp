@@ -2,7 +2,7 @@
     <ion-content>
 
         <!-- Invitation game template -->
-        <div ng-if="invitation">
+        <div ng-if="invitation" class="template-select-friends template-black">
 
             <ion-list ng-repeat="f in friends" class="friends-list">
                 <p ng-click="addFriend(f, $index)" ng-class="{'online': f.online, 'selected': f.selected}">
@@ -17,11 +17,11 @@
         </div>
 
         <!-- Waiting for users template -->
-        <div class="waiting-users-invitation" ng-if="waiting">
+        <div class="template-waiting template-black waiting-users-invitation" ng-if="waiting">
             <h1>En attente de joueurs ...</h1>
         </div>
 
-        <div class="waiting-users" ng-if="usersResponses.active">
+        <div class="template-waiting template-black waiting-users" ng-if="usersResponses.active">
             <h1>En attente de joueurs ...</h1>
             <p>
                 Il ne reste plus que {{usersResponses.responses}} joueur(s) à attendre ...
@@ -30,7 +30,7 @@
 
         <!-- Game template -->
 
-        <div ng-if="game">
+        <div ng-if="game" class="template-play template-black">
 
             <div class="timestamp">
                 <p>
@@ -80,7 +80,7 @@
 
 
         <!-- Rank template -->
-        <div class="ranking" ng-if="gameEnded">
+        <div class="template-ranking template-white" ng-if="gameEnded">
             <h1>Fin du jeu !</h1>
             <h2>Classement</h2>
             <ion-list ng-repeat="friend in users | orderBy:'-score'">

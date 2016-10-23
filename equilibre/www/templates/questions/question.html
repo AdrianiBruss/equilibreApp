@@ -1,26 +1,33 @@
-<ion-view view-title="Question" class="template template-question" hide-nav-bar="true">
+<ion-view view-title="Question" class="template template-question template-white" hide-nav-bar="true">
     <ion-content class="padding">
 
-        <h2>Create a question</h2>
+        <h1>Contribute</h1>
+        <span class="line thin-line"></span>
 
         <!-- form start -->
         <form role="form" name="addForm" novalidate ng-submit="addQuestion()">
             <!-- Question -->
             <div class="box">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Upload Question</h3>
-                    </div>
+                <div class="box">
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="questionText">Question text</label>
-                            <input type="text" ng-model="newQuestion.questionText" class="form-control"
-                                   id="questionText"
-                                   placeholder="Enter Question">
+                            <span class="input input--nao">
+				                <input class="input__field input__field--nao" type="text" id="questionText" ng-model="newQuestion.questionText"/>
+					            <label class="input__label input__label--nao" for="questionText">
+						            <span class="input__label-content input__label-content--nao">Question text</span>
+					            </label>
+					            <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+						            <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"/>
+					            </svg>
+				            </span>
                         </div>
                         <div class="form-group">
-                            <label for="questionPicture">Question Picture</label>
-                            <input type="file" id="questionPicture" fileread="newQuestion.questionPicture" ng-model="newQuestion.questionPicture">
+                            <h2>Illustrate your question</h2>
+                            <!-- <input type="file" id="questionPicture" fileread="newQuestion.questionPicture" ng-model="newQuestion.questionPicture"> -->
+                            <div class="eq-icons">
+                                <a href="#" class="eq-icon" ng-click="openCamera()"><span class="eq-icon-camera"></span></a>
+                                <a href="#" class="eq-icon" ng-click="openMedias()"><span class="eq-icon-medias"></span></a>
+                            </div>
                             <img data-ng-src="{{newQuestion.questionPicture}}"
                                  data-err-src="vendor/adminlte/img/avatar.png"
                                  style="height: 60px"/>

@@ -4,16 +4,12 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900');
 h1, h2, h3, p, a {
 	font-family: 'Rubik', sans-serif;
+	font-weight: $font-regular;
 }
 h1 {
 	font-size: $font-size-h1;
-}
-
-/*
-* Templates
-*/
-.template {
-	background: $black;
+	text-align: center;
+	margin: 60px auto 40px auto;
 }
 
 /*
@@ -21,9 +17,10 @@ h1 {
 */
 .tabs {
 	background: $black;
+	border-top: 1px solid $white !important;
 }
-.tab-item.tab-item-active {
-	color: $white;
+.tab-item, &.tab-item-active {
+	color: $white !important;
 }
 
 
@@ -71,3 +68,24 @@ h1 {
 	}
 
 }
+
+span.line {
+
+	display: block;
+
+	height: 1px;
+	width: 80%;
+
+	background: $white;
+
+    margin: 40px auto;
+
+	&.thin-line {
+		opacity: 0.4;
+	}
+}
+
+
+@import "partials/eq-icons";
+@import "partials/input";
+@import "partials/template";

@@ -1,0 +1,41 @@
+/*
+* Eq icons
+*/
+.eq-icons {
+
+	text-align: center;
+
+	.eq-icon {
+		display: inline-block;
+
+		width: 80px;
+		height: 50px;
+
+		border: 1px solid $black;
+
+		margin: 10px;
+
+		.eq-icon-camera {
+			display: block;
+
+			margin: 0 auto;
+
+			width: 35px;
+			height: 25px;
+
+			background: url('../img/eq-icon-camera.svg');
+		}
+
+		.eq-icon-files {
+			display: block;
+
+			margin: 0 auto;
+
+			width: 22px;
+			height: 28px;
+
+			background: url('../img/eq-icon-files.svg');
+		}
+	}
+
+}
