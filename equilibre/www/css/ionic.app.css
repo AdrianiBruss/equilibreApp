@@ -9861,6 +9861,11 @@ h1 {
   text-transform: uppercase;
   text-decoration: none;
   text-align: center; }
+  .btn.btn-big {
+    padding: 65px 0;
+    font-size: 22px; }
+  .btn.btn-small {
+    padding: 20px 0; }
 
 .template-game .friends-list p {
   cursor: pointer;

@@ -6,7 +6,7 @@ h1, h2, h3, p, a {
 	font-family: 'Rubik', sans-serif;
 }
 h1 {
-	font-size: 30px;
+	font-size: $font-size-h1;
 }
 
 /*
@@ -52,12 +52,22 @@ h1 {
 	border: 1px solid $white;
 	background: transparent;
 
-	font-size: 17px;
+	font-size: $font-size-btn;
 	font-weight: $font-medium;
 
 	color: $white;
 	text-transform: uppercase;
 	text-decoration: none;
 	text-align: center;
+
+	&.btn-big {
+		padding: 65px 0;
+
+		font-size: $font-size-btn-big;
+	}
+
+	&.btn-small {
+		padding: 20px 0;
+	}
 
 }
