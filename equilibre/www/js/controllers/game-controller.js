@@ -154,6 +154,15 @@ angular.module('starter.gameController', [])
                 // Stop timer
                 stopChrono();
 
+                setTimeout(function(){
+                    console.log($('.template-ranking .questions'));
+                    $('.template-ranking .questions').slick({
+                        dots: true,
+                        arrows: false
+                    })
+                }, 0)
+
+
                 // console.log('scope.user.position', $scope.user.position);
                 // [Socket] : send final score to socket
                 SOCKET.instance.emit('submit question', [$scope.roomID, false, null, null, null, $scope.user.score])
@@ -210,8 +219,6 @@ angular.module('starter.gameController', [])
                 })
 
             });
-
-            console.log('USERS', $scope.users);
 
             $scope.$apply();
 

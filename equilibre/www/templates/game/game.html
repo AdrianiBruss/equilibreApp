@@ -102,37 +102,53 @@
 
 
         <!-- Rank template -->
-        <div class="template-ranking template-white" ng-if="gameEnded">
-            <h1>Fin du jeu !</h1>
-            <h2>Classement</h2>
-            <ion-list ng-repeat="friend in users | orderBy:'-score'">
-                <div class="user">
-                    <p>
-                        <img ng-src="{{friend.picture.data.url}}" alt="" />
-                        Nom: {{friend.name}}
-                        Score: {{friend.score}}
-                    </p>
+        <div class="template-ranking" ng-if="gameEnded">
+            <h1>You finished !</h1>
+
+            <span class="line thin-line"></span>
+            <h2>Ranking</h2>
+            <div class="friends-list" ng-repeat="participant in users | orderBy:'-score'">
+                <div class="users-list">
+                    <span class="index">{{$index + 1}}. </span>
+                    <div class="picture">
+                        <img ng-src="{{participant.picture.data.url}}" alt="" />
+                    </div>
+                    <div class="text">
+                        <p class="name">
+                            {{ participant.name }}
+                        </p>
+                    </div>
+                    <div class="eq-icons">
+                        <span class="eq-icon">{{participant.score}} pts</span></p>
+                    </div>
                 </div>
-            </ion-list>
-            <hr>
-            <h2>Liste des questions</h2>
-            <ion-list ng-repeat="ql in questionList">
-                <div class="questionListItem">
-                    <h2>{{ql.questionText}}</h2>
-                    <img class="questionPicture" ng-if="ql.questionPicture" data-ng-src="{{ql.questionPicture}}"/>
-                    <p class="description">
-                        {{ql.description}}
-                    </p>
-                    <ion-list ng-if="ql.answer[0] == 'text'" ng-class="true-answer-{{ql.trueAnswer}}">
-                        <p>{{ql.answer[1]}}</p>
-                        <p>{{ql.answer[2]}}</p>
-                    </ion-list>
-                    <ion-list ng-if="ql.answer[0] == 'image'" ng-class="true-answer-{{ql.trueAnswer}}">
-                        <img data-ng-src="{{ql.answer[1]}}" style="height: 60px"/>
-                        <img data-ng-src="{{ql.answer[2]}}" style="height: 60px"/>
-                    </ion-list>
+            </div>
+
+            <span class="line thin-line"></span>
+            <h2>Question list</h2>
+
+            <div id="questionList">
+                <div class="questions">
+                    <div ng-repeat="q in questionList">
+                        <p class="eq-text">
+                            <span class="bullet bullet-white"></span>
+                            {{ q.questionText }}
+                        </p>
+                        <img class="questionPicture" ng-if="q.questionPicture" data-ng-src="{{q.questionPicture}}"/>
+                        <p class="description">
+                            {{q.description}}
+                        </p>
+                        <div class="questionAnswer" ng-if="q.answer[0] == 'text'" ng-class="{'true-first': {{q.trueAnswer == 1}} }">
+                            <p>{{q.answer[1]}}</p>
+                            <p>{{q.answer[2]}}</p>
+                        </div>
+                        <div class="questionAnswer" ng-if="q.answer[0] == 'image'" ng-class="{'true-first': {{q.trueAnswer == 1}} }">
+                            <img data-ng-src="{{q.answer[1]}}"/>
+                            <img data-ng-src="{{q.answer[2]}}"/>
+                        </div>
+                    </div>
                 </div>
-            </ion-list>
+            </div>
 
         </div>
 

@@ -6,6 +6,8 @@ angular.module('starter.facebookService', [])
         // [Facebook] : init service
         function facebookInit() {
 
+            console.log('facebookInit')
+
             $window.fbAsyncInit = function () {
                 FB.init({
                     appId: '1297400556958732',
@@ -21,11 +23,14 @@ angular.module('starter.facebookService', [])
 
         // [Facebook] : watching for login status
         function facebookWatchLoginStatus() {
+            console.log('facebookWatchLoginStatus')
 
             FB.getLoginStatus(function (response) {
 
                 if (response.status === 'connected') {
                     // User connected
+
+                    console.log('FB User connected')
 
                     $rootScope.user = response;
 
@@ -82,6 +87,8 @@ angular.module('starter.facebookService', [])
         // [Facebook] : get profile datas
         // [API] : Login or register User to API
         function getProfile(registerUser) {
+
+            console.log('getProfile')
 
             FB.api('/me?fields=id,name,email,picture.width(200),friends{picture,name},cover', function (response) {
 
