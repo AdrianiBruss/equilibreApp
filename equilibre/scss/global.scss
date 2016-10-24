@@ -199,6 +199,25 @@ span.bullet {
 
 }
 
+.popup-container {
+	.popup {
+		background: $white;
+		color: $black;
+		.popup-head {
+			border-bottom-color: $black;
+			.popup-title {
+				
+				font-size: $font-size-content;
+			}
+		}
+		.popup-buttons {
+			.button {
+				background: $white;
+				border: 1px solid $black;
+			}
+		}
+	}
+}
 /*
 * Slick Slider
 */

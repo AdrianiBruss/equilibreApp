@@ -1,5 +1,6 @@
 .template-game {
 
+
 	.friends-list{
 
 		width:80%;
@@ -57,7 +58,7 @@
 
 
 	.questionListItem {
-		
+
 		.true-answer-1 {
 			p:first-child{
 				color: green;
@@ -70,4 +71,123 @@
 		}
 	}
 
+	.template-play {
+
+
+		.timestamp {
+			margin-top: 20px;
+			p {
+				text-align: center;
+				font-size: 50px;
+			}
+
+		}
+
+		.questions {
+
+			p {
+				margin: 20px 0;
+				padding: 0 20px;
+			}
+
+			.questionPicture {
+
+				display: block;
+				max-width: 250px;
+				max-height: 100px;
+				margin: 0 auto;
+
+			}
+
+			.response {
+				text-align: center;
+				margin-top: 20px;
+
+				.btn {
+					display: inline-block;
+					width: 40%;
+					padding: 20px 0;
+				}
+
+				img {
+					max-height: 150px;
+					max-width: 40%;
+				}
+
+			}
+
+		}
+
+		.timeline {
+
+			position: absolute;
+			bottom: 0px;
+
+			width: 100%;
+
+			.timeline-user {
+
+				position: relative;
+
+				margin: 20px auto;
+
+
+				.initials {
+
+					display: inline-block;
+					vertical-align: middle;
+					color: $white;
+
+					margin-right: 10px;
+
+				}
+
+				.line {
+					position: relative;
+
+					width: 80%;
+					height: 1px;
+
+					vertical-align: middle;
+					display: inline-block;
+
+					background: $white;
+
+				}
+
+				.profile {
+
+					position: absolute;
+
+					top: -15px;
+
+					width: 30px;
+					height: 30px;
+
+					border: 1px solid $white;
+					border-radius: 50%;
+
+					overflow: hidden;
+
+					transition: all .5s ease;
+					-webkit-transition: all .5s ease;
+
+					img {
+						max-width: 100%;
+
+						-webkit-filter: grayscale(100%);
+						filter: grayscale(100%);
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
 }
+
+
+@import 'game/play';

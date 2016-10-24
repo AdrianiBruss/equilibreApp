@@ -4,7 +4,6 @@ angular.module('starter.gameController', [])
     function (SocketService, $scope, $rootScope, SocketService, $state, SOCKET, ApiService, UserService) {
 
         $scope.friends = $rootScope.user.friends.data;
-        // console.log($rootScope.user.friends.data);
         $scope.room = [];
         $scope.invitation = true;
         $scope.roomId = null;
@@ -85,7 +84,7 @@ angular.module('starter.gameController', [])
                 $scope.invitation = false;
                 $scope.usersResponses.active = true;
 
-                getFacebookProfile($scope, guests);
+                getFacebookProfile(guests);
 
                 $scope.$apply();
             });
@@ -114,21 +113,21 @@ angular.module('starter.gameController', [])
 
             SOCKET.instance.on('users updated', function(data){
 
+                // console.log('users updated', data);
+                // console.log('game', $scope.game);
+
                 var users = data[1];
 
+                ( $scope.game || $scope.gameEnded ) ? $scope.usersResponses.active = false : $scope.usersResponses.active = true;
+
                 $scope.invitation = false;
-                $scope.usersResponses.active = data[0];
+                // $scope.usersResponses.active = data[0];
                 $scope.user = users.filter(function(obj) {
                     return obj.userID == $rootScope.user.id;
                 })[0];
 
                 // update users during game
-                getFacebookProfile($scope, users);
-
-                // console.log($scope.users);
-
-                $scope.$apply();
-
+                getFacebookProfile(users);
 
             });
 
@@ -191,24 +190,39 @@ angular.module('starter.gameController', [])
 
         var end = 0, diff = 0, timer = null;
 
-        function getFacebookProfile(scope, profiles){
-            scope.users = [];
+        function getFacebookProfile(profiles){
+
+            $scope.users = [];
 
             angular.forEach(profiles, function(value, key){
 
                 if ( value.userID == $rootScope.user.id )
                 {
-                    scope.users.push(angular.extend({}, value, $rootScope.user));
+                    $rootScope.user.initials = getInitals($rootScope.user.name);
+                    $scope.users.push(angular.extend({}, value, $rootScope.user));
                 }
 
                 angular.forEach($rootScope.user.friends.data, function(v, k){
                     if ( value.userID === v.id ){
-                        scope.users.push(angular.extend({}, value, v))
+                        v.initials = getInitals(v.name);
+                        $scope.users.push(angular.extend({}, value, v))
                     }
                 })
 
             });
 
+            console.log('USERS', $scope.users);
+
+            $scope.$apply();
+
+        }
+
+        function getInitals(name) {
+            var initials = name.split(' '), output = "";
+            angular.forEach(initials, function(v, k){
+                output += v.charAt(0);
+            })
+            return output;
         }
 
         function startChrono() {
