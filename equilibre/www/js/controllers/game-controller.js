@@ -30,8 +30,6 @@ angular.module('starter.gameController', [])
         // checking if an invitation has been send
         if ($state.params.question) {
             startGame();
-            // // $scope.waiting = true;
-            // $scope.invitation = false;
             $scope.participants = $state.params.participants;
         }
 
@@ -54,6 +52,7 @@ angular.module('starter.gameController', [])
                 }
 
             }
+
         };
 
         // [Socket]: Sending invitation
@@ -67,7 +66,7 @@ angular.module('starter.gameController', [])
                 });
                 SocketService.playGame($scope.room)
             }else {
-                console.error('select users to play with')
+                alert('Veuillez sélectionner un joueur');
             }
 
             startGame();
@@ -76,6 +75,8 @@ angular.module('starter.gameController', [])
 
         // [Socket] : waiting for new questions
         function startGame(){
+
+            $('div.tab-nav.tabs').hide();
 
             //--- hide loader
             SOCKET.instance.on('invitation sent', function (guests) {
@@ -88,12 +89,10 @@ angular.module('starter.gameController', [])
             });
 
             SOCKET.instance.on('send question', function(data){
-                // console.log('Question received', data[0], data[1], data[2])
 
                 // If it's the first question
                 if (data[2]) {
 
-                    // $scope.waiting = false;
                     $scope.usersResponses.active = false;
                     $scope.invitation = false;
                     $scope.game = true;
@@ -113,15 +112,12 @@ angular.module('starter.gameController', [])
 
             SOCKET.instance.on('users updated', function(data){
 
-                // console.log('users updated', data);
-                // console.log('game', $scope.game);
 
                 var users = data[1];
 
                 ( $scope.game || $scope.gameEnded ) ? $scope.usersResponses.active = false : $scope.usersResponses.active = true;
 
                 $scope.invitation = false;
-                // $scope.usersResponses.active = data[0];
                 $scope.user = users.filter(function(obj) {
                     return obj.userID == $rootScope.user.id;
                 })[0];
@@ -133,6 +129,8 @@ angular.module('starter.gameController', [])
 
             SOCKET.instance.on('game stop', function(data){
 
+                $('div.tab-nav.tabs').show();
+
                 var score = data[1];
                 var timestamp = $scope.timer.timestamp;
 
@@ -140,14 +138,11 @@ angular.module('starter.gameController', [])
                 $scope.gameEnded = true;
                 $scope.questionList = data[0];
                 $scope.user.score = Math.round( (1 / (timestamp * score + timestamp)) * 100000000);
-                // console.log('votre score est', $scope.user.score);
 
                 // update user experience
                 ApiService.getUser($rootScope.user.accessToken).then(function (data) {
                     data.experience += $scope.user.score;
-                    // console.log(data.experience);
                     ApiService.updateUser($rootScope.user.accessToken, {"experience":data.experience}).then(function (data) {
-                        // console.log(data)
                     });
                 });
 
@@ -163,7 +158,6 @@ angular.module('starter.gameController', [])
                 }, 0)
 
 
-                // console.log('scope.user.position', $scope.user.position);
                 // [Socket] : send final score to socket
                 SOCKET.instance.emit('submit question', [$scope.roomID, false, null, null, null, $scope.user.score])
             })

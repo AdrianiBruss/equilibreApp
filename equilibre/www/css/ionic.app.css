@@ -7715,6 +7715,8 @@ ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.tab-item-active, ion-
   display: block;
   max-width: 250px;
   margin: 50px auto 50px auto; }
+  .logo img {
+    width: 100%; }
 
 .btn {
   display: block;
@@ -8100,7 +8102,7 @@ select {
     vertical-align: bottom;
     bottom: 100px;
     position: fixed;
-    margin: 0 auto;
+    margin: 20px auto 30px auto;
     left: 0;
     right: 0; }
 

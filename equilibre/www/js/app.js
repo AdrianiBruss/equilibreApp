@@ -33,6 +33,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
             $rootScope.hideTabs = false;
 
+
             // [Facebook] : Init Facebook connection
             FacebookService.init();
 

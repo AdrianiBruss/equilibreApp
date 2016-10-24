@@ -11,8 +11,6 @@ angular.module('starter.facebookService', [])
 
                 if (response.status === 'connected') {
                     // User connected
-                    console.log('FB User connected')
-
                     $rootScope.user = response;
 
                     var uid = response.authResponse.userID;
@@ -23,7 +21,6 @@ angular.module('starter.facebookService', [])
 
                 } else if (response.status === 'not_authorized') {
                     // User not authorized
-                    console.log('not authorized');
 
                     $ionicLoading.hide();
 
@@ -31,13 +28,11 @@ angular.module('starter.facebookService', [])
 
                 } else {
                     // User not logged in to Facebook
-                    console.log('login');
                     $ionicLoading.hide();
                     $state.go('login');
                 }
             },
             function (error) {
-                console.log('Facebook error: ' + error.error_description);
             });
         }
 
@@ -57,7 +52,6 @@ angular.module('starter.facebookService', [])
                         getProfile(register);
 
                     } else {
-                        console.log('Facebook login failed');
                         $state.go('login')
                     }
             });
@@ -66,7 +60,6 @@ angular.module('starter.facebookService', [])
         // [Facebook] : get profile datas
         // [API] : Login or register User to API
         function getProfile(registerUser) {
-
             ngFB.api({
                 path: '/me',
                 params: {fields: 'id,name,email,picture.width(200),friends{picture,name},cover'}

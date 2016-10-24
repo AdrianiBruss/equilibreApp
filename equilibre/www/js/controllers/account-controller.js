@@ -10,8 +10,6 @@ angular.module('starter.accountController', [])
         SOCKET.instance.on('send users ranking', function(users){
             $scope.usersRanking = users;
 
-            console.log(users);
-
             users.filter(function ( obj ) {
                 if( obj._id === $rootScope.user.userId )
                     $scope.experience = obj.experience;
@@ -27,7 +25,10 @@ angular.module('starter.accountController', [])
 
         // [API] Get user's questions
         ApiService.getQuestions($rootScope.user.accessToken).then(function(data){
+    
             $scope.questions = data;
+    
+            $('div.tab-nav.tabs').show();
 
             setTimeout(function(){
                 $('.template-account #questions').slick({
