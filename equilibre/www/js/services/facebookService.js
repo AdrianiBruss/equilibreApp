@@ -12,8 +12,6 @@ angular.module('starter.facebookService', [])
                 if (response.status === 'connected') {
                     // User connected
 
-                    console.log('FB User connected')
-
                     $rootScope.user = response;
 
                     var uid = response.authResponse.userID;
@@ -24,7 +22,6 @@ angular.module('starter.facebookService', [])
 
                 } else if (response.status === 'not_authorized') {
                     // User not authorized
-                    console.log('not authorized');
 
                     $ionicLoading.hide();
 
@@ -32,13 +29,11 @@ angular.module('starter.facebookService', [])
 
                 } else {
                     // User not logged in to Facebook
-                    console.log('login');
                     $ionicLoading.hide();
                     $state.go('login');
                 }
             },
             function (error) {
-                console.log('Facebook error: ' + error.error_description);
             });
         }
 
@@ -54,13 +49,10 @@ angular.module('starter.facebookService', [])
 
             ngFB.login({scope: 'email, read_custom_friendlists, user_friends'}).then(
                 function (response) {
-                    console.log(response)
                     if (response.status === 'connected') {
-                        console.log('Facebook login succeeded');
                         getProfile(register);
 
                     } else {
-                        console.log('Facebook login failed');
                         $state.go('login')
                     }
             });
@@ -70,14 +62,12 @@ angular.module('starter.facebookService', [])
         // [API] : Login or register User to API
         function getProfile(registerUser) {
 
-            console.log('getProfile')
 
             ngFB.api({
                 path: '/me',
                 params: {fields: 'id,name,email,picture.width(200),friends{picture,name},cover'}
             }).then(
             function (response) {
-                console.log('user', response)
                 $rootScope.user = response;
                 $rootScope.user['password'] = sha512_224(response.email+response.id);
                 if (registerUser)

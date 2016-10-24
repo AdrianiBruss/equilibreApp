@@ -8,7 +8,6 @@ angular.module('starter.apiService', [])
         function APIRequest(method, url, data, methodName, scopeData) {
 
             var defer = $q.defer();
-            console.log('APIRequest : ', method, url, data)
 
             $http({
                 method: method,
@@ -33,7 +32,6 @@ angular.module('starter.apiService', [])
                         $state.go('tab.account');
                         break;
                     default:
-                        console.log('switch default');
                         break;
 
                 }
@@ -42,10 +40,8 @@ angular.module('starter.apiService', [])
                 $ionicLoading.hide()
 
             }, function errorCallback(response) {
-                console.log(response)
                 defer.reject(response);
 
-                // console.error(response.data.error.details.messages['username'][0])
             });
 
             return defer.promise;

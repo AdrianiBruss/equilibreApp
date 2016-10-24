@@ -24,8 +24,7 @@ angular.module('starter.socketService', [])
                 $rootScope.$apply();
 
                 // Update friends' status
-                // UserService.updateUsersStatus();
-
+                UserService.updateUsersStatus();
             });
         }
 
@@ -46,8 +45,6 @@ angular.module('starter.socketService', [])
                 var participants = data[1];
                 var host;
                 var hostID = participants[participants.length - 1].userID;
-
-                console.log(participants);
 
                 $rootScope.user.friends.data.filter(function(obj){
                     if ( obj.id == hostID )

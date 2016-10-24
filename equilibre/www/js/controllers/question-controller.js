@@ -13,28 +13,22 @@ angular.module('starter.questionController', [])
 
             $scope.success = true;
 
-            if (($scope.newQuestion.questionText != null) &&
-                ($scope.newQuestion.description != null)  &&
-                ($scope.newQuestion.answer != [])         &&
-                ($scope.newQuestion.trueAnswer != null))
+            if (($scope.newQuestion.questionText != '' && $scope.newQuestion.questionText != null) &&
+                ($scope.newQuestion.description != '' && $scope.newQuestion.description != null)  &&
+                ($scope.newQuestion.answer != []) &&
+                ($scope.newQuestion.trueAnswer != '' && $scope.newQuestion.trueAnswer != null))
             {
+                $ionicLoading.show();
                 ApiService.addQuestion($scope.newQuestion);
                 initNewQuestion();
 
             } else {
-                $scope.success = false;
+                alert('Please fill out the parts "Upload Question", "Upload answer" and "Add a description".');
+                // $scope.success = false;
             }
         };
 
-        $scope.clearAnswerFields = function(){
-            $scope.newQuestion.answer[1] = '';
-            $scope.newQuestion.answer[2] = '';
-            $scope.trueAnswer = '';
-            angular.element("input.radio").attr('checked', '');
-        };
-
         $scope.openCamera = function(step, method) {
-            console.log('getPicture')
 
             document.addEventListener("deviceready", function () {
 
@@ -60,8 +54,8 @@ angular.module('starter.questionController', [])
                     setImage($scope.image, step)
 
                 }, function(err) {
-                    console.log('err my image', err)
                   // error
+                  console.log(error);
                 });
 
             }, false);
@@ -80,7 +74,6 @@ angular.module('starter.questionController', [])
                     $scope.newQuestion.answer[2] = image;
                     break;
                 default:
-                    console.log('myImage', image);
                     break;
             }
 
@@ -96,6 +89,9 @@ angular.module('starter.questionController', [])
                 "stats":            [0, 0],
                 "playerId":         $rootScope.user.userId
             };
+            
+            $('div.tab-nav.tabs').show();
+
         }
 
     }]);
