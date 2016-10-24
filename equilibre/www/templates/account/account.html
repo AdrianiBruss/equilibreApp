@@ -14,7 +14,7 @@
                 <div class="profile-questions">
                     <h2>My questions </h2>
                     <div id="questions">
-                        <div ng-repeat="q in questions">
+                        <div ng-repeat="q in questions" ng-if="q.status">
                             <p class="eq-text">
                                 <span class="bullet bullet-black"></span>
                                 {{ q.questionText }}
@@ -33,7 +33,7 @@
                     <h2>Ranking</h2>
 
                     <div class="users-list" ng-repeat="user in usersRanking">
-                        <span class="index">{{$index + 1}}. </span> 
+                        <span class="index">{{$index + 1}}. </span>
                         <div class="picture">
                             <img ng-src="{{user.profilePicture}}" alt="" />
                         </div>

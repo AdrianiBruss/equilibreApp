@@ -36,7 +36,7 @@
             <span class="line thin-line"></span>
 
             <div class="friends-list" ng-repeat="participant in users">
-                <div class="users-list">
+                <div class="users-list" ng-if="$last == false">
                     <div class="picture">
                         <img ng-src="{{participant.picture.data.url}}" alt="" />
                     </div>

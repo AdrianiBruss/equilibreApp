@@ -25,8 +25,8 @@
                             <h2>Illustrate your question</h2>
                             <!-- <input type="file" id="questionPicture" fileread="newQuestion.questionPicture" ng-model="newQuestion.questionPicture"> -->
                             <div class="eq-icons">
-                                <div class="eq-icon" ng-click="openCamera()"><span class="eq-icon-camera"></span></div>
-                                <div class="eq-icon" ng-click="openMedias()"><span class="eq-icon-files"></span></div>
+                                <div class="eq-icon" ng-click="openCamera('questionPicture', 'openCamera')"><span class="eq-icon-camera"></span></div>
+                                <div class="eq-icon" ng-click="openCamera('questionPicture', 'openMedias')"><span class="eq-icon-files"></span></div>
                             </div>
                             <img ng-if="newQuestion.questionPicture" data-ng-src="{{newQuestion.questionPicture}}"/>
                         </div>
@@ -90,8 +90,8 @@
                             <div class="form-group">
                                 <p>Response 1</p>
                                 <div class="eq-icons">
-                                    <div class="eq-icon" ng-click="openCamera()"><span class="eq-icon-camera"></span></div>
-                                    <div class="eq-icon" ng-click="openMedias()"><span class="eq-icon-files"></span></div>
+                                    <div class="eq-icon" ng-click="openCamera('answer1', 'openCamera')"><span class="eq-icon-camera"></span></div>
+                                    <div class="eq-icon" ng-click="openCamera('answer1', 'openMedias')"><span class="eq-icon-files"></span></div>
                                 </div>
                                 <img ng-if="newQuestion.answer[1]" data-ng-src="{{newQuestion.answer[1]}}"/>
                                 <!-- <input type="file" id="answerPictureOne" fileread="newQuestion.answer[1]"> -->
@@ -101,8 +101,8 @@
                             <div class="form-group">
                                 <p>Response 2</p>
                                 <div class="eq-icons">
-                                    <div class="eq-icon" ng-click="openCamera()"><span class="eq-icon-camera"></span></div>
-                                    <div class="eq-icon" ng-click="openMedias()"><span class="eq-icon-files"></span></div>
+                                    <div class="eq-icon" ng-click="openCamera('answer2', 'openCamera')"><span class="eq-icon-camera"></span></div>
+                                    <div class="eq-icon" ng-click="openCamera('answer2', 'openMedias')"><span class="eq-icon-files"></span></div>
                                 </div>
                                 <img ng-if="newQuestion.answer[2]" data-ng-src="{{newQuestion.answer[2]}}"/>
                                 <!-- <label for="answerPictureTwo">Response 2</label>
