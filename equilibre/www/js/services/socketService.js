@@ -1,6 +1,7 @@
 angular.module('starter.socketService', [])
 
-    .service('SocketService', ['$rootScope', 'UserService', '$ionicPopup', '$state', 'SOCKET', function ($rootScope, UserService, $ionicPopup, $state, SOCKET) {
+    .service('SocketService', ['$rootScope', 'UserService', '$ionicPopup', '$state', 'SOCKET',
+    function ($rootScope, UserService, $ionicPopup, $state, SOCKET) {
 
         var socket;
 
@@ -23,7 +24,7 @@ angular.module('starter.socketService', [])
                 $rootScope.$apply();
 
                 // Update friends' status
-                UserService.updateUsersStatus();
+                // UserService.updateUsersStatus();
 
             });
         }

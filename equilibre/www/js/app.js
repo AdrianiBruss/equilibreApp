@@ -1,17 +1,17 @@
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'ngOpenFB'])
     .constant('lbConfig', {
-        // 'url': 'http://equilibreapp-cloudbruss.rhcloud.com/api',
-        'url': 'http://localhost:3000/api'
+        'url': 'http://equilibreapp-cloudbruss.rhcloud.com/api',
+        // 'url': 'http://localhost:3000/api'
     })
     .constant('SOCKET', {
-        // 'url' : 'http://equilibresocket-cloudbruss.rhcloud.com:8000',
-        'url': 'http://localhost:8000',
+        'url' : 'http://equilibresocket-cloudbruss.rhcloud.com:8000',
+        // 'url': 'http://localhost:8000',
         'instance': null
     })
-    .run(['$rootScope', '$window', '$ionicPlatform', '$ionicLoading', 'FacebookService', 'SocketService', 'SOCKET',
-        function ($rootScope, $window, $ionicPlatform, $ionicLoading, FacebookService, SocketService, SOCKET) {
+    .run(['$rootScope', '$window', '$ionicPlatform', '$ionicLoading', 'FacebookService', 'SocketService', 'SOCKET', 'ngFB',
+        function ($rootScope, $window, $ionicPlatform, $ionicLoading, FacebookService, SocketService, SOCKET, ngFB) {
         $ionicPlatform.ready(function () {
-            $rootScope.loader = $ionicLoading.show();
+            // $ionicLoading.show();
 
             if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
                 cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -22,6 +22,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                 // org.apache.cordova.statusbar required
                 StatusBar.styleDefault();
             }
+
+            ngFB.init({appId: '1297400556958732'});
 
         });
 

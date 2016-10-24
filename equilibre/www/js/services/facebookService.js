@@ -1,31 +1,13 @@
 angular.module('starter.facebookService', [])
 
-    .service('FacebookService', ['$window', '$state', '$rootScope', 'ApiService', '$ionicLoading',
-        function ($window, $state, $rootScope, ApiService, $ionicLoading) {
+    .service('FacebookService', ['$window', '$state', '$rootScope', 'ApiService', '$ionicLoading', 'ngFB',
+        function ($window, $state, $rootScope, ApiService, $ionicLoading, ngFB) {
 
         // [Facebook] : init service
+        // [Facebook] : watching for login status
         function facebookInit() {
 
-            console.log('facebookInit')
-
-            $window.fbAsyncInit = function () {
-                FB.init({
-                    appId: '1297400556958732',
-                    status: true,
-                    cookie: true,
-                    xfbml: true,
-                    version: 'v2.7'
-                });
-                facebookWatchLoginStatus();
-            };
-
-        }
-
-        // [Facebook] : watching for login status
-        function facebookWatchLoginStatus() {
-            console.log('facebookWatchLoginStatus')
-
-            FB.getLoginStatus(function (response) {
+            ngFB.getLoginStatus().then(function (response) {
 
                 if (response.status === 'connected') {
                     // User connected
@@ -54,33 +36,33 @@ angular.module('starter.facebookService', [])
                     $ionicLoading.hide();
                     $state.go('login');
                 }
+            },
+            function (error) {
+                console.log('Facebook error: ' + error.error_description);
             });
         }
 
         // [Facebook] : Facebook logout
         // [API] : Logout user
         function facebookLogout() {
-            FB.logout();
+            ngFB.logout();
             ApiService.logoutUser($rootScope.user.accessToken)
         }
 
         // [Facebook] : Facebook register
         function facebookResgister(register) {
-            FB.login(function (response) {
 
-                if (response.authResponse) {
-                    // User connected to Facebook
+            ngFB.login({scope: 'email, read_custom_friendlists, user_friends'}).then(
+                function (response) {
+                    console.log(response)
+                    if (response.status === 'connected') {
+                        console.log('Facebook login succeeded');
+                        getProfile(register);
 
-                    // get profile datas from Facebook and register to API
-                    getProfile(register);
-
-                } else {
-                    // User cancelled login or did not fully authorize
-                    $state.go('login')
-                }
-            }, {
-                scope: 'email, read_custom_friendlists, user_friends',
-                return: true
+                    } else {
+                        console.log('Facebook login failed');
+                        $state.go('login')
+                    }
             });
         }
 
@@ -90,16 +72,22 @@ angular.module('starter.facebookService', [])
 
             console.log('getProfile')
 
-            FB.api('/me?fields=id,name,email,picture.width(200),friends{picture,name},cover', function (response) {
-
+            ngFB.api({
+                path: '/me',
+                params: {fields: 'id,name,email,picture.width(200),friends{picture,name},cover'}
+            }).then(
+            function (response) {
+                console.log('user', response)
                 $rootScope.user = response;
                 $rootScope.user['password'] = sha512_224(response.email+response.id);
                 if (registerUser)
                     ApiService.registerUser($rootScope.user);
                 else
                     ApiService.loginUser($rootScope.user);
+            },
+            function (error) {
+                alert('Facebook error: ' + error.error_description);
             });
-
         }
 
         return {
