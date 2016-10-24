@@ -23,21 +23,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                 StatusBar.styleDefault();
             }
 
-            ngFB.init({appId: '1297400556958732'});
+            ngFB.init({
+                appId: '1297400556958732',
+                tokenStore: localStorage
+            });
+
+            // Global user variable
+            $rootScope.user = {};
+
+            $rootScope.hideTabs = false;
+
+            // [Facebook] : Init Facebook connection
+            FacebookService.init();
+
+            // [Socket] : Init Socket connection
+            SocketService.init(SOCKET.instance, SOCKET.url);
+            SocketService.onInvit();
 
         });
-
-        // Global user variable
-        $rootScope.user = {};
-
-        $rootScope.hideTabs = false;
-
-        // [Facebook] : Init Facebook connection
-        FacebookService.init();
-
-        // [Socket] : Init Socket connection
-        SocketService.init(SOCKET.instance, SOCKET.url);
-        SocketService.onInvit();
 
     }])
     .config(function ($stateProvider, $urlRouterProvider) {

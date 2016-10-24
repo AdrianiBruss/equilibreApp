@@ -8,7 +8,7 @@ angular.module('starter.gameController', [])
         $scope.invitation = true;
         $scope.roomId = null;
         $scope.question = null;
-        $scope.users = null;
+        $scope.users = [];
         $scope.game = false;
         $scope.gameEnded = false;
         $scope.score = 0;
@@ -26,8 +26,6 @@ angular.module('starter.gameController', [])
         };
 
         var start = 0;
-
-        $('div.tab-nav.tabs').hide();
 
         // checking if an invitation has been send
         if ($state.params.question) {
@@ -103,6 +101,8 @@ angular.module('starter.gameController', [])
                     // Start timer
                     start = new Date();
                     startChrono();
+
+                    $('div.tab-nav.tabs').hide();
                 }
 
                 $scope.question = data[0];
@@ -155,11 +155,11 @@ angular.module('starter.gameController', [])
                 stopChrono();
 
                 setTimeout(function(){
-                    console.log($('.template-ranking .questions'));
                     $('.template-ranking .questions').slick({
                         dots: true,
                         arrows: false
                     })
+                    $('div.tab-nav.tabs').show();
                 }, 0)
 
 

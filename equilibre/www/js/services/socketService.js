@@ -24,7 +24,7 @@ angular.module('starter.socketService', [])
                 $rootScope.$apply();
 
                 // Update friends' status
-                // UserService.updateUsersStatus();
+                UserService.updateUsersStatus();
 
             });
         }

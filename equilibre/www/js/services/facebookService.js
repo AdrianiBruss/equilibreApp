@@ -11,7 +11,6 @@ angular.module('starter.facebookService', [])
 
                 if (response.status === 'connected') {
                     // User connected
-
                     console.log('FB User connected')
 
                     $rootScope.user = response;
@@ -54,9 +53,7 @@ angular.module('starter.facebookService', [])
 
             ngFB.login({scope: 'email, read_custom_friendlists, user_friends'}).then(
                 function (response) {
-                    console.log(response)
                     if (response.status === 'connected') {
-                        console.log('Facebook login succeeded');
                         getProfile(register);
 
                     } else {
@@ -70,14 +67,11 @@ angular.module('starter.facebookService', [])
         // [API] : Login or register User to API
         function getProfile(registerUser) {
 
-            console.log('getProfile')
-
             ngFB.api({
                 path: '/me',
                 params: {fields: 'id,name,email,picture.width(200),friends{picture,name},cover'}
             }).then(
             function (response) {
-                console.log('user', response)
                 $rootScope.user = response;
                 $rootScope.user['password'] = sha512_224(response.email+response.id);
                 if (registerUser)
@@ -86,7 +80,7 @@ angular.module('starter.facebookService', [])
                     ApiService.loginUser($rootScope.user);
             },
             function (error) {
-                alert('Facebook error: ' + error.error_description);
+                console.log('Facebook error: ' + error.error_description);
             });
         }
 

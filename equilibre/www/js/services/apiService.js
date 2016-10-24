@@ -8,7 +8,7 @@ angular.module('starter.apiService', [])
         function APIRequest(method, url, data, methodName, scopeData) {
 
             var defer = $q.defer();
-            console.log('APIRequest : ', method, url, data)
+            // console.log('APIRequest : ', method, url, data)
 
             $http({
                 method: method,
@@ -33,7 +33,7 @@ angular.module('starter.apiService', [])
                         $state.go('tab.account');
                         break;
                     default:
-                        console.log('switch default');
+                        // console.log('switch default');
                         break;
 
                 }
