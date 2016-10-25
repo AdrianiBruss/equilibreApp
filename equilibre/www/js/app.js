@@ -11,7 +11,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     .run(['$rootScope', '$window', '$ionicPlatform', '$ionicLoading', 'FacebookService', 'SocketService', 'SOCKET', 'ngFB',
         function ($rootScope, $window, $ionicPlatform, $ionicLoading, FacebookService, SocketService, SOCKET, ngFB) {
         $ionicPlatform.ready(function () {
-            $ionicLoading.show();
+            // $ionicLoading.show();
 
             if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
                 cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
