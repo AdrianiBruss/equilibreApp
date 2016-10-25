@@ -1,6 +1,6 @@
 <ion-view view-title="Account" class="template template-black template-account" hide-nav-bar="true">
     <ion-content>
-        <div class="background" style="background:url('{{user.cover.source}}') no-repeat;"></div>
+        <div class="background" ng-style="{'background-image':'url({{ user.cover.source }})'}"></div>
         <div class="wrapper">
             <div class="content">
                 <div class="profile">
@@ -13,7 +13,7 @@
                     <p class="name">{{ user.name }}</p>
                 </div>
                 <span class="line thin-line"></span>
-                <div class="profile-questions">
+                <div class="profile-questions" ng-if="questions.length > 0">
                     <h2>My questions </h2>
                     <div id="questions">
                         <div ng-repeat="q in questions" ng-if="q.status">
@@ -22,15 +22,15 @@
                                 {{ q.questionText }}
                             </p>
                             <p class="eq-stats eq-gr">
-                                Good answers <span>{{ q.stats[0] * 100 / (q.stats[0] + q.stats[1]) | number:1 }} %</span>
+                                Good answers <span>{{ (q.stats[0] * 100 / (q.stats[0] + q.stats[1]) | number:1) || 0 }} %</span>
                             </p>
                             <p class="eq-stats eq-br">
-                                Bad answers <span>{{ q.stats[1] * 100 / (q.stats[0] + q.stats[1]) | number:1 }} %</span>
+                                Bad answers <span>{{ (q.stats[1] * 100 / (q.stats[0] + q.stats[1]) | number:1) || 0 }} %</span>
                             </p>
                         </div>
                     </div>
                 </div>
-                <span class="line thin-line"></span>
+                <span class="line thin-line" ng-if="questions.length > 0"></span>
                 <div class="profile-ranking">
                     <h2>Ranking</h2>
 

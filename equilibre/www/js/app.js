@@ -63,7 +63,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                 {
                     if($rootScope.roomId != null)
                     {
-                        SOCKET.instance.leave('room ' + $rootScope.roomId);                        
+                        SOCKET.instance.leave('room ' + $rootScope.roomId);
                     }
 
                     $('div.tab-nav.tabs').show();

@@ -32,7 +32,7 @@ angular.module('starter.facebookService', [])
             },
             function (error) {
                 $ionicLoading.hide();
-                console.log('getLoginStatus', error);    
+                console.log('getLoginStatus', error);
             });
         }
 
@@ -63,7 +63,7 @@ angular.module('starter.facebookService', [])
         function getProfile(registerUser) {
             ngFB.api({
                 path: '/me',
-                params: {fields: 'id,name,email,picture.width(200),friends{picture,name},cover'}
+                params: {fields: 'id,name,email,picture.width(200),friends{picture.width(200),name},cover'}
             }).then(
             function (response) {
                 $ionicLoading.hide();
