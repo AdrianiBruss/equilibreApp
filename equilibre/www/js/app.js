@@ -4,14 +4,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         // 'url': 'http://localhost:3000/api'
     })
     .constant('SOCKET', {
-        'url' : 'http://equilibresocket-cloudbruss.rhcloud.com:8000',
-        // 'url': 'http://localhost:8000',
+        // 'url' : 'http://equilibresocket-cloudbruss.rhcloud.com:8000',
+        'url': 'http://localhost:8000',
         'instance': null
     })
     .run(['$rootScope', '$window', '$ionicPlatform', '$ionicLoading', 'FacebookService', 'SocketService', 'SOCKET', 'ngFB',
         function ($rootScope, $window, $ionicPlatform, $ionicLoading, FacebookService, SocketService, SOCKET, ngFB) {
         $ionicPlatform.ready(function () {
-            // $ionicLoading.show();
+            $ionicLoading.show();
 
             if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
                 cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -30,9 +30,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
             // Global user variable
             $rootScope.user = {};
-
-            $rootScope.hideTabs = false;
-
+            $rootScope.roomId = null;
+            $rootScope.invitation = true;
+            $rootScope.waiting = false;
+            $rootScope.game = false;
+            $rootScope.gameEnded = false;
+            $rootScope.usersResponses = {
+                'active': false
+            };
 
             // [Facebook] : Init Facebook connection
             FacebookService.init();
@@ -40,6 +45,32 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             // [Socket] : Init Socket connection
             SocketService.init(SOCKET.instance, SOCKET.url);
             SocketService.onInvit();
+
+            // called every time the state transition is attempted
+            $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
+
+                if(toState.name == "tab.game")
+                {
+                    $rootScope.invitation = true;
+                    $rootScope.waiting = false;
+                    $rootScope.game = false;
+                    $rootScope.gameEnded = false;
+                    $rootScope.usersResponses = {
+                        'active': false
+                    };
+                }
+                else
+                {
+                    if($rootScope.roomId != null)
+                    {
+                        SOCKET.instance.leave('room ' + $rootScope.roomId);                        
+                    }
+
+                    $('div.tab-nav.tabs').show();
+                }
+
+            })
+
 
         });
 

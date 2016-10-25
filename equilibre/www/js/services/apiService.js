@@ -36,11 +36,11 @@ angular.module('starter.apiService', [])
                 }
 
                 defer.resolve(response.data);
-                $ionicLoading.hide()
+                $ionicLoading.hide();
 
             }, function errorCallback(response) {
                 defer.reject(response);
-
+                $ionicLoading.hide();
             });
 
             return defer.promise;

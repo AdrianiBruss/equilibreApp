@@ -89,9 +89,6 @@ angular.module('starter.questionController', [])
                 "stats":            [0, 0],
                 "playerId":         $rootScope.user.userId
             };
-            
-            $('div.tab-nav.tabs').show();
-
         }
 
     }]);

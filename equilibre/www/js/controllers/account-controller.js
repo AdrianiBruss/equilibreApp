@@ -28,8 +28,6 @@ angular.module('starter.accountController', [])
     
             $scope.questions = data;
     
-            $('div.tab-nav.tabs').show();
-
             setTimeout(function(){
                 $('.template-account #questions').slick({
                     dots: true,
