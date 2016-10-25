@@ -4,8 +4,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         // 'url': 'http://localhost:3000/api'
     })
     .constant('SOCKET', {
-        // 'url' : 'http://equilibresocket-cloudbruss.rhcloud.com:8000',
-        'url': 'http://localhost:8000',
+        'url' : 'http://equilibresocket-cloudbruss.rhcloud.com:8000',
+        // 'url': 'http://localhost:8000',
         'instance': null
     })
     .run(['$rootScope', '$window', '$ionicPlatform', '$ionicLoading', 'FacebookService', 'SocketService', 'SOCKET', 'ngFB',
