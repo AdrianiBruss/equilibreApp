@@ -12,7 +12,9 @@
                 <div class="users-list" ng-repeat="friend in friends" ng-click="addFriend(friend, $index)">
                     <span class="status" ng-class="friend.online ? 'online': 'offline'"></span>
                     <div class="picture">
-                        <img ng-src="{{friend.picture.data.url}}" alt="" />
+                        <div class="picture-eq"
+                            ng-style="{'background-image':'url({{ friend.picture.data.url}})'}">
+                        </div>
                     </div>
                     <div class="text">
                         <p class="name">
@@ -38,7 +40,9 @@
             <div class="friends-list" ng-repeat="participant in users">
                 <div class="users-list" ng-if="$last == false">
                     <div class="picture">
-                        <img ng-src="{{participant.picture.data.url}}" alt="" />
+                        <div class="picture-eq"
+                            ng-style="{'background-image':'url({{ participant.picture.data.url}})'}">
+                        </div>
                     </div>
                     <div class="text">
                         <p class="name">
@@ -90,7 +94,9 @@
                     <span class="initials">{{u.initials}}</span>
                     <div class="line">
                         <div class="profile" style="left: {{u.position * 100 / 5}}%;">
-                            <img ng-src="{{u.picture.data.url}}" alt="" />
+                            <div class="picture-eq"
+                                ng-style="{'background-image':'url({{ u.picture.data.url}})'}">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -111,7 +117,9 @@
                 <div class="users-list">
                     <span class="index">{{$index + 1}}. </span>
                     <div class="picture">
-                        <img ng-src="{{participant.picture.data.url}}" alt="" />
+                        <div class="picture-eq"
+                            ng-style="{'background-image':'url({{ participant.picture.data.url}})'}">
+                        </div>
                     </div>
                     <div class="text">
                         <p class="name">

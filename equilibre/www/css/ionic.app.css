@@ -7718,6 +7718,14 @@ ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.tab-item-active, ion-
   .logo img {
     width: 100%; }
 
+.picture-eq {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: 50%;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%); }
+
 .btn {
   display: block;
   max-width: 250px;
@@ -7737,6 +7745,14 @@ ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.tab-item-active, ion-
     font-size: 22px; }
   .btn.btn-small {
     padding: 20px 0; }
+  .btn.btn-xsmall {
+    padding: 10px 0; }
+  .btn.btn-black {
+    border-color: #2b2b2b;
+    color: #2b2b2b; }
+  .btn.btn-logout {
+    border-color: #f64747;
+    color: #f64747; }
 
 span.line {
   display: block;
@@ -7774,10 +7790,6 @@ span.bullet {
     border: 1px solid #ecf0f1;
     border-radius: 50%;
     overflow: hidden; }
-    .users-list .picture img {
-      max-width: 100%;
-      -webkit-filter: grayscale(100%);
-      filter: grayscale(100%); }
   .users-list .text {
     display: inline-block;
     vertical-align: middle;

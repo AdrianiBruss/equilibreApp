@@ -21,6 +21,7 @@ angular.module('starter.apiService', [])
                         break;
                     case 'logout':
                         $state.go('login');
+                        $ionicLoading.hide();
                         break;
                     case 'getStatsQuestion':
                         putStatQuestion(response.data.stats, scopeData);

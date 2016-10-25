@@ -5,7 +5,9 @@
             <div class="content">
                 <div class="profile">
                     <div class="profile-picture">
-                        <img ng-src="{{ user.picture.data.url }}" alt="" />
+                        <div class="picture-eq"
+                            ng-style="{'background-image':'url({{ user.picture.data.url}})'}">
+                        </div>
                     </div>
                     <p class="experience">xp <span>{{ experience }}</span> </p>
                     <p class="name">{{ user.name }}</p>
@@ -35,7 +37,9 @@
                     <div class="users-list" ng-repeat="user in usersRanking">
                         <span class="index">{{$index + 1}}. </span>
                         <div class="picture">
-                            <img ng-src="{{user.profilePicture}}" alt="" />
+                            <div class="picture-eq"
+                                ng-style="{'background-image':'url({{ user.profilePicture}})'}">
+                            </div>
                         </div>
                         <div class="text">
                             <p class="name">
@@ -47,9 +51,10 @@
                         </div>
                     </div>
                 </div>
+                <span class="line thin-line"></span>
+                <button class="btn btn-black btn-xsmall" ng-click="logout()">Logout</button>
 
             </div>
         </div>
-        <!-- <button class="button button-danger" ng-click="logout()">Facebook Logout</button> -->
     </ion-content>
 </ion-view>

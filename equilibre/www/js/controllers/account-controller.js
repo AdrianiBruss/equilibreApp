@@ -20,14 +20,15 @@ angular.module('starter.accountController', [])
 
         // [Facebook] Logout
         $scope.logout = function() {
+            $ionicLoading.show();
             FacebookService.logout();
         };
 
         // [API] Get user's questions
         ApiService.getQuestions($rootScope.user.accessToken).then(function(data){
-    
+
             $scope.questions = data;
-    
+
             setTimeout(function(){
                 $('.template-account #questions').slick({
                     dots: true,

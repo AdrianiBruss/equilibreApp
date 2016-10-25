@@ -80,6 +80,16 @@ ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.tab-item-active, ion-
 	}
 
 }
+.picture-eq {
+	width: 100%;
+	height: 100%;
+
+	background-size: cover;
+	background-position: 50%;
+
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+}
 
 .btn {
 
@@ -110,6 +120,20 @@ ion-tabs.tabs-striped.tabs-color-active-positive .tab-item.tab-item-active, ion-
 
 	&.btn-small {
 		padding: 20px 0;
+	}
+
+	&.btn-xsmall {
+		padding: 10px 0;
+	}
+
+	&.btn-black {
+		border-color: $black;
+		color: $black;
+	}
+
+	&.btn-logout {
+		border-color: $red;
+		color: $red;
 	}
 
 }
@@ -174,13 +198,6 @@ span.bullet {
 		border-radius: 50%;
 
 		overflow: hidden;
-
-		img {
-			max-width: 100%;
-
-			-webkit-filter: grayscale(100%);
-			filter: grayscale(100%);
-		}
 
 	}
 
