@@ -68,7 +68,7 @@
                     {{question.questionText}}
                 </p>
                 <img class="questionPicture" ng-if="question.questionPicture" data-ng-src="{{question.questionPicture}}"/>
-
+                <span class="line thin-line"></span>
                 <div class="response" ng-model="response" ng-if="question.answer[0] == 'text'">
 
                     <button class="btn" ng-click="sendResponse(1)">{{question.answer[1]}}</button>

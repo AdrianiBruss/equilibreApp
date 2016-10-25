@@ -1,7 +1,7 @@
 angular.module('starter.questionController', [])
 
-    .controller('QuestCtrl', ['$scope', '$rootScope', 'ApiService', '$cordovaCamera', '$cordovaImagePicker',
-    function ($scope, $rootScope, ApiService, $cordovaCamera, $cordovaImagePicker) {
+    .controller('QuestCtrl', ['$scope', '$rootScope', 'ApiService', '$cordovaCamera', '$cordovaImagePicker', '$ionicLoading',
+    function ($scope, $rootScope, ApiService, $cordovaCamera, $cordovaImagePicker, $ionicLoading) {
 
         $scope.image = null;
         $scope.newQuestion = {};
@@ -36,7 +36,7 @@ angular.module('starter.questionController', [])
                 (method == 'openCamera') ? sourceType = Camera.PictureSourceType.CAMERA : sourceType = Camera.PictureSourceType.PHOTOLIBRARY;
 
                 var options = {
-                    quality: 50,
+                    quality: 100,
                     destinationType: Camera.DestinationType.DATA_URL,
                     sourceType: sourceType,
                     encodingType: Camera.EncodingType.JPEG,

@@ -7820,6 +7820,48 @@ span.bullet {
       background: #2b2b2b; }
 
 /*
+* popup
+*
+*/
+.popup .popup-head {
+  display: none; }
+
+.popup .popup-body {
+  overflow: visible;
+  padding-top: 70px; }
+
+.popup .popup-eq {
+  position: relative; }
+  .popup .popup-eq .profile {
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 1px solid #ecf0f1;
+    overflow: hidden;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%); }
+    .popup .popup-eq .profile img {
+      width: 100%;
+      -webkit-filter: grayscale(100%);
+      filter: grayscale(100%); }
+  .popup .popup-eq p {
+    text-align: center;
+    font-size: 15px; }
+    .popup .popup-eq p span {
+      font-weight: 500; }
+
+.popup .popup-buttons .button-default {
+  color: #f64747;
+  border: 2px solid #f64747 !important; }
+
+.popup .popup-buttons .button-positive {
+  color: #26c281;
+  border: 2px solid #26c281 !important; }
+
+/*
 * Eq icons
 */
 .eq-icons {
@@ -7830,7 +7872,7 @@ span.bullet {
     height: 50px;
     border: 1px solid #2b2b2b;
     margin: 10px; }
-    .eq-icons .eq-icon:hover {
+    .eq-icons .eq-icon:active {
       background: rgba(0, 0, 0, 0.2); }
     .eq-icons .eq-icon.eq-icon-checked {
       background: url("../img/eq-icon-check.svg") no-repeat;
@@ -7982,7 +8024,7 @@ select {
   background: #2b2b2b; }
   .template-black h1, .template-black h2, .template-black p, .template-black a {
     color: #ecf0f1; }
-  .template-black .btn:hover {
+  .template-black .btn:active {
     background: rgba(255, 255, 255, 0.2); }
   .template-black span.line {
     background: #ecf0f1; }
@@ -7994,7 +8036,7 @@ select {
   .template-white .btn {
     border: 1px solid #2b2b2b;
     color: #2b2b2b; }
-    .template-white .btn:hover {
+    .template-white .btn:active {
       background: rgba(0, 0, 0, 0.2); }
   .template-white span.line {
     background: #2b2b2b; }
@@ -8168,7 +8210,8 @@ select {
 
 .template-game .template-play .questions p {
   margin: 20px 0;
-  padding: 0 20px; }
+  font-size: 15px;
+  padding: 0 30px; }
 
 .template-game .template-play .questions .questionPicture {
   display: block;

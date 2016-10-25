@@ -4,6 +4,7 @@ angular.module('starter.socketService', [])
     function ($rootScope, UserService, $ionicPopup, $state, SOCKET) {
 
         var socket;
+        $rootScope.host = {};
 
         // [Socket] : initalisation
         function socketInit(instance, url) {
@@ -43,15 +44,17 @@ angular.module('starter.socketService', [])
             socket.on('send an invitation', function(data){
                 var roomID = data[0];
                 var participants = data[1];
-                var host;
                 var hostID = participants[participants.length - 1].userID;
 
                 $rootScope.user.friends.data.filter(function(obj){
-                    if ( obj.id == hostID )
-                        host = obj.name;
+                    if ( obj.id == hostID ) {
+                        $rootScope.host.name = obj.name;
+                        $rootScope.host.picture = obj.picture.data.url;
+                    }
+
                 })
                 // open request invitation popin
-                openPopin(roomID, host);
+                openPopin(roomID, $rootScope.host);
 
                 $state.go('tab.game', {'question': true, 'participants': participants});
             });
@@ -61,8 +64,8 @@ angular.module('starter.socketService', [])
         function openPopin(roomID, host) {
 
             var confirmPopup = $ionicPopup.confirm({
-                title: ''+host+' want to play with you !',
-                template: 'Confirm or decline the invitation'
+                scope: $rootScope,
+                templateUrl: 'popup.html'
             });
 
             // [Socket] : send a response to invitation

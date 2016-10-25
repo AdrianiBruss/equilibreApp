@@ -6,7 +6,7 @@ angular.module('starter.gameController', [])
         init();
 
         function init(){
-            
+
             $scope.friends = $rootScope.user.friends.data;
             $scope.room = [];
             $scope.question = null;
@@ -22,7 +22,7 @@ angular.module('starter.gameController', [])
             $scope.goodAnswer = 0;
 
             var start = 0;
-        
+
         }
 
         // checking if an invitation has been send
@@ -40,13 +40,13 @@ angular.module('starter.gameController', [])
             }
 
             // checking for friend connection
-            if ($scope.room.indexOf(friend.id) > -1) 
+            if ($scope.room.indexOf(friend.id) > -1)
             {
                 $scope.room.splice($scope.room.indexOf(friend.id), 1);
             }
-            else 
+            else
             {
-                if (friend.online && friend.selected) 
+                if (friend.online && friend.selected)
                 {
                     var exists = $scope.room.filter(function(obj) {
                         return obj.userID == friend.id;
@@ -57,9 +57,9 @@ angular.module('starter.gameController', [])
                         $scope.room.push({
                             'socketID': friend.socketID,
                             'userID': friend.id
-                        });    
+                        });
                     }
-                    
+
                 }
 
             }
@@ -80,7 +80,7 @@ angular.module('starter.gameController', [])
                 startGame();
 
             }
-            else 
+            else
             {
                 alert('Veuillez sélectionner un joueur');
             }
@@ -97,11 +97,11 @@ angular.module('starter.gameController', [])
                 $rootScope.invitation = false;
                 $rootScope.usersResponses.active = true;
 
-                getFacebookProfile(guests);
+                getFacebookProfile(guests, true);
 
                 $scope.$apply();
             });
-            
+
             SOCKET.instance.on('too many refuse', function (guests) {
                 alert('Sorry but all guests decline your invitation !');
                 $state.go('home');
@@ -131,7 +131,6 @@ angular.module('starter.gameController', [])
 
             SOCKET.instance.on('users updated', function(data){
 
-
                 var users = data[1];
 
                 ( $scope.game || $scope.gameEnded ) ? $scope.usersResponses.active = false : $scope.usersResponses.active = true;
@@ -142,7 +141,7 @@ angular.module('starter.gameController', [])
                 })[0];
 
                 // update users during game
-                getFacebookProfile(users);
+                getFacebookProfile(users, data[0]);
 
             });
 
@@ -210,26 +209,42 @@ angular.module('starter.gameController', [])
 
         var end = 0, diff = 0, timer = null;
 
-        function getFacebookProfile(profiles){
+        function getFacebookProfile(profiles, first){
 
-            $scope.users = [];
+            if ( first ) {
+                $scope.users = [];
 
-            angular.forEach(profiles, function(value, key){
+                angular.forEach(profiles, function(value, key){
 
-                if ( value.userID == $rootScope.user.id )
-                {
-                    $rootScope.user.initials = getInitals($rootScope.user.name);
-                    $scope.users.push(angular.extend({}, value, $rootScope.user));
-                }
-
-                angular.forEach($rootScope.user.friends.data, function(v, k){
-                    if ( value.userID === v.id ){
-                        v.initials = getInitals(v.name);
-                        $scope.users.push(angular.extend({}, value, v))
+                    if ( value.userID == $rootScope.user.id )
+                    {
+                        $rootScope.user.initials = getInitals($rootScope.user.name);
+                        $scope.users.push(angular.extend({}, value, $rootScope.user));
                     }
+
+                    angular.forEach($rootScope.user.friends.data, function(v, k){
+                        if ( value.userID === v.id ){
+                            v.initials = getInitals(v.name);
+                            $scope.users.push(angular.extend({}, value, v))
+                        }
+                    })
+
+                });
+            }else {
+
+                angular.forEach($scope.users, function(value, key){
+                    angular.forEach(profiles, function(v, k){
+                        if ( value.userID == v.userID ) {
+                            $scope.users[key].firstIndex = v.firstIndex;
+                            $scope.users[key].secondIndex = v.secondIndex;
+                            $scope.users[key].position = v.position;
+                            $scope.users[key].score = v.score;
+                        }
+                    })
+
                 })
 
-            });
+            }
 
             $scope.$apply();
 
